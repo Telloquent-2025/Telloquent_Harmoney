@@ -10,14 +10,20 @@ document.addEventListener('DOMContentLoaded', function() {
         sidebarBtn.addEventListener('click', function() {
             sidebar.classList.add('open');
             overlay.classList.add('active');
-            document.body.classList.add('sidebar-open');
+            document.body.style.overflow = 'hidden';
+            
+            // Initialize all dropdowns to closed state
+            closeAllDropdowns();
         });
         
         // Close sidebar
         function closeSidebar() {
             sidebar.classList.remove('open');
             overlay.classList.remove('active');
-            document.body.classList.remove('sidebar-open');
+            document.body.style.overflow = '';
+            
+            // Close all dropdowns when closing sidebar
+            closeAllDropdowns();
         }
         
         // Close button
@@ -30,95 +36,117 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Close on escape key
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
+            if (e.key === 'Escape' && sidebar.classList.contains('open')) {
                 closeSidebar();
             }
         });
     }
     
-    // Mobile Submenu Toggle (Resources & Our Story)
-    const mobileSubmenus = document.querySelectorAll('.mobile-submenu .menu-toggle');
+    // Mobile Dropdown Functionality
+    const mobileDropdowns = document.querySelectorAll('.mobile-dropdown .has-dropdown');
+    const mobileLoginToggle = document.querySelector('.mobile-login-toggle');
     
-    mobileSubmenus.forEach(toggle => {
+    // Function to close all dropdowns
+    function closeAllDropdowns() {
+        // Close main dropdowns
+        mobileDropdowns.forEach(toggle => {
+            const dropdown = toggle.closest('.mobile-dropdown');
+            const icon = toggle.querySelector('.dropdown-icon');
+            
+            dropdown.classList.remove('active');
+            if (icon) {
+                icon.style.transform = 'rotate(0deg)';
+            }
+        });
+        
+        // Close login dropdown
+        if (mobileLoginToggle) {
+            const loginContainer = mobileLoginToggle.closest('.mobile-login-container');
+            const loginIcon = mobileLoginToggle.querySelector('.login-dropdown-icon');
+            
+            loginContainer.classList.remove('active');
+            if (loginIcon) {
+                loginIcon.style.transform = 'rotate(0deg)';
+            }
+        }
+    }
+    
+    // Handle main dropdowns (Our Story, Resources)
+    mobileDropdowns.forEach(toggle => {
         toggle.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             
-            const parent = this.closest('.mobile-submenu');
-            const submenu = parent.querySelector('.mobile-submenu-list');
+            const dropdown = this.closest('.mobile-dropdown');
+            const icon = this.querySelector('.dropdown-icon');
             
-            // Toggle active class
-            parent.classList.toggle('active');
+            // Check if current dropdown is already active
+            const isActive = dropdown.classList.contains('active');
             
-            // Toggle submenu visibility
-            if (submenu.style.maxHeight) {
-                submenu.style.maxHeight = null;
-            } else {
-                submenu.style.maxHeight = submenu.scrollHeight + "px";
-            }
+            // Close all dropdowns first
+            closeAllDropdowns();
             
-            // Close other submenus
-            mobileSubmenus.forEach(otherToggle => {
-                if (otherToggle !== this) {
-                    const otherParent = otherToggle.closest('.mobile-submenu');
-                    const otherSubmenu = otherParent.querySelector('.mobile-submenu-list');
-                    
-                    otherParent.classList.remove('active');
-                    otherSubmenu.style.maxHeight = null;
+            // Toggle current dropdown
+            if (!isActive) {
+                dropdown.classList.add('active');
+                if (icon) {
+                    icon.style.transform = 'rotate(180deg)';
                 }
-            });
+            }
         });
     });
     
-    // Mobile Login Dropdown Fix
-    const mobileLoginToggle = document.querySelector('.mobile-login-dropdown .menu-toggle');
-    
+    // Handle login dropdown
     if (mobileLoginToggle) {
-        const mobileLoginContainer = mobileLoginToggle.closest('.mobile-login-dropdown');
-        const mobileLoginSubmenu = mobileLoginContainer.querySelector('.mobile-submenu-list');
-        
         mobileLoginToggle.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             
-            // Toggle active class
-            mobileLoginContainer.classList.toggle('active');
+            const loginContainer = this.closest('.mobile-login-container');
+            const loginIcon = this.querySelector('.login-dropdown-icon');
             
-            // Toggle submenu visibility
-            if (mobileLoginSubmenu.style.maxHeight) {
-                mobileLoginSubmenu.style.maxHeight = null;
-            } else {
-                mobileLoginSubmenu.style.maxHeight = mobileLoginSubmenu.scrollHeight + "px";
+            // Check if login dropdown is already active
+            const isActive = loginContainer.classList.contains('active');
+            
+            // Close all dropdowns first
+            closeAllDropdowns();
+            
+            // Toggle login dropdown
+            if (!isActive) {
+                loginContainer.classList.add('active');
+                if (loginIcon) {
+                    loginIcon.style.transform = 'rotate(180deg)';
+                }
             }
         });
-        
-        // Initialize submenu as closed
-        mobileLoginSubmenu.style.maxHeight = null;
     }
     
-    // Close submenus when clicking outside
+    // Close dropdowns when clicking outside
     document.addEventListener('click', function(e) {
-        // Check if click is outside mobile submenus
-        if (!e.target.closest('.mobile-submenu') && !e.target.closest('.mobile-login-dropdown')) {
-            const allSubmenus = document.querySelectorAll('.mobile-submenu, .mobile-login-dropdown');
-            
-            allSubmenus.forEach(item => {
-                item.classList.remove('active');
-                const submenu = item.querySelector('.mobile-submenu-list');
-                if (submenu) {
-                    submenu.style.maxHeight = null;
-                }
-            });
+        if (sidebar.classList.contains('open') && 
+            !e.target.closest('.mobile-dropdown') && 
+            !e.target.closest('.mobile-login-container') &&
+            !e.target.closest('#sidebar-btn')) {
+            closeAllDropdowns();
         }
     });
     
-    // Prevent clicks inside submenus from closing them
-    document.querySelectorAll('.mobile-submenu-list, .mobile-login-dropdown .mobile-submenu-list').forEach(submenu => {
-        submenu.addEventListener('click', function(e) {
-            e.stopPropagation();
+    // Close dropdowns when clicking on a link inside dropdown
+    document.querySelectorAll('.mobile-dropdown-menu a, .mobile-login-dropdown a').forEach(link => {
+        link.addEventListener('click', function() {
+            closeSidebar();
         });
     });
+    
+    // Close all dropdowns when window is resized
+    window.addEventListener('resize', function() {
+        if (window.innerWidth <= 576 && sidebar.classList.contains('open')) {
+            closeAllDropdowns();
+        }
+    });
 });
+
+
 
 
         // Mobile footer accordion functionality

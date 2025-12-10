@@ -62,7 +62,7 @@
 
 <body>
     <div id="app" class="d-flex flex-column min-vh-100">
-            <header>
+        <header>
             <!-- Top nav for desktop -->
             <div class="d-sm-block d-none">
                 <nav class="navbar topNav t_nav navbar-expand-md bg-faded justify-content-center">
@@ -87,11 +87,6 @@
                                 <li class="nav-item">
                                     <a href="nri-corner.html" class="nav-link">NRI Corner</a>
                                 </li>
-
-
-
-
-
 
                                 <!-- Our Story Dropdown with Hover -->
                                 <li class="nav-item dropdown">
@@ -221,7 +216,6 @@
                 </nav>
             </div>
             <!-- End top nav -->
-
             <!-- Top navigation for mobile -->
             <div class="d-sm-none d-block">
                 <div class="slide-drawer">
@@ -231,9 +225,9 @@
                                     alt="Harmoney FinServ India Private Limited"></a>
                         </div>
                         <button id="sidebar-btn" class="sidebar-btn">
-                            <div class="menu-stripes"></div>
-                            <div class="menu-stripes"></div>
-                            <div class="menu-stripes"></div>
+                            <span class="menu-stripes"></span>
+                            <span class="menu-stripes"></span>
+                            <span class="menu-stripes"></span>
                         </button>
                     </div>
 
@@ -252,23 +246,6 @@
                                 <li>
                                     <a href="index.html" class="menu-link">Home</a>
                                 </li>
-
-                                <!-- Mobile Resources Section -->
-                                <li class="mobile-submenu">
-                                    <a href="javascript:void(0)" class="menu-link menu-toggle">Resources <i
-                                            class="fas fa-chevron-down"></i></a>
-                                    <ul class="mobile-submenu-list">
-                                        <li><a href="newsletter.html" class="menu-link">Newsletter</a></li>
-                                        <li class="submenu-header">Investor Charter</li>
-                                        <li><a href="assets/pdf/investor_charter_pms.pdf"
-                                                class="menu-link download-link" target="_blank"
-                                                download="investor_charter_pms.pdf">Investor Charter</a></li>
-                                        <li><a href="assets/pdf/investor_complaints.pdf" target="_blank"
-                                                class="menu-link download-link"
-                                                download="investor_complaints.pdf">Investor Grievances</a></li>
-                                    </ul>
-                                </li>
-
                                 <li>
                                     <a href="services.html" class="menu-link">Services</a>
                                 </li>
@@ -276,295 +253,362 @@
                                     <a href="nri-corner.html" class="menu-link">NRI Corner</a>
                                 </li>
 
-                                <!-- Mobile Our Story Section -->
-                                <li class="mobile-submenu">
-                                    <a href="javascript:void(0)" class="menu-link menu-toggle">Our Story <i
-                                            class="fas fa-chevron-down"></i></a>
-                                    <ul class="mobile-submenu-list">
-                                        <li><a href="aboutus.html" class="menu-link">About Us</a></li>
-                                        <li><a href="mission.html" class="menu-link">Mission</a></li>
-                                        <li><a href="philosophy.html" class="menu-link">Our Philosophy</a></li>
-                                        <li><a href="what-we-do.html" class="menu-link">What we do</a></li>
-                                        <li><a href="team.html" class="menu-link">Team</a></li>
-                                        <li><a href="privacy-policy.html" class="menu-link">Privacy Policy</a></li>
+                                <!-- Mobile Our Story Dropdown -->
+                                <li class="mobile-dropdown">
+                                    <a href="javascript:void(0)" class="menu-link has-dropdown">
+                                        Our Story <i class="fas fa-chevron-down dropdown-icon"></i>
+                                    </a>
+                                    <ul class="mobile-dropdown-menu">
+                                        <li><a href="aboutus.html" class="dropdown-item">About Us</a></li>
+                                        <li><a href="mission.html" class="dropdown-item">Mission</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a href="philosophy.html" class="dropdown-item">Our Philosophy</a></li>
+                                        <li><a href="what-we-do.html" class="dropdown-item">What we do</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a href="awards.html" class="dropdown-item">Awards</a></li>
+                                        <li><a href="team.html" class="dropdown-item">Team</a></li>
                                     </ul>
                                 </li>
 
                                 <li>
                                     <a href="careers.html" class="menu-link">Careers</a>
                                 </li>
+
+                                <!-- Mobile Resources Dropdown -->
+                                <li class="mobile-dropdown">
+                                    <a href="javascript:void(0)" class="menu-link has-dropdown">
+                                        Resources <i class="fas fa-chevron-down dropdown-icon"></i>
+                                    </a>
+                                    <ul class="mobile-dropdown-menu">
+                                        <li><a href="newsletter.html" class="dropdown-item">Newsletter</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a href="assets/pdf/investor_charter_pms.pdf"
+                                                class="dropdown-item download-link" target="_blank"
+                                                download="investor_charter_pms.pdf">Investor Charter</a></li>
+                                        <li><a href="usefil-links.html" class="dropdown-item">Useful Links</a></li>
+                                    </ul>
+                                </li>
+
                                 <li>
                                     <a href="contactus.html" class="menu-link">Contact Us</a>
                                 </li>
                             </ul>
                         </nav>
-                        <div class="bottom-links">
+                        <div class="mobile-bottom-section">
                             <!-- Mobile Login Dropdown -->
-                            <div class="mobile-login-dropdown">
-                                <a href="javascript:void(0)"
-                                    class="btn-secondaryNoIcon md-secondarynoIcon menu-toggle">Log In <i
-                                        class="fas fa-chevron-down"></i></a>
-                                <ul class="mobile-submenu-list">
-                                    <li><a href="https://pms.harmoneywealth.in/shrdbms/userlogin.ss"
-                                            class="menu-link">PMS Login</a></li>
-                                    <li><a href="https://mfd-login-url.com" class="menu-link">MFD Login</a></li>
-                                </ul>
+                            <div class="mobile-login-container">
+                                <a href="javascript:void(0)" class="mobile-login-toggle">
+                                    Login <i class="fas fa-chevron-down login-dropdown-icon"></i>
+                                </a>
+                                <div class="mobile-login-dropdown">
+                                    <a href="https://pms.harmoneywealth.in/shrdbms/userlogin.ss"
+                                        class="mobile-login-item">PMS Login</a>
+                                    <a href="https://harmoneywealth.themfbox.com/" class="mobile-login-item">MFD
+                                        Login</a>
+                                </div>
                             </div>
-                            <!-- <a href="index.html" type="button" class="btn-primaryNoIcon md-primarynoIcon">Register</a> -->
                         </div>
                     </section>
                     <div id="overlay" class="overlayy"></div>
                 </div>
             </div>
             <!-- End top navigation for mobile -->
+            <!-- End top navigation for mobile -->
         </header>
 
-<!-- Awards Section -->
-<section class="awards-section">
-    <div class="container">
-        <h2 class="section-title center">Awards & Recognitions</h2>
-        <p class="section-subtitle">Our commitment to excellence has been recognized by industry leaders and partners</p>
-        
-        <div class="awards-grid">
-             <!-- Award 5: Tata AIG General Insurance -->
-            <div class="award-card">
-                <div class="award-image">
-                    <img src="assets/images/Awards/tata aig general insurance awards.jpg" alt="Tata AIG General Insurance Award">
-                    <div class="award-overlay">
-                        <span class="view-certificate" data-image="assets/images/Awards/tata aig general insurance awards.jpg" data-title="Tata AIG General Insurance Award">View Certificate</span>
+
+        <!-- Awards Section -->
+        <section class="awards-section">
+            <div class="container">
+                <h2 class="section-title center">Awards & Recognitions</h2>
+                <p class="section-subtitle">Our commitment to excellence has been recognized by industry leaders and
+                    partners</p>
+
+                <div class="awards-grid">
+                    <!-- Award 5: Tata AIG General Insurance -->
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="assets/images/Awards/tata aig general insurance awards.jpg"
+                                alt="Tata AIG General Insurance Award">
+                            <div class="award-overlay">
+                                <span class="view-certificate"
+                                    data-image="assets/images/Awards/tata aig general insurance awards.jpg"
+                                    data-title="Tata AIG General Insurance Award">View Certificate</span>
+                            </div>
+                        </div>
+                        <div class="award-info">
+                            <h3 class="award-title">Exceptional Performance Award</h3>
+                            <div class="award-issuer">
+                                <i class="fas fa-star"></i>
+                                <span>Tata AIG General Insurance</span>
+                            </div>
+                            <div class="award-year">FY 2024</div>
+                            <div class="award-description">
+                                <p>Awarded for exceptional performance making a lasting impact, symbolizing dedication,
+                                    hard work, and shared success.</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="award-info">
-                    <h3 class="award-title">Exceptional Performance Award</h3>
-                    <div class="award-issuer">
-                        <i class="fas fa-star"></i>
-                        <span>Tata AIG General Insurance</span>
+
+
+                    <!-- Award 2: HDFC Mutual Fund -->
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="assets/images/Awards/hdfc mutual fund key partner.jpg"
+                                alt="HDFC Mutual Fund Key Partner">
+                            <div class="award-overlay">
+                                <span class="view-certificate"
+                                    data-image="assets/images/Awards/hdfc mutual fund key partner.jpg"
+                                    data-title="HDFC Mutual Fund Key Partner Award">View Certificate</span>
+                            </div>
+                        </div>
+                        <div class="award-info">
+                            <h3 class="award-title">Valued Key Partner</h3>
+                            <div class="award-issuer">
+                                <i class="fas fa-handshake"></i>
+                                <span>HDFC Mutual Fund</span>
+                            </div>
+                            <div class="award-year">Key Partner Award</div>
+                            <div class="award-description">
+                                <p>Recognized as the most valuable key partner for outstanding contribution towards
+                                    business growth and excellence in distribution.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="award-year">FY 2024</div>
-                    <div class="award-description">
-                        <p>Awarded for exceptional performance making a lasting impact, symbolizing dedication, hard work, and shared success.</p>
+
+                    <!-- Award 3: LIC of India -->
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="assets/images/Awards/LIC of India top 10 for promoting Annuity plans.jpg"
+                                alt="LIC of India Top 10 Award">
+                            <div class="award-overlay">
+                                <span class="view-certificate"
+                                    data-image="assets/images/Awards/LIC of India top 10 for promoting Annuity plans.jpg"
+                                    data-title="LIC of India Top 10 Award">View Certificate</span>
+                            </div>
+                        </div>
+                        <div class="award-info">
+                            <h3 class="award-title">Top 10 Performer</h3>
+                            <div class="award-issuer">
+                                <i class="fas fa-medal"></i>
+                                <span>LIC of India</span>
+                            </div>
+                            <div class="award-year">Annuity Plans Promotion</div>
+                            <div class="award-description">
+                                <p>Awarded for being among the top 10 performers in promoting Annuity Plans and valuable
+                                    contribution to LIC's business.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Award 4: AK Capital -->
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="assets/images/Awards/AK capital taxfree bond promotions 2016-17.jpg"
+                                alt="AK Capital Taxfree Bond Award">
+                            <div class="award-overlay">
+                                <span class="view-certificate"
+                                    data-image="assets/images/Awards/AK capital taxfree bond promotions 2016-17.jpg"
+                                    data-title="AK Capital Appreciation Award">View Certificate</span>
+                            </div>
+                        </div>
+                        <div class="award-info">
+                            <h3 class="award-title">Award of Appreciation</h3>
+                            <div class="award-issuer">
+                                <i class="fas fa-award"></i>
+                                <span>AK Capital</span>
+                            </div>
+                            <div class="award-year">FY 2016-2017</div>
+                            <div class="award-description">
+                                <p>Recognized for commitment, contribution, and partnership in building a vibrant Bond
+                                    Market.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Award 1: Axis Mutual Fund -->
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="assets/images/Awards/Axis Mutual fund best performer 2018-19.jpg"
+                                alt="Axis Mutual Fund Best Performer 2018-19">
+                            <div class="award-overlay">
+                                <span class="view-certificate"
+                                    data-image="assets/images/Awards/Axis Mutual fund best performer 2018-19.jpg"
+                                    data-title="Axis Mutual Fund Best Performer Award">View Certificate</span>
+                            </div>
+                        </div>
+                        <div class="award-info">
+                            <h3 class="award-title">Best Performer Award</h3>
+                            <div class="award-issuer">
+                                <i class="fas fa-trophy"></i>
+                                <span>Axis Mutual Fund</span>
+                            </div>
+                            <div class="award-year">FY 2015-2019</div>
+                            <div class="award-description">
+                                <p>Recognized for outstanding contribution and performance as a key advisory partner
+                                    from 2015 to 2019.</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Award 6: Client Recognition -->
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="assets/images/Awards/client reconisation for planning.jpeg"
+                                alt="Client Recognition for Planning">
+                            <div class="award-overlay">
+                                <span class="view-certificate"
+                                    data-image="assets/images/Awards/client reconisation for planning.jpeg"
+                                    data-title="Client Recognition Award">View Certificate</span>
+                            </div>
+                        </div>
+                        <div class="award-info">
+                            <h3 class="award-title">Guardian of Hearts</h3>
+                            <div class="award-issuer">
+                                <i class="fas fa-heart"></i>
+                                <span>Client Recognition</span>
+                            </div>
+                            <div class="award-year">Client Appreciation</div>
+                            <div class="award-description">
+                                <p>Presented by clients for exceptional financial planning services and being a trusted
+                                    guardian of their financial well-being.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Award 7: 7 Habits Training -->
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="assets/images/Awards/7 habits of highly effective particiapt in2008.jpg"
+                                alt="7 Habits Training Completion">
+                            <div class="award-overlay">
+                                <span class="view-certificate"
+                                    data-image="assets/images/Awards/7 habits of highly effective particiapt in2008.jpg"
+                                    data-title="7 Habits Training Certificate">View Certificate</span>
+                            </div>
+                        </div>
+                        <div class="award-info">
+                            <h3 class="award-title">7 Habits Training Program</h3>
+                            <div class="award-issuer">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>FranklinCovey</span>
+                            </div>
+                            <div class="award-year">2008</div>
+                            <div class="award-description">
+                                <p>Successfully completed the "7 Habits of Highly Effective People" training program,
+                                    demonstrating commitment to personal and professional development.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Award 8: MILT Leadership Training -->
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="assets/images/Awards/leadersip training by milt 2003.jpg"
+                                alt="MILT Leadership Training">
+                            <div class="award-overlay">
+                                <span class="view-certificate"
+                                    data-image="assets/images/Awards/leadersip training by milt 2003.jpg"
+                                    data-title="MILT Leadership Training Diploma">View Certificate</span>
+                            </div>
+                        </div>
+                        <div class="award-info">
+                            <h3 class="award-title">Mastering Course Diploma</h3>
+                            <div class="award-issuer">
+                                <i class="fas fa-user-graduate"></i>
+                                <span>MILT Training Foundation</span>
+                            </div>
+                            <div class="award-year">2003</div>
+                            <div class="award-description">
+                                <p>Completed the MILT Mastering Course conducted by General Lodneys, earning the MILT
+                                    Diploma in leadership development.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Award 9: IFPAS Congress -->
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="assets/images/Awards/IFPAS congress in 2003.jpg" alt="IFPAS Congress Attendance">
+                            <div class="award-overlay">
+                                <span class="view-certificate"
+                                    data-image="assets/images/Awards/IFPAS congress in 2003.jpg"
+                                    data-title="IFPAS Congress Certificate">View Certificate</span>
+                            </div>
+                        </div>
+                        <div class="award-info">
+                            <h3 class="award-title">Asia Pacific Insurance Congress</h3>
+                            <div class="award-issuer">
+                                <i class="fas fa-certificate"></i>
+                                <span>IFPAS</span>
+                            </div>
+                            <div class="award-year">2003</div>
+                            <div class="award-description">
+                                <p>Successfully completed the 7th Asia Pacific Life Insurance Congress held in
+                                    Singapore, demonstrating commitment to industry education.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Award 10: Family Physicians Association -->
+                    <div class="award-card">
+                        <div class="award-image">
+                            <img src="assets/images/Awards/family physician assocation awareness on fp_page-0001.jpg"
+                                alt="Family Physicians Association">
+                            <div class="award-overlay">
+                                <span class="view-certificate"
+                                    data-image="assets/images/Awards/family physician assocation awareness on fp_page-0001.jpg"
+                                    data-title="Family Physicians Association Recognition">View Certificate</span>
+                            </div>
+                        </div>
+                        <div class="award-info">
+                            <h3 class="award-title">Awareness Initiative</h3>
+                            <div class="award-issuer">
+                                <i class="fas fa-hand-holding-heart"></i>
+                                <span>Family Physicians Association</span>
+                            </div>
+                            <div class="award-year">Community Outreach</div>
+                            <div class="award-description">
+                                <p>Recognized for contributions to financial planning awareness initiatives with the
+                                    Family Physicians Association, Bangalore.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        
 
-            <!-- Award 2: HDFC Mutual Fund -->
-            <div class="award-card">
-                <div class="award-image">
-                    <img src="assets/images/Awards/hdfc mutual fund key partner.jpg" alt="HDFC Mutual Fund Key Partner">
-                    <div class="award-overlay">
-                        <span class="view-certificate" data-image="assets/images/Awards/hdfc mutual fund key partner.jpg" data-title="HDFC Mutual Fund Key Partner Award">View Certificate</span>
+            <!-- Certificate Modal Popup -->
+            <div class="certificate-modal" id="certificateModal">
+                <div class="modal-overlay"></div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="modalTitle">Certificate</h3>
+                        <button class="modal-close" id="modalClose">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
-                </div>
-                <div class="award-info">
-                    <h3 class="award-title">Valued Key Partner</h3>
-                    <div class="award-issuer">
-                        <i class="fas fa-handshake"></i>
-                        <span>HDFC Mutual Fund</span>
-                    </div>
-                    <div class="award-year">Key Partner Award</div>
-                    <div class="award-description">
-                        <p>Recognized as the most valuable key partner for outstanding contribution towards business growth and excellence in distribution.</p>
+                    <div class="modal-body">
+                        <div class="image-container">
+                            <img id="modalImage" src="" alt="Certificate">
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Award 3: LIC of India -->
-            <div class="award-card">
-                <div class="award-image">
-                    <img src="assets/images/Awards/LIC of India top 10 for promoting Annuity plans.jpg" alt="LIC of India Top 10 Award">
-                    <div class="award-overlay">
-                        <span class="view-certificate" data-image="assets/images/Awards/LIC of India top 10 for promoting Annuity plans.jpg" data-title="LIC of India Top 10 Award">View Certificate</span>
-                    </div>
-                </div>
-                <div class="award-info">
-                    <h3 class="award-title">Top 10 Performer</h3>
-                    <div class="award-issuer">
-                        <i class="fas fa-medal"></i>
-                        <span>LIC of India</span>
-                    </div>
-                    <div class="award-year">Annuity Plans Promotion</div>
-                    <div class="award-description">
-                        <p>Awarded for being among the top 10 performers in promoting Annuity Plans and valuable contribution to LIC's business.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Award 4: AK Capital -->
-            <div class="award-card">
-                <div class="award-image">
-                    <img src="assets/images/Awards/AK capital taxfree bond promotions 2016-17.jpg" alt="AK Capital Taxfree Bond Award">
-                    <div class="award-overlay">
-                        <span class="view-certificate" data-image="assets/images/Awards/AK capital taxfree bond promotions 2016-17.jpg" data-title="AK Capital Appreciation Award">View Certificate</span>
-                    </div>
-                </div>
-                <div class="award-info">
-                    <h3 class="award-title">Award of Appreciation</h3>
-                    <div class="award-issuer">
-                        <i class="fas fa-award"></i>
-                        <span>AK Capital</span>
-                    </div>
-                    <div class="award-year">FY 2016-2017</div>
-                    <div class="award-description">
-                        <p>Recognized for commitment, contribution, and partnership in building a vibrant Bond Market.</p>
-                    </div>
-                </div>
-            </div>
-                <!-- Award 1: Axis Mutual Fund -->
-            <div class="award-card">
-                <div class="award-image">
-                    <img src="assets/images/Awards/Axis Mutual fund best performer 2018-19.jpg" alt="Axis Mutual Fund Best Performer 2018-19">
-                    <div class="award-overlay">
-                        <span class="view-certificate" data-image="assets/images/Awards/Axis Mutual fund best performer 2018-19.jpg" data-title="Axis Mutual Fund Best Performer Award">View Certificate</span>
-                    </div>
-                </div>
-                <div class="award-info">
-                    <h3 class="award-title">Best Performer Award</h3>
-                    <div class="award-issuer">
-                        <i class="fas fa-trophy"></i>
-                        <span>Axis Mutual Fund</span>
-                    </div>
-                    <div class="award-year">FY 2015-2019</div>
-                    <div class="award-description">
-                        <p>Recognized for outstanding contribution and performance as a key advisory partner from 2015 to 2019.</p>
-                    </div>
-                </div>
-            </div>
-
-           
-
-            <!-- Award 6: Client Recognition -->
-            <div class="award-card">
-                <div class="award-image">
-                    <img src="assets/images/Awards/client reconisation for planning.jpeg" alt="Client Recognition for Planning">
-                    <div class="award-overlay">
-                        <span class="view-certificate" data-image="assets/images/Awards/client reconisation for planning.jpeg" data-title="Client Recognition Award">View Certificate</span>
-                    </div>
-                </div>
-                <div class="award-info">
-                    <h3 class="award-title">Guardian of Hearts</h3>
-                    <div class="award-issuer">
-                        <i class="fas fa-heart"></i>
-                        <span>Client Recognition</span>
-                    </div>
-                    <div class="award-year">Client Appreciation</div>
-                    <div class="award-description">
-                        <p>Presented by clients for exceptional financial planning services and being a trusted guardian of their financial well-being.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Award 7: 7 Habits Training -->
-            <div class="award-card">
-                <div class="award-image">
-                    <img src="assets/images/Awards/7 habits of highly effective particiapt in2008.jpg" alt="7 Habits Training Completion">
-                    <div class="award-overlay">
-                        <span class="view-certificate" data-image="assets/images/Awards/7 habits of highly effective particiapt in2008.jpg" data-title="7 Habits Training Certificate">View Certificate</span>
-                    </div>
-                </div>
-                <div class="award-info">
-                    <h3 class="award-title">7 Habits Training Program</h3>
-                    <div class="award-issuer">
-                        <i class="fas fa-graduation-cap"></i>
-                        <span>FranklinCovey</span>
-                    </div>
-                    <div class="award-year">2008</div>
-                    <div class="award-description">
-                        <p>Successfully completed the "7 Habits of Highly Effective People" training program, demonstrating commitment to personal and professional development.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Award 8: MILT Leadership Training -->
-            <div class="award-card">
-                <div class="award-image">
-                    <img src="assets/images/Awards/leadersip training by milt 2003.jpg" alt="MILT Leadership Training">
-                    <div class="award-overlay">
-                        <span class="view-certificate" data-image="assets/images/Awards/leadersip training by milt 2003.jpg" data-title="MILT Leadership Training Diploma">View Certificate</span>
-                    </div>
-                </div>
-                <div class="award-info">
-                    <h3 class="award-title">Mastering Course Diploma</h3>
-                    <div class="award-issuer">
-                        <i class="fas fa-user-graduate"></i>
-                        <span>MILT Training Foundation</span>
-                    </div>
-                    <div class="award-year">2003</div>
-                    <div class="award-description">
-                        <p>Completed the MILT Mastering Course conducted by General Lodneys, earning the MILT Diploma in leadership development.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Award 9: IFPAS Congress -->
-            <div class="award-card">
-                <div class="award-image">
-                    <img src="assets/images/Awards/IFPAS congress in 2003.jpg" alt="IFPAS Congress Attendance">
-                    <div class="award-overlay">
-                        <span class="view-certificate" data-image="assets/images/Awards/IFPAS congress in 2003.jpg" data-title="IFPAS Congress Certificate">View Certificate</span>
-                    </div>
-                </div>
-                <div class="award-info">
-                    <h3 class="award-title">Asia Pacific Insurance Congress</h3>
-                    <div class="award-issuer">
-                        <i class="fas fa-certificate"></i>
-                        <span>IFPAS</span>
-                    </div>
-                    <div class="award-year">2003</div>
-                    <div class="award-description">
-                        <p>Successfully completed the 7th Asia Pacific Life Insurance Congress held in Singapore, demonstrating commitment to industry education.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Award 10: Family Physicians Association -->
-            <div class="award-card">
-                <div class="award-image">
-                    <img src="assets/images/Awards/family physician assocation awareness on fp_page-0001.jpg" alt="Family Physicians Association">
-                    <div class="award-overlay">
-                        <span class="view-certificate" data-image="assets/images/Awards/family physician assocation awareness on fp_page-0001.jpg" data-title="Family Physicians Association Recognition">View Certificate</span>
-                    </div>
-                </div>
-                <div class="award-info">
-                    <h3 class="award-title">Awareness Initiative</h3>
-                    <div class="award-issuer">
-                        <i class="fas fa-hand-holding-heart"></i>
-                        <span>Family Physicians Association</span>
-                    </div>
-                    <div class="award-year">Community Outreach</div>
-                    <div class="award-description">
-                        <p>Recognized for contributions to financial planning awareness initiatives with the Family Physicians Association, Bangalore.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Certificate Modal Popup -->
-    <div class="certificate-modal" id="certificateModal">
-        <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">Certificate</h3>
-                <button class="modal-close" id="modalClose">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="image-container">
-                    <img id="modalImage" src="" alt="Certificate">
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        </section>
 
 
 
 
 
 
-     <footer class="footer mt-auto">
+        <footer class="footer mt-auto">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">

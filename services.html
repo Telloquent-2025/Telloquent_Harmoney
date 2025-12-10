@@ -59,7 +59,7 @@
 <body>
     <div id="app" class="d-flex flex-column min-vh-100">
 
-              <header>
+        <header>
             <!-- Top nav for desktop -->
             <div class="d-sm-block d-none">
                 <nav class="navbar topNav t_nav navbar-expand-md bg-faded justify-content-center">
@@ -84,11 +84,6 @@
                                 <li class="nav-item">
                                     <a href="nri-corner.html" class="nav-link">NRI Corner</a>
                                 </li>
-
-
-
-
-
 
                                 <!-- Our Story Dropdown with Hover -->
                                 <li class="nav-item dropdown">
@@ -218,7 +213,6 @@
                 </nav>
             </div>
             <!-- End top nav -->
-
             <!-- Top navigation for mobile -->
             <div class="d-sm-none d-block">
                 <div class="slide-drawer">
@@ -228,9 +222,9 @@
                                     alt="Harmoney FinServ India Private Limited"></a>
                         </div>
                         <button id="sidebar-btn" class="sidebar-btn">
-                            <div class="menu-stripes"></div>
-                            <div class="menu-stripes"></div>
-                            <div class="menu-stripes"></div>
+                            <span class="menu-stripes"></span>
+                            <span class="menu-stripes"></span>
+                            <span class="menu-stripes"></span>
                         </button>
                     </div>
 
@@ -249,23 +243,6 @@
                                 <li>
                                     <a href="index.html" class="menu-link">Home</a>
                                 </li>
-
-                                <!-- Mobile Resources Section -->
-                                <li class="mobile-submenu">
-                                    <a href="javascript:void(0)" class="menu-link menu-toggle">Resources <i
-                                            class="fas fa-chevron-down"></i></a>
-                                    <ul class="mobile-submenu-list">
-                                        <li><a href="newsletter.html" class="menu-link">Newsletter</a></li>
-                                        <li class="submenu-header">Investor Charter</li>
-                                        <li><a href="assets/pdf/investor_charter_pms.pdf"
-                                                class="menu-link download-link" target="_blank"
-                                                download="investor_charter_pms.pdf">Investor Charter</a></li>
-                                        <li><a href="assets/pdf/investor_complaints.pdf" target="_blank"
-                                                class="menu-link download-link"
-                                                download="investor_complaints.pdf">Investor Grievances</a></li>
-                                    </ul>
-                                </li>
-
                                 <li>
                                     <a href="services.html" class="menu-link">Services</a>
                                 </li>
@@ -273,48 +250,75 @@
                                     <a href="nri-corner.html" class="menu-link">NRI Corner</a>
                                 </li>
 
-                                <!-- Mobile Our Story Section -->
-                                <li class="mobile-submenu">
-                                    <a href="javascript:void(0)" class="menu-link menu-toggle">Our Story <i
-                                            class="fas fa-chevron-down"></i></a>
-                                    <ul class="mobile-submenu-list">
-                                        <li><a href="aboutus.html" class="menu-link">About Us</a></li>
-                                        <li><a href="mission.html" class="menu-link">Mission</a></li>
-                                        <li><a href="philosophy.html" class="menu-link">Our Philosophy</a></li>
-                                        <li><a href="what-we-do.html" class="menu-link">What we do</a></li>
-                                        <li><a href="team.html" class="menu-link">Team</a></li>
-                                        <li><a href="privacy-policy.html" class="menu-link">Privacy Policy</a></li>
+                                <!-- Mobile Our Story Dropdown -->
+                                <li class="mobile-dropdown">
+                                    <a href="javascript:void(0)" class="menu-link has-dropdown">
+                                        Our Story <i class="fas fa-chevron-down dropdown-icon"></i>
+                                    </a>
+                                    <ul class="mobile-dropdown-menu">
+                                        <li><a href="aboutus.html" class="dropdown-item">About Us</a></li>
+                                        <li><a href="mission.html" class="dropdown-item">Mission</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a href="philosophy.html" class="dropdown-item">Our Philosophy</a></li>
+                                        <li><a href="what-we-do.html" class="dropdown-item">What we do</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a href="awards.html" class="dropdown-item">Awards</a></li>
+                                        <li><a href="team.html" class="dropdown-item">Team</a></li>
                                     </ul>
                                 </li>
 
                                 <li>
                                     <a href="careers.html" class="menu-link">Careers</a>
                                 </li>
+
+                                <!-- Mobile Resources Dropdown -->
+                                <li class="mobile-dropdown">
+                                    <a href="javascript:void(0)" class="menu-link has-dropdown">
+                                        Resources <i class="fas fa-chevron-down dropdown-icon"></i>
+                                    </a>
+                                    <ul class="mobile-dropdown-menu">
+                                        <li><a href="newsletter.html" class="dropdown-item">Newsletter</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a href="assets/pdf/investor_charter_pms.pdf"
+                                                class="dropdown-item download-link" target="_blank"
+                                                download="investor_charter_pms.pdf">Investor Charter</a></li>
+                                        <li><a href="usefil-links.html" class="dropdown-item">Useful Links</a></li>
+                                    </ul>
+                                </li>
+
                                 <li>
                                     <a href="contactus.html" class="menu-link">Contact Us</a>
                                 </li>
                             </ul>
                         </nav>
-                        <div class="bottom-links">
+                        <div class="mobile-bottom-section">
                             <!-- Mobile Login Dropdown -->
-                            <div class="mobile-login-dropdown">
-                                <a href="javascript:void(0)"
-                                    class="btn-secondaryNoIcon md-secondarynoIcon menu-toggle">Log In <i
-                                        class="fas fa-chevron-down"></i></a>
-                                <ul class="mobile-submenu-list">
-                                    <li><a href="https://pms.harmoneywealth.in/shrdbms/userlogin.ss"
-                                            class="menu-link">PMS Login</a></li>
-                                    <li><a href="https://mfd-login-url.com" class="menu-link">MFD Login</a></li>
-                                </ul>
+                            <div class="mobile-login-container">
+                                <a href="javascript:void(0)" class="mobile-login-toggle">
+                                    Login <i class="fas fa-chevron-down login-dropdown-icon"></i>
+                                </a>
+                                <div class="mobile-login-dropdown">
+                                    <a href="https://pms.harmoneywealth.in/shrdbms/userlogin.ss"
+                                        class="mobile-login-item">PMS Login</a>
+                                    <a href="https://harmoneywealth.themfbox.com/" class="mobile-login-item">MFD
+                                        Login</a>
+                                </div>
                             </div>
-                            <!-- <a href="index.html" type="button" class="btn-primaryNoIcon md-primarynoIcon">Register</a> -->
                         </div>
                     </section>
                     <div id="overlay" class="overlayy"></div>
                 </div>
             </div>
             <!-- End top navigation for mobile -->
+            <!-- End top navigation for mobile -->
         </header>
+
 
 
         <!-- Hero Section -->
@@ -333,8 +337,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="hero-image">
-                            <img src="assets/images/service.png"
-                                alt="Wealth Growth Services" class="img-fluid">
+                            <img src="assets/images/service.png" alt="Wealth Growth Services" class="img-fluid">
                         </div>
                     </div>
                 </div>
@@ -557,31 +560,36 @@
         </section>
         <section class="container">
             <div class="security-outer-box">
-						<div class="security-caption">
-							<h4 class="hf_heading05 hf_light">Our Security Best Practices</h4>
-							<p class="hf_bodytext02 hf_light">Harmoney follows industry best practices, for transferring and storing your data.</p>
-						</div>
-						<div class="row">
-							<div class="col-sm-4">
-								<div class="singlebox">
-									<img class="" data-src="/img/security-icon01.svg" alt="" src="assets/images/security-icon01.svg">
-									<p class="hf_bodytext02 hf_light">Servers secured by intrusion prevention/detection technology</p>
-								</div>
-							</div>
-							<div class="col-sm-4">
-								<div class="singlebox">
-									<img class="" data-src="/img/security-icon02.svg" alt="" src="assets/images/security-icon02.svg">
-									<p class="hf_bodytext02 hf_light">256 Bit SSL encryption security</p>
-								</div>
-							</div>
-							<div class="col-sm-4">
-								<div class="singlebox">
-									<img class="" data-src="/img/security-icon03.svg" alt="" src="assets/images/security-icon03.svg">
-									<p class="hf_bodytext02 hf_light">Bank grade security policies</p>
-								</div>
-							</div>
-						</div>
-					</div>
+                <div class="security-caption">
+                    <h4 class="hf_heading05 hf_light">Our Security Best Practices</h4>
+                    <p class="hf_bodytext02 hf_light">Harmoney follows industry best practices, for transferring and
+                        storing your data.</p>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="singlebox">
+                            <img class="" data-src="/img/security-icon01.svg" alt=""
+                                src="assets/images/security-icon01.svg">
+                            <p class="hf_bodytext02 hf_light">Servers secured by intrusion prevention/detection
+                                technology</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="singlebox">
+                            <img class="" data-src="/img/security-icon02.svg" alt=""
+                                src="assets/images/security-icon02.svg">
+                            <p class="hf_bodytext02 hf_light">256 Bit SSL encryption security</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="singlebox">
+                            <img class="" data-src="/img/security-icon03.svg" alt=""
+                                src="assets/images/security-icon03.svg">
+                            <p class="hf_bodytext02 hf_light">Bank grade security policies</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- CTA Section -->
@@ -598,7 +606,7 @@
             </div>
         </section>
 
-  <footer class="footer mt-auto">
+        <footer class="footer mt-auto">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
