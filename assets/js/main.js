@@ -1405,3 +1405,32 @@ setTimeout(function() {
         console.error('❌ Elements not found!');
     }
 }, 1000);
+
+
+
+
+
+
+  // Optional JavaScript for better mobile interaction
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add touch feedback for mobile
+            const touchElements = document.querySelectorAll('.doc-item, .quicklink, .additional-doc, .scores-btn, .odr-btn, .evoting-btn');
+            
+            touchElements.forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.style.transition = 'transform 0.1s ease';
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                element.addEventListener('touchend', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+            
+            // Improve long tap on mobile
+            touchElements.forEach(element => {
+                element.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                });
+            });
+        });
