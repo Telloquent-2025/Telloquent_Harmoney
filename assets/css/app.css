@@ -8890,15 +8890,7 @@ body.modal-open {
 
 @media (min-width: 1024px) and (max-width: 1366px) {
     
-    /* For iPad Pro, show mobile navigation */
-    .d-sm-block.d-none {
-        display: none !important;
-    }
-    
-    .d-sm-none.d-block {
-        display: block !important;
-    }
-    
+  
     /* iPad Pro Slide Drawer */
     .slide-drawer {
         position: relative;
