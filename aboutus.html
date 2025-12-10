@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="csrf-token" content="thYxXYCZeWhq9mY7ujg5B2wAc7xhEPKNB20Dje0e">
+
+    <title>Harmoney FinServ India Private Limited</title>
+
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
+    <!--Google Font-->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
+    <link href="assets/css/app.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="assets/css/jquery.confirm.min.css" type="text/css" rel="stylesheet">
+    <link href="assets/css/bootstrap5/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="assets/css/customstyle.css" type="text/css" rel="stylesheet">
+    <!-- <script src="https://www.happynessfactory.in/assets/js/jquery-3.6.1.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" async defer></script>
+    <script src="https://www.happynessfactory.in/assets/js/prelogApplication.js?v=SCM2.8.5.18"></script>
+
+    <!-- CLEVERTAP START -->
+    <script type="text/javascript">
+        var clevertap = { event: [], profile: [], region: 'in1', account: [], onUserLogin: [], notifications: [] };
+        console.log('in ctap');
+        clevertap.account.push({ "id": "W46-R59-K65Z" });
+        (function () {
+            var wzrk = document.createElement('script');
+            wzrk.type = 'text/javascript';
+            wzrk.async = true;
+            wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/a.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wzrk, s);
+        })();
+
+        // To push specific events, insert following code:
+        clevertap.event.push("Webpage Viewed", {
+            "page name": "/",
+        });
+    </script>
+    <!-- CLEVERTAP END -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KM3PJ686KV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-KM3PJ686KV');
+    </script>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f8f9fa;
+    }
+
+
+
+    /* Header Styles */
+    .about-header {
+        background-color: linear-gradient(135deg, #1a3a5f 0%, #2563eb 100%);
+        background-color: #c2e7fa !important;
+        color: white;
+        padding: 100px 0 80px;
+        text-align: center;
+    }
+
+    .hf_heading01 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #0097da;
+    }
+
+    .hf_primary {
+        color: #93c5fd;
+    }
+
+    .hf_heading04 {
+        font-size: 1.5rem;
+        font-weight: 400;
+        max-width: 700px;
+        margin: 0 auto;
+        opacity: 0.9;
+        color: #333333;
+    }
+
+    /* Content Sections */
+    .about-section {
+        padding: 80px 0;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .hf_heading02 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #1a3a5f;
+    }
+
+    .content-row {
+        display: flex;
+        align-items: center;
+        gap: 50px;
+        margin-bottom: 80px;
+    }
+
+    .content-row.reverse {
+        flex-direction: row-reverse;
+    }
+
+    .content-text {
+        flex: 1;
+    }
+
+    .content-image {
+        flex: 1;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .hf_bodytext01 {
+        font-size: 1.1rem;
+        color: #4a6572;
+        margin-bottom: 20px;
+        line-height: 1.8;
+    }
+
+    /* Values Section */
+    .values-section {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+        padding: 80px 0;
+    }
+
+    .values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+    }
+
+    .value-card {
+        background: white;
+        border-radius: 12px;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease;
+    }
+
+    .value-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .value-icon {
+        font-size: 3rem;
+        color: #2563eb;
+        margin-bottom: 20px;
+    }
+
+    .hf_heading05 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #1a3a5f;
+    }
+
+    /* Mission Highlight */
+    .mission-highlight {
+        background: #0196d8 !important;
+        color: white;
+        padding: 80px 40px;
+        border-radius: 12px 200px 12px 200px;
+        text-align: center;
+        margin: 60px 0;
+    }
+
+    .hf_light {
+        color: white;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        text-align: center;
+        padding: 60px 0;
+    }
+
+    .btn-primaryNoIcon {
+        display: inline-block;
+        background: #2563eb;
+        color: white;
+        padding: 16px 40px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 1.1rem;
+    }
+
+    .btn-primaryNoIcon:hover {
+        background: #1d4ed8;
+    }
+
+    @media (max-width: 768px) {
+        .content-row {
+            flex-direction: column;
+        }
+
+        .hf_heading01 {
+            font-size: 2.5rem;
+        }
+
+        .hf_heading02 {
+            font-size: 2rem;
+        }
+
+        .about-header {
+            padding: 80px 0 60px;
+        }
+    }
+</style>
+
+<body>
+    <header>
+        <!-- Top nav for desktop -->
+        <div class="d-sm-block d-none">
+            <nav class="navbar topNav t_nav navbar-expand-md bg-faded justify-content-center">
+                <div class="container-fluid">
+                    <div class="navbar-brand d-flex mr-auto">
+                        <a href="home.html"><img src="assets/images/Harmony logo Black.png"
+                                alt="Harmoney FinServ India Private Limited" height="90px" width="200px"></a>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse w-100 justify-content-between" id="navbarSupportedContent">
+                        <ul class="navbar-nav mx-auto justify-content-start">
+                            <li class="nav-item">
+                                <a href="home.html" class="nav-item nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="services.html" class="nav-link">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="nri-corner.html" class="nav-link">NRI Corner</a>
+                            </li>
+
+
+
+
+
+
+                            <!-- Our Story Dropdown with Hover -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="ourStoryDropdown" role="button">
+                                    Our Story <i class="fa-solid fa-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="ourStoryDropdown">
+                                    <li><a class="dropdown-item" href="aboutus.html">About Us</a></li>
+                                    <li><a class="dropdown-item" href="mission.html">Mission</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="philosophy.html">Our Philosophy</a></li>
+                                    <li><a class="dropdown-item" href="what-we-do.html">What we do</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="awards.html">Awards</a></li>
+                                    <li><a class="dropdown-item" href="team.html">Team</a></li>
+
+                                </ul>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="careers.html" class="nav-link">Careers</a>
+                            </li>
+                            <!-- Resources Dropdown with Hover -->
+                            <li class="nav-item dropdown dropdown-submenu">
+                                <a class="nav-link dropdown-toggle" href="#" id="resourcesDropdown" role="button">
+                                    Resources <i class="fa-solid fa-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="resourcesDropdown">
+                                    <!-- Newsletter Section -->
+                                    <li><a class="dropdown-item" href="newsletter.html">Newsletter</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <!-- Investor Charter Section -->
+                                    <!-- <li class="dropdown-header">Investor Charter</li> -->
+                                    <li><a class="dropdown-item download-link"
+                                            href="assets/pdf/investor_charter_pms.pdf" target="_blank"
+                                            download="investor_charter_pms.pdf">Investor Charter</a></li>
+                                    <!--li><a class="dropdown-item download-link"
+                                                href="assets/pdf/investor_complaints.pdf" target="_blank"
+                                                download="investor_complaints.pdf">Investor Grievances</a></li>
+
+                                        <li-->
+                                    <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="usefil-links.html">Useful Links</a></li>
+
+                            <!-- Downloads Submenu -->
+                            <!--li class="dropdown-submenu">
+                                            <a class="dropdown-item dropdown-toggle" href="#">Downloads <i
+                                                    class="fas fa-arrow-right"></i></a>
+                                            <ul class="dropdown-menu nested-dropdown">
+                                         
+                                                <li class="dropdown-header">KYC Documents</li>
+                                                <li><a class="dropdown-item download-link"
+                                                        href="assets/pdf/KYC_for_Individual.pdf" target="_blank"
+                                                        download="KYC_for_Individual.pdf">Individual (For Fresh KYC)</a>
+                                                </li>
+                                                <li><a class="dropdown-item download-link"
+                                                        href="assets/pdf/KYC_for_Corporate.pdf" target="_blank"
+                                                        download="KYC_for_Corporate.pdf">Non Individual (For Fresh
+                                                        KYC)</a></li>
+                                                <li><a class="dropdown-item download-link"
+                                                        href="assets/pdf/KYC_details_change_Reequest.pdf"
+                                                        target="_blank"
+                                                        download="KYC_details_change_Reequest.pdf">Individual (For
+                                                        Change Request)</a></li>
+
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+
+                                        
+                                                <li class="dropdown-header">PAN Documents</li>
+                                                <li><a class="dropdown-item download-link"
+                                                        href="assets/pdf/Form49A-Application_Individual.pdf"
+                                                        target="_blank"
+                                                        download="Form49A-Application_Individual.pdf">Form 49A -
+                                                        Individual English</a></li>
+                                                <li><a class="dropdown-item download-link"
+                                                        href="assets/pdf/Form49AA_ NRI_application.pdf" target="_blank"
+                                                        download="Form49A_NRI_Application.pdf">Form 49A - NRI
+                                                        Application</a></li>
+                                                <li><a class="dropdown-item download-link"
+                                                        href="assets/pdf/PAN-Change_Request_Form_for_Individual.pdf"
+                                                        target="_blank" download="PAN_Change_Request_Form.pdf">PAN
+                                                        Change Request
+                                                        Form</a></li>
+
+                                            </ul>
+                                        </li-->
+                        </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="contactus.html" class="nav-link">Contact Us</a>
+                        </li>
+                        <!-- <li class="nav-item accessibility-dropdown">
+                                    <button class="nav-link2 accessibility-trigger" id="accessibilityTrigger">
+                                        <i class="fas fa-universal-access"></i>
+                                    </button>
+                                </li> -->
+                        </ul>
+                        <ul class="nav navbar-nav ml-auto justify-content-end align-items-center responsive-list">
+                            <!-- Login Dropdown -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link2 link-login dropdown-toggle" href="#" id="loginDropdown"
+                                    role="button">
+                                    Login <i class="fa-solid fa-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="loginDropdown">
+                                    <li><a class="dropdown-item"
+                                            href="https://pms.harmoneywealth.in/shrdbms/userlogin.ss">PMS Login</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="https://harmoneywealth.themfbox.com/">MFD
+                                            Login</a></li>
+                                </ul>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- End top nav -->
+
+        <!-- Top navigation for mobile -->
+        <div class="d-sm-none d-block">
+            <div class="slide-drawer">
+                <div class="top-header">
+                    <div class="company-logo">
+                        <a href="home.html"><img src="assets/images/Harmony logo Black.png"
+                                alt="Harmoney FinServ India Private Limited"></a>
+                    </div>
+                    <button id="sidebar-btn" class="sidebar-btn">
+                        <div class="menu-stripes"></div>
+                        <div class="menu-stripes"></div>
+                        <div class="menu-stripes"></div>
+                    </button>
+                </div>
+
+                <section id="sidebar" class="sidebar">
+                    <div class="slide-top-bar">
+                        <div class="m-logo">
+                            <img src="assets/images/Harmony logo Black.png"
+                                alt="Harmoney FinServ India Private Limited">
+                        </div>
+                        <div class="slide-close">
+                            <a href="javascript:void(0)" class="btn-slideClose"><i class="fas fa-times"></i></a>
+                        </div>
+                    </div>
+                    <nav class="menu">
+                        <ul class="m_link">
+                            <li>
+                                <a href="home.html" class="menu-link">Home</a>
+                            </li>
+
+                            <!-- Mobile Resources Section -->
+                            <li class="mobile-submenu">
+                                <a href="javascript:void(0)" class="menu-link menu-toggle">Resources <i
+                                        class="fas fa-chevron-down"></i></a>
+                                <ul class="mobile-submenu-list">
+                                    <li><a href="newsletter.html" class="menu-link">Newsletter</a></li>
+                                    <li class="submenu-header">Investor Charter</li>
+                                    <li><a href="assets/pdf/investor_charter_pms.pdf" class="menu-link download-link"
+                                            target="_blank" download="investor_charter_pms.pdf">Investor Charter</a>
+                                    </li>
+                                    <li><a href="assets/pdf/investor_complaints.pdf" target="_blank"
+                                            class="menu-link download-link" download="investor_complaints.pdf">Investor
+                                            Grievances</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="services.html" class="menu-link">Services</a>
+                            </li>
+                            <li>
+                                <a href="nri-corner.html" class="menu-link">NRI Corner</a>
+                            </li>
+
+                            <!-- Mobile Our Story Section -->
+                            <li class="mobile-submenu">
+                                <a href="javascript:void(0)" class="menu-link menu-toggle">Our Story <i
+                                        class="fas fa-chevron-down"></i></a>
+                                <ul class="mobile-submenu-list">
+                                    <li><a href="aboutus.html" class="menu-link">About Us</a></li>
+                                    <li><a href="mission.html" class="menu-link">Mission</a></li>
+                                    <li><a href="philosophy.html" class="menu-link">Our Philosophy</a></li>
+                                    <li><a href="what-we-do.html" class="menu-link">What we do</a></li>
+                                    <li><a href="team.html" class="menu-link">Team</a></li>
+                                    <li><a href="privacy-policy.html" class="menu-link">Privacy Policy</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="careers.html" class="menu-link">Careers</a>
+                            </li>
+                            <li>
+                                <a href="contactus.html" class="menu-link">Contact Us</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="bottom-links">
+                        <!-- Mobile Login Dropdown -->
+                        <div class="mobile-login-dropdown">
+                            <a href="javascript:void(0)" class="btn-secondaryNoIcon md-secondarynoIcon menu-toggle">Log
+                                In <i class="fas fa-chevron-down"></i></a>
+                            <ul class="mobile-submenu-list">
+                                <li><a href="https://pms.harmoneywealth.in/shrdbms/userlogin.ss" class="menu-link">PMS
+                                        Login</a></li>
+                                <li><a href="https://mfd-login-url.com" class="menu-link">MFD Login</a></li>
+                            </ul>
+                        </div>
+                        <!-- <a href="home.html" type="button" class="btn-primaryNoIcon md-primarynoIcon">Register</a> -->
+                    </div>
+                </section>
+                <div id="overlay" class="overlayy"></div>
+            </div>
+        </div>
+        <!-- End top navigation for mobile -->
+    </header>
+
+    <!-- Header Section -->
+    <header class="about-header">
+        <div class="container">
+            <h1 class="hf_heading01">About <span class="hf_primary">Harmoney</span></h1>
+            <p class="hf_heading04">Assisting you in achieving abundance in wealth leading to financial freedom</p>
+        </div>
+    </header>
+
+    <!-- Our Story Section -->
+    <section class="about-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="hf_heading02">Our Story: Inspired by India's Harmon(e)y</h2>
+            </div>
+
+            <div class="content-row">
+                <div class="content-text">
+                    <p class="hf_bodytext01">India is the best example on this planet for human-kind living in
+                        Harmon(e)y.
+                        All the different culture, traditions, faith and languages synergizing into one movement -
+                        India. Drawing the best of every difference, synthesizing into a Harmonious orchestra, our
+                        Dharma enshrines at its heart, a deep sense of respect for all aspects of Creation.</p>
+                    <p class="hf_bodytext01">Living in Harmony at peace with ourselves, with nature and with this planet
+                        Earth with a defined character of India ness, we are proud to be Indians.</p>
+                </div>
+                <div class="content-image">
+                    <img src="assets/images/about-us1.jpg" alt="Indian cultural harmony">
+                </div>
+            </div>
+
+            <div class="content-row reverse">
+                <div class="content-text">
+                    <p class="hf_bodytext01">Equally diversified, is the financial instruments market today in India.
+                        Different people have different needs. These needs vary from person to person with various
+                        criteria of age, income level, family size and so on.</p>
+                    <p class="hf_bodytext01">Harmoney strives to match these needs with the variety of financial
+                        instruments and recommend an appropriate blend that will ensure Harmony in the lives of such
+                        persons we are associated with.</p>
+                </div>
+                <div class="content-image">
+                    <img src="assets/images/about-us2.jpg" alt="Financial planning">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="values-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="hf_heading02">Our Vision for India's Prosperity</h2>
+            </div>
+
+            <div class="content-row">
+                <div class="content-text">
+                    <p class="hf_bodytext01">When Indians became free, India became a free country. When Indians become
+                        wealthy, India will become wealthy. Harmoney dedicates its life to this great cause and in the
+                        process make a living for itself.</p>
+                    <p class="hf_bodytext01">We believe that true financial freedom comes from achieving harmon(e)y
+                        between
+                        your aspirations and your financial capabilities. Our approach combines the wisdom of
+                        traditional values with modern financial expertise.</p>
+                </div>
+                <div class="content-image">
+                    <img src="assets/images/about-us3.jpg" alt="Wealth growth">
+                </div>
+            </div>
+
+            <div class="mission-highlight">
+                <h3 class="hf_light hf_heading02">ASSISTING YOU IN ACHIEVING ABUNDANCE IN WEALTH LEADING TO FINANCIAL
+                    FREEDOM</h3>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h4 class="hf_heading05">Personalized Approach</h4>
+                    <p class="hf_bodytext01">We understand that every individual's financial journey is unique and
+                        requires customized solutions.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h4 class="hf_heading05">Harmonious Blending</h4>
+                    <p class="hf_bodytext01">We create the perfect blend of financial instruments to match your specific
+                        needs and goals.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4 class="hf_heading05">Trust & Integrity</h4>
+                    <p class="hf_bodytext01">Built on a foundation of honesty and transparency, we've served clients for
+                        over 32 years.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h3 class="hf_heading02">Ready to Achieve Financial Harmon(e)y?</h3>
+            <p class="hf_bodytext01" style="max-width: 600px; margin: 20px auto 30px;">Join thousands of families who
+                have trusted Harmoney to guide them toward financial freedom and abundance.</p>
+            <a href="#" class="btn-primaryNoIcon">Schedule a Consultation</a>
+        </div>
+    </section>
+     <footer class="footer mt-auto">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <!-- Desktop Footer -->
+                        <div class="footer-links d-none d-sm-block">
+                            <div class="row">
+                                <!-- Company Info -->
+                                <div class="col-sm-3">
+                                    <div class="footerlink-box">
+                                        <img src="assets/images/Harmony logo Black.png"
+                                            alt="Harmoney FinServ India Private Limited" style="width:210px;">
+
+                                        <div class="social-links mt-3">
+                                            <a href="#" class=""></a>
+                                            <div class="toolkit">
+                                                <a href="https://play.google.com/store/apps" target="_blank"
+                                                    class="toolkit-item social-icon" data-tooltip="Linkedin">
+                                                    <i class="fab fa-linkedin-in"></i>
+
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Quick Links -->
+                                <div class="col-sm-2">
+                                    <div class="footerlink-box">
+                                        <h5 class="footer-heading">Quick Links</h5>
+                                        <ul class="navLinks">
+                                            <li><a href="home.html" class="hf_light hf_bodytext02">Home</a></li>
+                                            <li><a href="aboutus.html" class="hf_light hf_bodytext02">About Us</a></li>
+                                            <li><a href="usefil-links.html">Useful Links</a></li>
+                                            <li><a href="contactus.html" class="hf_light hf_bodytext02">Contact Us</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Our Services -->
+                                <div class="col-sm-2">
+                                    <div class="footerlink-box">
+                                        <h5 class="footer-heading">Our Services</h5>
+                                        <ul class="navLinks">
+                                            <li><a href="philosophy.html" class="hf_light hf_bodytext02">Our
+                                                    Philosophy</a></li>
+                                            <li><a href="what-we-do.html" class="hf_light hf_bodytext02">What We Do</a>
+                                            </li>
+                                            <li><a href="services.html" class="hf_light hf_bodytext02">Services</a></li>
+                                            <li><a href="team.html" class="hf_light hf_bodytext02">Our Team</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Special Sections -->
+                                <div class="col-sm-2">
+                                    <div class="footerlink-box">
+                                        <h5 class="footer-heading">Special Sections</h5>
+                                        <ul class="navLinks">
+                                            <li><a href="nri-corner.html" class="hf_light hf_bodytext02">NRI Corner</a>
+                                            </li>
+                                            <li><a href="careers.html" class="hf_light hf_bodytext02">Careers</a>
+                                            </li>
+                                            <li><a href="awards.html" class="hf_light hf_bodytext02">Awards</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Legal & Regulatory -->
+                                <div class="col-sm-3">
+                                    <div class="footerlink-box">
+                                        <h5 class="footer-heading">Legal & Compliance</h5>
+                                        <ul class="navLinks">
+                                            <li><a href="privacy-policy.html" class="hf_light hf_bodytext02">Privacy
+                                                    Policy</a></li>
+
+                                            <li><a href="compliance.html" class="hf_light hf_bodytext02">Compliance</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="contact-info mt-1">
+                                            <p class="contact-item">
+                                                <a href="mailto:support@harmoneywealth.com">
+                                                    <i class="fas fa-envelope"></i> support@harmoneywealth.com </a>
+                                            </p>
+                                            <p class="contact-item">
+                                                <a href="callto:080-41125960">
+                                                    <i class="fas fa-phone phone-icon rotated"></i> 080-41125960 </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Regulatory Information Section -->
+                            <div class="row regulatory-info mt-4">
+                                <div class="col-sm-12">
+                                    <div class="regulatory-section">
+                                        <h6 class="regulatory-heading">Regulatory Information</h6>
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <div class="reg-container"
+                                                    style="display: flex; flex-wrap: wrap; gap: 15px; align-items: center;">
+                                                    <div class="reg-item">
+                                                        <strong>SEBI PMS Reg No:</strong> INP000003898 |
+                                                    </div>
+                                                    <div class="reg-item">
+                                                        <strong>IRDA Reg No:</strong> CA0336 |
+                                                    </div>
+                                                    <div class="reg-item">
+                                                        <strong>GST:</strong> 29AABCI2919Q1Z0 |
+                                                    </div>
+                                                    <div class="reg-item">
+                                                        <strong>CIN:</strong> U74992KA2002PTC069061 |
+                                                    </div>
+                                                    <div class="reg-item">
+                                                        <strong>AMFI Distributor:</strong> ARN-18080 |
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <p class="copyright-text  " style="font-size: 12px;">
+                                                        Mutual Fund Investments are subject to market risks. Please read
+                                                        the scheme
+                                                        information and offer documents before investing. Past
+                                                        performance is not
+                                                        indicative of future results
+                                                    </p>
+                                                    <p class="copyright-text " style="font-size: 12px;">
+                                                        Registration granted by SEBI, AMFI and IRDA or any other
+                                                        regulator in no way
+                                                        guarantee performance or provide any assurance of returns to
+                                                        investors. </p>
+                                                </div>
+                                            </div>
+                                            <div class=" col-sm-2"
+                                                style="display: flex; flex-direction: column; gap: 20px;">
+
+                                                <!-- Android/Play Store -->
+                                                <a href="https://play.google.com/store/apps/details?id=com.harmoneywealth"
+                                                    target="_blank" class="social-icon" data-tooltip="Play Store">
+                                                    <img src="assets/images/footer-googleplay.svg" />
+                                                </a>
+
+                                                <!-- iOS/App Store -->
+                                                <a href="https://apps.apple.com/in/app/harmoney/id6751745585 "
+                                                    target="_blank" class=" social-icon" data-tooltip="App Store">
+                                                    <img src="assets/images/footer-appstore.svg" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Copyright Section -->
+                            <div class="row footer-bottom mt-2">
+                                <div class="col-sm-12">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <p class="copyright-text mb-0">
+                                            &copy; 2025 Harmoney FinServ India Private Limited. All rights
+                                            reserved.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End Desktop Footer -->
+
+
+                        <!-- Mobile Footer -->
+                        <!-- Mobile Footer -->
+                        <div class="m-footerLinks d-block d-sm-none">
+                            <div class='sidebar-1'>
+                                <!-- Company Info -->
+                                <div class="footer-logo" style="padding:10px 0; text-align: center;">
+                                    <img src="assets/images/Harmony logo Black.png"
+                                        alt="Harmoney FinServ India Private Limited" style="width:130px;">
+                                    <p class="footer-description mt-2">
+                                        Achieving Harmon(e)y between your financial needs and capabilities.
+                                    </p>
+                                </div>
+
+                                <!-- Quick Links -->
+                                <div class='sidebar-menu'>QUICK LINKS <div class='expand'><i
+                                            class="fas fa-chevron-down"></i></div>
+                                </div>
+                                <div class='sub-menu'>
+                                    <ul>
+                                        <li><a href="home.html">Home</a></li>
+                                        <li><a href="aboutus.html">About Us</a></li>
+                                        <li><a href="usefil-links.html">Useful Links</a></li>
+                                        <li><a href="contactus.html">Contact Us</a></li>
+                                    </ul>
+                                </div>
+
+                                <!-- Our Services -->
+                                <div class='sidebar-menu'>OUR SERVICES <div class='expand'><i
+                                            class="fas fa-chevron-down"></i></div>
+                                </div>
+                                <div class='sub-menu'>
+                                    <ul>
+                                        <li><a href="philosophy.html">Our Philosophy</a></li>
+                                        <li><a href="what-we-do.html">What We Do</a></li>
+                                        <li><a href="services.html">Services</a></li>
+                                        <li><a href="team.html">Our Team</a></li>
+                                    </ul>
+                                </div>
+
+                                <!-- Special Sections -->
+                                <div class='sidebar-menu'>SPECIAL SECTIONS <div class='expand'><i
+                                            class="fas fa-chevron-down"></i></div>
+                                </div>
+                                <div class='sub-menu'>
+                                    <ul>
+                                        <li><a href="nri-corner.html">NRI Corner</a></li>
+                                        <li><a href="careers.html">Careers</a></li>
+                                        <li><a href="awards.html">Awards</a></li>
+                                    </ul>
+                                </div>
+
+                                <!-- Legal & Regulatory -->
+                                <div class='sidebar-menu'>LEGAL & REGULATORY <div class='expand'><i
+                                            class="fas fa-chevron-down"></i></div>
+                                </div>
+                                <div class='sub-menu'>
+                                    <ul>
+                                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                                        <li><a href="compliance.html">Compliance</a></li>
+                                        <li><a href="https://pms.harmoneywealth.in/shrdbms/userlogin.ss"
+                                                target="_blank">Disclosure Document</a></li>
+                                    </ul>
+                                </div>
+
+                                <!-- Regulatory Information -->
+                                <div class='sidebar-menu'>REGULATORY INFORMATION <div class='expand'><i
+                                            class="fas fa-chevron-down"></i></div>
+                                </div>
+                                <div class='sub-menu'>
+                                    <ul>
+                                        <li><strong>SEBI PMS Reg No:</strong> INP000003898</li>
+                                        <li><strong>IRDA Reg No:</strong> CA0336</li>
+                                        <li><strong>GST:</strong> 29AABCI2919Q1Z0</li>
+                                        <li><strong>CIN:</strong> U74992KA2002PTC069061</li>
+                                        <li><strong>AMFI Distributor:</strong> ARN-18080</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Contact Info -->
+                                <div class='sidebar-menu'>CONTACT INFO <div class='expand'><i
+                                            class="fas fa-chevron-down"></i></div>
+                                </div>
+                                <div class='sub-menu'>
+                                    <ul>
+                                        <li>
+                                            <a href="mailto:support@harmoneywealth.com">
+                                                <i class="fas fa-envelope"></i> support@harmoneywealth.com
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="tel:08041125960">
+                                                <i class="fas fa-phone"></i> 080-41125960
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- App Store Links -->
+                                <div class='sidebar-menu'>DOWNLOAD OUR APP <div class='expand'><i
+                                            class="fas fa-chevron-down"></i></div>
+                                </div>
+                                <div class='sub-menu'>
+                                    <ul>
+                                        <li>
+                                            <!-- Android/Play Store -->
+                                            <a href="https://play.google.com/store/apps/details?id=com.harmoneywealth"
+                                                target="_blank"
+                                                style="display: flex; align-items: center; gap: 10px; padding: 10px 0;">
+                                                <img src="assets/images/footer-googleplay.svg" alt="Google Play"
+                                                    style="width: 40px; height: 40px;">
+                                                <div>
+                                                    <div style="font-size: 12px; color: #666;">GET IT ON</div>
+                                                    <div style="font-weight: bold; color: #000;">Google Play</div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <!-- iOS/App Store -->
+                                            <a href="https://apps.apple.com/in/app/harmoney/id6751745585"
+                                                target="_blank"
+                                                style="display: flex; align-items: center; gap: 10px; padding: 10px 0;">
+                                                <img src="assets/images/footer-appstore.svg" alt="App Store"
+                                                    style="width: 40px; height: 40px;">
+                                                <div>
+                                                    <div style="font-size: 12px; color: #666;">Download on the</div>
+                                                    <div style="font-weight: bold; color: #000;">App Store</div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Social Links -->
+                                <div class="social-links-mobile text-center mt-3">
+                                    <a href="#" class="social-icon" data-tooltip="Linkedin">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                    <a href="#" class="social-icon" data-tooltip="Facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                    <a href="#" class="social-icon" data-tooltip="Twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                    <a href="#" class="social-icon" data-tooltip="Instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                </div>
+
+                                <!-- Mutual Fund Disclaimer -->
+                                <div class="mt-3"
+                                    style="background: rgba(59, 130, 246, 0.1); padding: 15px; border-radius: 8px; font-size: 11px; line-height: 1.4; color: #000;">
+                                    <p style="margin-bottom: 8px;">
+                                        <strong>Disclaimer:</strong> Mutual Fund Investments are subject to market
+                                        risks. Please read the scheme information and offer documents before investing.
+                                        Past performance is not indicative of future results.
+                                    </p>
+                                    <p style="margin-bottom: 0;">
+                                        Registration granted by SEBI, AMFI and IRDA or any other regulator in no way
+                                        guarantee performance or provide any assurance of returns to investors.
+                                    </p>
+                                </div>
+
+                                <!-- Copyright -->
+                                <div class="copyright-mobile text-center mt-3">
+                                    <p>&copy; 2025 Harmoney FinServ India Private Limited.</p>
+                                    <p class="small">All rights reserved.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Mobile Footer -->
+                        <!-- End Mobile Footer -->
+
+                    </div>
+                </div>
+            </div>
+        </footer>
+    <script src="https://www.happynessfactory.in/js/app.js?v=SCM2.8.5.18"></script>
+    <script src="https://www.happynessfactory.in/js/custom.js?v=SCM2.8.5.18"></script>
+    <script src="https://www.happynessfactory.in/js/activity.js"></script>
+
+    <script src="https://unpkg.com/phosphor-icons" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" async defer></script>
+    <script src="https://www.happynessfactory.in/assets/js/jquery.confirm.min.js"></script>
+    <script src="https://www.happynessfactory.in/assets/js/mask/jquery.mask.min.js"></script>
+    <script src="https://www.happynessfactory.in/assets/js/mask/jquery.inputmask.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>
