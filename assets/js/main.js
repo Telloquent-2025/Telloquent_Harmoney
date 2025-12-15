@@ -855,7 +855,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // count animation 
  document.addEventListener('DOMContentLoaded', function() {
         // Target values for counters
-        const counterValues = [32, 400, 500, 100];
+        const counterValues = [32, 400, 500, 2000];
         const counterElements = document.querySelectorAll('.counterNo');
         let animationStarted = false;
         
