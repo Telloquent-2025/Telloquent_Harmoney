@@ -12069,3 +12069,295 @@ section img.banner-img {
         display: block;
     }
 }
+
+
+
+
+        .achievement-container {
+            background-color: var(--hf-lightlemon);
+            padding: 60px 0;
+        }
+        
+        .hf_heading02 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            text-align: center;
+            padding-bottom: 15px;
+            position: relative;
+        }
+        
+        .hf_heading02:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .hf_bodytext01 {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hf_dark {
+            color: var(--dark-text);
+        }
+        
+        /* Tab Styles for Desktop */
+        .achievement-tabs {
+            display: block;
+        }
+        
+        .nav-tabs {
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .nav-tabs .nav-link {
+            color: #666;
+            font-weight: 600;
+            border: none;
+            border-bottom: 3px solid transparent;
+            padding: 12px 20px;
+            margin-right: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            color: var(--primary-color);
+            border-bottom: 3px solid rgba(44, 90, 160, 0.5);
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            background-color: transparent;
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        .tab-content {
+            padding: 30px 0;
+        }
+        
+        .content-div {
+            min-height: 320px;
+        }
+        
+        .button-container {
+            margin-top: 30px;
+        }
+        
+        .btn-primaryNoIcon {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary-color);
+        }
+        
+        .btn-primaryNoIcon:hover {
+            background-color: transparent;
+            color: var(--primary-color);
+        }
+        
+        /* Carousel Styles for Mobile/Tablet */
+        .mobile-carousel-container {
+            display: none;
+            position: relative;
+        }
+        
+        .carousel-item {
+            padding: 20px 0 40px 0; /* Added bottom padding for dots */
+        }
+        
+        /* Custom dots styling */
+        .custom-carousel-indicators {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            z-index: 2;
+        }
+        
+        .custom-carousel-indicators button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin: 0 8px;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .custom-carousel-indicators button.active {
+            background-color: var(--primary-color);
+            transform: scale(1.2);
+        }
+        
+        .carousel-control-prev, 
+        .carousel-control-next {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.8;
+            z-index: 3;
+        }
+        
+        .carousel-control-prev {
+            left: 10px;
+        }
+        
+        .carousel-control-next {
+            right: 10px;
+        }
+        
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            opacity: 1;
+        }
+        
+        .carousel-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(44, 90, 160, 0.2);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1199.98px) {
+            .hf_heading02 {
+                font-size: 1.9rem;
+            }
+        }
+        
+        /* Tablet and Mobile Breakpoint - Show carousel, hide tabs */
+        @media (max-width: 991.98px) {
+            .achievement-tabs {
+                display: none !important;
+            }
+            
+            .mobile-carousel-container {
+                display: block;
+                margin-top: 30px;
+            }
+            
+            .tabs-image-container {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            
+            .tabs-image-container img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+            
+            .content-div {
+                min-height: auto;
+                padding: 20px;
+                background-color: rgba(255, 255, 255, 0.8);
+                border-radius: 8px;
+                box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            }
+            
+            .row.align-items-top {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 767.98px) {
+            /* Mobile styles */
+            .achievement-container {
+                padding: 40px 0;
+            }
+            
+            .hf_heading02 {
+                font-size: 1.7rem;
+                margin-bottom: 30px;
+            }
+            
+            .tabs-image-container {
+                margin-bottom: 20px;
+            }
+            
+            .tabs-image-container img {
+                max-width: 90%;
+            }
+            
+            .carousel-control-prev,
+            .carousel-control-next {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .carousel-control-prev {
+                left: 5px;
+            }
+            
+            .carousel-control-next {
+                right: 5px;
+            }
+            
+            .carousel-title {
+                font-size: 1.3rem;
+            }
+            
+            .hf_bodytext01 {
+                font-size: 1rem;
+            }
+            
+            .carousel-item {
+                padding: 20px 0 35px 0;
+            }
+        }
+        
+        @media (max-width: 575.98px) {
+            .hf_heading02 {
+                font-size: 1.5rem;
+            }
+            
+            .content-div {
+                padding: 15px;
+            }
+            
+            .btn-primaryNoIcon {
+                padding: 10px 20px;
+                font-size: 0.95rem;
+            }
+            
+            .carousel-item {
+                padding: 15px 0 30px 0;
+            }
+            
+            .custom-carousel-indicators {
+                bottom: 10px;
+            }
+            
+            .custom-carousel-indicators button {
+                width: 10px;
+                height: 10px;
+                margin: 0 6px;
+            }
+        }

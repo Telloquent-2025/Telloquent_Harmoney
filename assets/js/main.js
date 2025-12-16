@@ -42,6 +42,68 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+ // Initialize Bootstrap tabs for desktop
+        document.addEventListener('DOMContentLoaded', function() {
+            var tabTriggers = [].slice.call(document.querySelectorAll('#myTab a'))
+            tabTriggers.forEach(function (tabTriggerEl) {
+                tabTriggerEl.addEventListener('click', function (event) {
+                    event.preventDefault()
+                    var tabTarget = this.getAttribute('href')
+                    var bsTab = new bootstrap.Tab(this)
+                    bsTab.show()
+                })
+            })
+            
+            // Custom carousel functionality with 2-second interval
+            var carousel = document.getElementById('harmonyCarousel');
+            if (carousel) {
+                // Initialize carousel with 2000ms (2 seconds) interval
+                var carouselInstance = new bootstrap.Carousel(carousel, {
+                    interval: 2000, // Changed from 5000 to 2000 for 2-second interval
+                    wrap: true,
+                    touch: true
+                });
+                
+                // Add click functionality to custom indicators
+                var indicators = document.querySelectorAll('.custom-carousel-indicators button');
+                indicators.forEach(function(indicator, index) {
+                    indicator.addEventListener('click', function() {
+                        carouselInstance.to(index);
+                        updateActiveIndicator(index);
+                    });
+                });
+                
+                // Update active indicator when slide changes
+                carousel.addEventListener('slid.bs.carousel', function(event) {
+                    var activeIndex = event.to;
+                    updateActiveIndicator(activeIndex);
+                });
+                
+                // Function to update active indicator
+                function updateActiveIndicator(activeIndex) {
+                    indicators.forEach(function(indicator, index) {
+                        if (index === activeIndex) {
+                            indicator.classList.add('active');
+                        } else {
+                            indicator.classList.remove('active');
+                        }
+                    });
+                }
+                
+                // Pause carousel when user hovers over it
+                carousel.addEventListener('mouseenter', function() {
+                    carouselInstance.pause();
+                });
+                
+                // Resume carousel when user leaves
+                carousel.addEventListener('mouseleave', function() {
+                    carouselInstance.cycle();
+                });
+            }
+        });
+
+
+    
     // Mobile Dropdown Functionality
     const mobileDropdowns = document.querySelectorAll('.mobile-dropdown .has-dropdown');
     const mobileLoginToggle = document.querySelector('.mobile-login-toggle');
