@@ -752,74 +752,61 @@ document.addEventListener('DOMContentLoaded', function() {
             const testimonials = [
                 {
                     id: 1,
-                    quote: "Today, I am happy with the investment income generated out of their planned strategies. Thanks to Harmoney. I admire their commitment.",
-                    name: "Dr. A. Kurian Joseph, M.D., D.G.O.",
+                    quote: "We are using the Financial Planning services for the last 16 years and are richly benefited.",
+                    name: "Praveen Badrinath",
                     // position: "President, All India Gynaecologists Association",
-                    initials: "AJ"
+                    initials: "PB"
                 },
                 {
                     id: 2,
-                    quote: "Financial & Investment information is provided with thorough professionalism.",
-                    name: "K. Varathan",
+                    quote: "I can vouch for the significant improvement in the quality of my balance sheet to M/s Harmoney. They are known to me for the past 20 years",
+                    name: "P J Ashokkumar ",
                     // position: "Cinetekk, Sale distributors in India for JBL professional DTX - Dolby - Digital theatre systems",
-                    initials: "KV"
+                    initials: "PJ"
                 },
                 {
                     id: 3,
-                    quote: "I can vouch for the significant improvement in the quality of my balance sheet to M/s Harmoney. They are known to me for the past 14 years and my money is totally taken care of by them.",
-                    name: "Dr. C. Vaithilingam, Ph.D.",
+                    quote: "Earned money become wealth only when it is invested and managed rightly by right hands! It is a biggest task.  Harmony is awesome in that!",
+                    name: "PARAMAN PACHAIMUTHU ",
                     // position: "Managing Director, Ram Vijay Biotech (P) Ltd.",
-                    initials: "CV"
+                    initials: "PP"
                 },
                 {
                     id: 4,
-                    quote: "Our relationship is almost two decades now. They have done a remarkable job in building our wealth.",
-                    name: "M.G. Raghavan",
+                    quote: "Many a times I have admired the way in which they understand my family's need and provide solutions in a very calm and pleasant manner. ",
+                    name: " GEETA KESHAVAN ",
                     // position: "Managing Director, Magna Chemical Manufacturers (P) Ltd.",
-                    initials: "MR"
+                    initials: "GK"
                 },
                 {
                     id: 5,
-                    quote: "We are using the advisory services for the last six years and are richly benefited.",
-                    name: "V.C. Raamsukaesh",
+                    quote: " I am benefited by their financial plan. I adopt for enhancing my wealth.",
+                    name: "RAJASEKHAR CHANDRASEKAR ",
                     // position: "Vinbro & Co.",
-                    initials: "VR"
+                    initials: "RC"
                 },
                 {
                     id: 6,
-                    quote: "Sincerity, confidence, delivering results: I find these best qualities in them.",
-                    name: "S. Kamalasekaran",
+                    quote: "Their financial diagnosis is their strength.",
+                    name: " Dr Madhukumar ",
                     // position: "Managing Director, NuTech Rubbers",
-                    initials: "SK"
+                    initials: "MK"
                 },
                 {
                     id: 7,
-                    quote: "What a remarkable job! I am delighted to see the growth of my investments.",
-                    name: "Krishna Agoram",
+                    quote: " Financial & Investment management services is provided with thorough foresight professionalism.",
+                    name: "Chenthamarai Venkatachalam",
                     // position: "Managing Director, Rolapack & company",
-                    initials: "KA"
+                    initials: "CV"
                 },
                 {
                     id: 8,
-                    quote: "Many a times I have admired the way in which they understand my family's need and provide solutions in a very calm and pleasant manner.",
-                    name: "L. S. Mani",
+                    quote: "Sincerity, confidence, delivering results: I find these best qualities in them.",
+                    name: "Nagendra Narasimhamurty ",
                     // position: "Poet & Writer (Retd D.E.O)",
-                    initials: "LM"
+                    initials: "NN"
                 },
-                {
-                    id: 9,
-                    quote: "I am benefited by their financial plan. I adopt for enhancing my wealth.",
-                    name: "Mr. Sriram Raju",
-                    // position: "Project Manager, IBM Global Soft",
-                    initials: "SR"
-                },
-                {
-                    id: 10,
-                    quote: "Their financial diagnosis is their strength.",
-                    name: "Dr. Chandrashekar S. Ratkal, M.B.B.S., M.S. Mah.",
-                    // position: "H.O.D. & Professor of Urology Victoria Hospital, Bangalore",
-                    initials: "CR"
-                }
+                
             ];
             
             // Function to create testimonial card HTML  <p>${testimonial.position}</p>
