@@ -1062,402 +1062,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-        // voice assistant popup
-// ===== ACCESSIBILITY MANAGER WITH HOVER READING =====
-(function() {
-    'use strict';
-    
-    let speechSynth = window.speechSynthesis;
-    let currentUtterance = null;
-    let isReading = false;
-    let hoverReadEnabled = false;
-    let hoverTimeout = null;
-    
-    // Initialize after page loads
-    setTimeout(initAccessibility, 1000);
-    
-    function initAccessibility() {
-        console.log('Initializing accessibility with hover reading...');
-        
-        const trigger = document.getElementById('accessibilityTrigger');
-        const menu = document.getElementById('accessibilityMenu');
-        const overlay = document.getElementById('accessibilityOverlay');
-        
-        if (!trigger || !menu) {
-            console.error('Accessibility elements not found!');
-            return;
-        }
-        
-        // ===== DROPDOWN TOGGLE =====
-        trigger.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            
-            // Toggle menu
-            const isShowing = menu.classList.toggle('show');
-            
-            // Show overlay only on mobile
-            if (window.innerWidth < 768 && overlay) {
-                overlay.classList.toggle('show', isShowing);
-            }
-            
-            // Close other dropdowns
-            closeOtherDropdowns(menu);
-        });
-        
-        // ===== CLOSE BUTTON =====
-        const closeBtn = document.querySelector('.close-accessibility');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                closeMenu();
-            });
-        }
-        
-        // ===== OVERLAY CLICK (Mobile only) =====
-        if (overlay) {
-            overlay.addEventListener('click', function(e) {
-                e.preventDefault();
-                closeMenu();
-            });
-        }
-        
-        // ===== PAGE READ BUTTON =====
-        const pageReadBtn = document.getElementById('pageReadBtn');
-        if (pageReadBtn) {
-            pageReadBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                startPageReading();
-                closeMenu();
-            });
-        }
-        
-        // ===== STOP BUTTON =====
-        const stopBtn = document.getElementById('stopReadBtn');
-        if (stopBtn) {
-            stopBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                stopReading();
-            });
-        }
-        
-        // ===== HOVER READ TOGGLE =====
-        const hoverReadToggle = document.getElementById('clickReadToggle');
-        if (hoverReadToggle) {
-            // Change label to "Hover to Read"
-            const label = hoverReadToggle.closest('.acc-feature').querySelector('span');
-            if (label) label.textContent = 'Hover to Read (after Page Read)';
-            
-            hoverReadToggle.addEventListener('change', function(e) {
-                hoverReadEnabled = e.target.checked;
-                showNotice(hoverReadEnabled ? 'Hover-to-read enabled' : 'Hover-to-read disabled');
-            });
-        }
-        
-        // ===== SETUP HOVER READING =====
-        setupHoverReading();
-        
-        // ===== FONT SIZE BUTTONS =====
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('font-size-btn')) {
-                e.preventDefault();
-                const size = e.target.id.replace('font', '').toLowerCase();
-                changeFontSize(size);
-            }
-        });
-        
-        // ===== CLICK OUTSIDE TO CLOSE =====
-        document.addEventListener('click', function(e) {
-            if (!trigger.contains(e.target) && !menu.contains(e.target)) {
-                closeMenu();
-            }
-        });
-        
-        // ===== ESCAPE KEY =====
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeMenu();
-                stopReading();
-            }
-        });
-        
-        console.log('Accessibility initialized with hover reading');
-    }
-    
-    function setupHoverReading() {
-        // Add hover listeners to the document
-        document.addEventListener('mouseover', handleMouseOver);
-        document.addEventListener('mouseout', handleMouseOut);
-    }
-    
-    function handleMouseOver(e) {
-        if (!hoverReadEnabled || !isReading) return;
-        
-        // Skip if hovering over accessibility controls
-        if (e.target.closest('.accessibility-menu') || 
-            e.target.closest('.screen-reader-status') ||
-            e.target.closest('#accessibilityTrigger')) {
-            return;
-        }
-        
-        clearTimeout(hoverTimeout);
-        
-        const element = e.target;
-        const text = getReadableText(element);
-        
-        if (text) {
-            // Add visual feedback
-            element.classList.add('hover-reading');
-            
-            // Read after 1 second of hovering
-            hoverTimeout = setTimeout(() => {
-                readText(text);
-                element.classList.remove('hover-reading');
-            }, 1000);
-        }
-    }
-    
-    function handleMouseOut(e) {
-        clearTimeout(hoverTimeout);
-        
-        // Remove hover highlight
-        if (e.target.classList.contains('hover-reading')) {
-            e.target.classList.remove('hover-reading');
-        }
-    }
-    
-    function getReadableText(element) {
-        // Skip interactive elements and empty text
-        const tagName = element.tagName.toLowerCase();
-        if (['button', 'a', 'input', 'select', 'textarea', 'label', 'img'].includes(tagName)) {
-            return null;
-        }
-        
-        // Skip elements with very short text
-        let text = element.textContent || element.innerText || '';
-        text = text.trim().replace(/\s+/g, ' ');
-        
-        // Minimum 10 characters, maximum 200 for hover reading
-        if (text.length < 10 || text.length > 200) return null;
-        
-        return text;
-    }
-    
-    function startPageReading() {
-        if (isReading) {
-            stopReading();
-            return;
-        }
-        
-        isReading = true;
-        hoverReadEnabled = true;
-        
-        // Update UI
-        const pageReadBtn = document.getElementById('pageReadBtn');
-        if (pageReadBtn) pageReadBtn.classList.add('active');
-        
-        const hoverReadToggle = document.getElementById('clickReadToggle');
-        if (hoverReadToggle) hoverReadToggle.checked = true;
-        
-        const statusPanel = document.getElementById('screenReaderStatus');
-        if (statusPanel) statusPanel.classList.add('active');
-        
-        showNotice('Page reading started. Hover over any text to read it.', 'success');
-        
-        // Read welcome message
-        readText('Accessibility mode activated. Now hover over any text on the page to hear it read aloud.');
-    }
-    
-    function readText(text) {
-        // Stop current reading
-        if (currentUtterance) {
-            speechSynth.cancel();
-        }
-        
-        // Create new utterance
-        currentUtterance = new SpeechSynthesisUtterance(text);
-        
-        // Set properties
-        const rate = document.getElementById('speechRate') ? document.getElementById('speechRate').value : 1;
-        const volume = document.getElementById('speechVolume') ? document.getElementById('speechVolume').value : 1;
-        
-        currentUtterance.rate = parseFloat(rate);
-        currentUtterance.volume = parseFloat(volume);
-        currentUtterance.pitch = 1;
-        
-        // Show progress
-        updateProgress(true);
-        
-        // Event handlers
-        currentUtterance.onstart = () => {
-            updateProgress(true);
-        };
-        
-        currentUtterance.onend = () => {
-            updateProgress(false);
-        };
-        
-        currentUtterance.onerror = (e) => {
-            console.error('Speech error:', e);
-            updateProgress(false);
-        };
-        
-        // Speak
-        try {
-            speechSynth.speak(currentUtterance);
-        } catch (error) {
-            console.error('Error speaking:', error);
-        }
-    }
-    
-    function stopReading() {
-        if (currentUtterance) {
-            speechSynth.cancel();
-        }
-        
-        isReading = false;
-        hoverReadEnabled = false;
-        
-        // Update UI
-        const pageReadBtn = document.getElementById('pageReadBtn');
-        if (pageReadBtn) pageReadBtn.classList.remove('active');
-        
-        const hoverReadToggle = document.getElementById('clickReadToggle');
-        if (hoverReadToggle) hoverReadToggle.checked = false;
-        
-        const statusPanel = document.getElementById('screenReaderStatus');
-        if (statusPanel) statusPanel.classList.remove('active');
-        
-        updateProgress(false);
-        
-        // Clear hover timeout
-        clearTimeout(hoverTimeout);
-        
-        // Remove all highlights
-        document.querySelectorAll('.hover-reading, .click-highlight').forEach(el => {
-            el.classList.remove('hover-reading', 'click-highlight');
-        });
-        
-        showNotice('Stopped reading');
-    }
-    
-    function updateProgress(show) {
-        const progressBar = document.getElementById('speechProgressBar');
-        if (progressBar) {
-            if (show) {
-                progressBar.style.width = '100%';
-                progressBar.style.transition = 'width 30s linear';
-            } else {
-                progressBar.style.width = '0%';
-                progressBar.style.transition = 'width 0.3s ease';
-            }
-        }
-    }
-    
-    function changeFontSize(size) {
-        // Remove all font size classes from html
-        document.documentElement.classList.remove(
-            'font-size-small',
-            'font-size-medium', 
-            'font-size-large',
-            'font-size-xlarge',
-            'font-size-xxlarge'
-        );
-        
-        // Add new size
-        document.documentElement.classList.add(`font-size-${size}`);
-        
-        // Update button states
-        const sizes = ['small', 'medium', 'large', 'xlarge', 'xxlarge'];
-        sizes.forEach(s => {
-            const btn = document.getElementById(`font${s.charAt(0).toUpperCase() + s.slice(1)}`);
-            if (btn) {
-                btn.classList.remove('active');
-                if (s === size) {
-                    btn.classList.add('active');
-                }
-            }
-        });
-        
-        // Update label
-        const label = document.getElementById('currentFontSize');
-        if (label) {
-            label.textContent = size.charAt(0).toUpperCase() + size.slice(1);
-        }
-        
-        showNotice(`Font size changed to ${size}`, 'success');
-    }
-    
-    function closeMenu() {
-        const menu = document.getElementById('accessibilityMenu');
-        const overlay = document.getElementById('accessibilityOverlay');
-        
-        if (menu) menu.classList.remove('show');
-        if (overlay) overlay.classList.remove('show');
-    }
-    
-    function closeOtherDropdowns(currentMenu) {
-        // Close any other open dropdowns
-        document.querySelectorAll('.accessibility-menu.show').forEach(menu => {
-            if (menu !== currentMenu) {
-                menu.classList.remove('show');
-            }
-        });
-    }
-    
-    function showNotice(message, type = 'info') {
-        const notice = document.getElementById('accessibilityNotice');
-        if (!notice) return;
-        
-        notice.textContent = message;
-        notice.className = 'accessibility-notice';
-        
-        if (type === 'error') {
-            notice.classList.add('error');
-        } else if (type === 'success') {
-            notice.classList.add('success');
-        }
-        
-        notice.style.display = 'block';
-        
-        setTimeout(() => {
-            notice.style.display = 'none';
-        }, 3000);
-    }
-})();
-
-
-
-// Debug code - Keep this at the VERY END
-setTimeout(function() {
-    console.log('=== ACCESSIBILITY DEBUG ===');
-    
-    const trigger = document.getElementById('accessibilityTrigger');
-    const menu = document.getElementById('accessibilityMenu');
-    
-    if (trigger && menu) {
-        console.log('✅ Elements found');
-        console.log('Trigger position:', trigger.getBoundingClientRect());
-        console.log('Menu will drop from trigger position');
-        
-        // Force show menu for testing (dropdown style)
-        setTimeout(function() {
-            console.log('DEBUG: Showing dropdown menu...');
-            menu.classList.add('show');
-            
-            // Position it correctly
-            const triggerRect = trigger.getBoundingClientRect();
-            menu.style.top = (triggerRect.bottom + 10) + 'px';
-            menu.style.right = (window.innerWidth - triggerRect.right) + 'px';
-        }, 2000);
-    } else {
-        console.error('❌ Elements not found!');
-    }
-}, 1000);
-
-
-
-
 
 
   // Optional JavaScript for better mobile interaction
@@ -1483,3 +1087,172 @@ setTimeout(function() {
                 });
             });
         });
+
+
+
+// Additional Accessibility Features
+
+function openAccessibilityPanel() {
+  document.getElementById("accessibilityPanel").classList.add("open");
+}
+function closeAccessibilityPanel() {
+  document.getElementById("accessibilityPanel").classList.remove("open");
+}
+
+/* ✅ LINE HEIGHT – REAL FIX */
+function setLineHeight(val) {
+  document.querySelectorAll("p, li, span, div, a").forEach(el => {
+    el.style.lineHeight = val;
+  });
+}
+
+// text size
+function setTextSize(val) {
+  document.documentElement.style.fontSize = val + "%";
+}
+
+
+/* KEEP LETTER SPACING */
+function setLetterSpacing(val) {
+  document.body.style.letterSpacing = val + "px";
+}
+
+/* BIG CURSOR */
+let bigCursorEnabled = false;
+
+function toggleBigCursor() {
+  bigCursorEnabled = !bigCursorEnabled;
+
+  document.documentElement.classList.toggle("big-cursor", bigCursorEnabled);
+}
+function toggleBigCursor() {
+  document.documentElement.classList.toggle("big-cursor");
+}
+
+
+/* PAGE READ + UNDERLINE + BORDER */
+let readEnabled = false;
+const synth = window.speechSynthesis;
+let lastReadText = "";
+
+function togglePageRead() {
+  readEnabled = !readEnabled;
+  synth.cancel();
+}
+
+document.body.addEventListener("mouseover", e => {
+  if (!readEnabled) return;
+
+  const el = e.target;
+
+  if (!el || !el.innerText || el.innerText.trim().length < 2) return;
+
+  // prevent reading parent sections
+  if (el.children.length > 0) return;
+
+  el.classList.add("a11y-read-hover");
+
+  const text = el.innerText.trim();
+  if (text !== lastReadText) {
+    synth.cancel();
+    synth.speak(new SpeechSynthesisUtterance(text));
+    lastReadText = text;
+  }
+});
+
+document.body.addEventListener("mouseout", e => {
+  e.target.classList.remove("a11y-read-hover");
+});
+
+/* HIGHLIGHT HEADINGS */
+function toggleHeadingHighlight() {
+  document.querySelectorAll("h1,h2,h3,h4,h5,h6")
+    .forEach(h => h.classList.toggle("a11y-heading"));
+}
+
+/* IMAGE DESCRIPTION – BIG */
+let imageDescEnabled = false;
+
+function toggleImageDesc() {
+  imageDescEnabled = !imageDescEnabled;
+}
+
+document.querySelectorAll("img").forEach(img => {
+  img.addEventListener("mouseenter", () => {
+    if (!imageDescEnabled || !img.alt) return;
+    const tip = document.createElement("div");
+    tip.className = "a11y-img-tip";
+    tip.innerText = img.alt;
+    document.body.appendChild(tip);
+    const r = img.getBoundingClientRect();
+    tip.style.top = (r.top + window.scrollY + r.height + 10) + "px";
+    tip.style.left = (r.left + window.scrollX) + "px";
+    img._tip = tip;
+  });
+  img.addEventListener("mouseleave", () => img._tip && img._tip.remove());
+});
+
+/* RESET */
+/* =================== RESET ACCESSIBILITY =================== */
+function resetAccessibility() {
+  // Reset text size
+  document.documentElement.style.fontSize = "100%";
+
+  // Reset line height
+  document.querySelectorAll("p, li, span, div, a").forEach(el => {
+    el.style.lineHeight = "";
+  });
+
+  // Reset letter spacing
+  document.body.style.letterSpacing = "";
+
+  // Reset big cursor
+  document.body.classList.remove("big-cursor");
+  bigCursorEnabled = false;
+
+  // Reset page read
+  readEnabled = false;
+  synth.cancel();
+  lastReadText = "";
+
+  // Remove heading highlights and read hover highlights
+  document
+    .querySelectorAll(".a11y-heading,.a11y-read-hover")
+    .forEach(el => el.classList.remove("a11y-heading","a11y-read-hover"));
+
+  // Reset image descriptions
+  imageDescEnabled = false;
+  document.querySelectorAll(".a11y-img-tip").forEach(tip => tip.remove());
+
+  // Reset hidden images
+  const imgs = document.querySelectorAll("img");
+  document.body.classList.remove("hide-images");
+  imgs.forEach(img => img.removeAttribute("aria-hidden"));
+}
+
+
+// Hide Images
+function toggleImages() {
+  document.body.classList.toggle('hide-images');
+}
+
+function toggleImages() {
+  const imgs = document.querySelectorAll('img');
+  const hide = document.body.classList.toggle('hide-images');
+
+  imgs.forEach(img => {
+    if (hide) {
+      img.setAttribute('aria-hidden', 'true');
+    } else {
+      img.removeAttribute('aria-hidden');
+    }
+  });
+}
+
+
+
+
+
+
+
+
