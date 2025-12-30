@@ -753,9 +753,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 {
                     id: 1,
                     quote: "We are using the Financial Planning services for the last 16 years and are richly benefited.",
-                    name: "Praveen Badrinath",
+                    name: "Praveena Seethuraman",
                     // position: "President, All India Gynaecologists Association",
-                    initials: "PB"
+                    initials: "PS"
                 },
                 {
                     id: 2,
@@ -781,7 +781,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 {
                     id: 5,
                     quote: " I am benefited by their financial plan. I adopt for enhancing my wealth.",
-                    name: "RAJASEKHAR CHANDRASEKAR ",
+                    name: "Rajasekaran Chandrasekaran",
                     // position: "Vinbro & Co.",
                     initials: "RC"
                 },
@@ -802,7 +802,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 {
                     id: 8,
                     quote: "Sincerity, confidence, delivering results: I find these best qualities in them.",
-                    name: "Nagendra Narasimhamurty ",
+                    name: "Nagendra Narasimhamurthy",
                     // position: "Poet & Writer (Retd D.E.O)",
                     initials: "NN"
                 },
