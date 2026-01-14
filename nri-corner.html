@@ -117,8 +117,8 @@
                                     <ul class="dropdown-menu" aria-labelledby="resourcesDropdown">
                                         <!-- Newsletter Section -->
                                         <li><a class="dropdown-item download-link"
-                                                href="assets/pdf/Nov-2025_Newsletter-1.pdf" target="_blank"
-                                                download="Nov-2025_Newsletter-1.pdf">Newsletter</a></li>
+                                                href="assets/pdf/Jan-2026_Newsletter.pdf" target="_blank"
+                                                download="Jan-2026_Newsletter.pdf">Newsletter</a></li>
                                         <li>
                                         <li>
                                             <hr class="dropdown-divider">
@@ -185,6 +185,12 @@
                             </li>
                             <li class="nav-item">
                                 <a href="contactus.html" class="nav-link">Contact Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <button class="a11y-trigger" onclick="openAccessibilityPanel()"
+                                    aria-label="Accessibility">
+                                    <i class="fa-solid fa-universal-access"></i>
+                                </button>
                             </li>
                             <!-- <li class="nav-item accessibility-dropdown">
                                     <button class="nav-link2 accessibility-trigger" id="accessibilityTrigger">
@@ -283,10 +289,8 @@
                                         Resources <i class="fas fa-chevron-down dropdown-icon"></i>
                                     </a>
                                     <ul class="mobile-dropdown-menu">
-                                        <li><a href="newsletter.html" class="dropdown-item">Newsletter</a></li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
+                                        <li><a href="assets/pdf/Jan-2026_Newsletter.pdf" class="dropdown-item download-link"  target="_blank"
+                                            download="Jan-2026_Newsletter.pdf">Newsletter</a></li>
                                         <li><a href="assets/pdf/investor_charter_pms.pdf"
                                                 class="dropdown-item download-link" target="_blank"
                                                 download="investor_charter_pms.pdf">Investor Charter</a></li>
@@ -1005,6 +1009,45 @@
             </div>
         </footer>
     </div>
+    <div id="accessibilityPanel">
+
+    <div class="a11y-header">
+        <span>Accessibility</span>
+        <button onclick="closeAccessibilityPanel()">✕</button>
+    </div>
+
+    <div class="a11y-body">
+
+        <div class="a11y-control">
+            <label>Line Height</label>
+            <input type="range" min="1.2" max="2.6" step="0.1" value="1.6"
+                   oninput="setLineHeight(this.value)">
+        </div>
+
+        <div class="a11y-control">
+            <label>Text Size</label>
+            <input type="range" min="90" max="130" value="100" step="5"
+                   oninput="setTextSize(this.value)">
+        </div>
+
+        <div class="a11y-control">
+            <label>Letter Spacing</label>
+            <input type="range" min="0" max="5" value="0"
+                   oninput="setLetterSpacing(this.value)">
+        </div>
+
+        <div class="a11y-actions">
+            <button onclick="toggleBigCursor()">Big Cursor</button>
+            <button onclick="togglePageRead()">Page Read</button>
+            <button onclick="toggleHeadingHighlight()">Highlight Headings</button>
+            <button onclick="toggleImages()">Hide Images</button>
+            <button onclick="toggleImageDesc()">Image Description</button>
+        </div>
+
+        <button class="a11y-reset" onclick="resetAccessibility()">Reset</button>
+    </div>
+</div>
+
     <script src="https://www.happynessfactory.in/js/app.js?v=SCM2.8.5.18"></script>
     <script src="https://www.happynessfactory.in/js/custom.js?v=SCM2.8.5.18"></script>
     <script src="https://www.happynessfactory.in/js/activity.js"></script>
@@ -1016,6 +1059,15 @@
     <script src="https://www.happynessfactory.in/assets/js/mask/jquery.mask.min.js"></script>
     <script src="https://www.happynessfactory.in/assets/js/mask/jquery.inputmask.bundle.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <script>
+        function openAccessibilityPanel() {
+            document.getElementById("accessibilityPanel").classList.add("open");
+        }
+
+        function closeAccessibilityPanel() {
+            document.getElementById("accessibilityPanel").classList.remove("open");
+        }
+    </script>
 </body>
 
 </html>
