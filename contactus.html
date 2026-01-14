@@ -648,8 +648,11 @@
                     </div>
 
                     <form id="contactForm" enctype="multipart/form-data">
+                    <form id="contactForm" enctype="multipart/form-data">
                         <div class="form-group">
                             <label class="form-label" for="name">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Enter your full name" required>
                             <input type="text" class="form-control" id="name" name="name"
                                 placeholder="Enter your full name" required>
                         </div>
@@ -658,10 +661,14 @@
                             <label class="form-label" for="email">Email Address</label>
                             <input type="email" class="form-control" id="email" name="email"
                                 placeholder="Enter your email" required>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="Enter your email" required>
                         </div>
 
                         <div class="form-group">
                             <label class="form-label" for="phone">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" name="phone"
+                                placeholder="Enter your phone number">
                             <input type="tel" class="form-control" id="phone" name="phone"
                                 placeholder="Enter your phone number">
                         </div>
@@ -670,15 +677,21 @@
                             <label class="form-label" for="subject">Subject</label>
                             <input type="text" class="form-control" id="subject" name="subject"
                                 placeholder="Enter subject" required>
+                            <input type="text" class="form-control" id="subject" name="subject"
+                                placeholder="Enter subject" required>
                         </div>
 
                         <div class="form-group">
                             <label class="form-label" for="message">Message</label>
                             <textarea class="form-control" id="message" name="message" placeholder="Enter your message"
                                 required></textarea>
+                            <textarea class="form-control" id="message" name="message" placeholder="Enter your message"
+                                required></textarea>
                         </div>
 
                         <button type="submit" class="btn-primaryNoIcon">Send Message</button>
+                        <div id="contactStatus" style="margin-top:12px; font-weight:600;"></div>
+
                         <div id="contactStatus" style="margin-top:12px; font-weight:600;"></div>
 
                     </form>
@@ -805,6 +818,8 @@
                                 <div class="footerlink-box">
                                     <h5 class="footer-heading">Legal & Compliance</h5>
                                     <ul class="navLinks">
+                                        <li><a href="privacy-policy.html" target="_blank"
+                                                class="hf_light hf_bodytext02">Privacy
                                         <li><a href="privacy-policy.html" target="_blank"
                                                 class="hf_light hf_bodytext02">Privacy
                                                 Policy</a></li>
@@ -964,6 +979,7 @@
                                         <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
                                     </li>
                                     <li><a href="compliance.html">Compliance</a></li>
+
 
                                 </ul>
                             </div>
