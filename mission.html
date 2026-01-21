@@ -415,17 +415,29 @@
         <!-- Top navigation for mobile -->
         <div class="d-sm-none d-block">
             <div class="slide-drawer">
-                <div class="top-header">
-                    <div class="company-logo">
-                        <a href="index.html"><img src="assets/images/Harmony logo Black.png"
-                                alt="Harmoney FinServ India Private Limited"></a>
+              <div class="top-header">
+                        <div class="company-logo">
+                            <a href="index.html">
+                                <img src="assets/images/Harmony logo Black.png"
+                                    alt="Harmoney FinServ India Private Limited">
+                            </a>
+                        </div>
+
+                        <div class="mobile-header-actions">
+                            <!-- Accessibility Button -->
+                            <button class="a11y-trigger mobile-a11y-btn" onclick="openAccessibilityPanel()"
+                                aria-label="Accessibility">
+                                <i class="fa-solid fa-universal-access"></i>
+                            </button>
+
+                            <!-- Menu Button -->
+                            <button id="sidebar-btn" class="sidebar-btn">
+                                <span class="menu-stripes"></span>
+                                <span class="menu-stripes"></span>
+                                <span class="menu-stripes"></span>
+                            </button>
+                        </div>
                     </div>
-                    <button id="sidebar-btn" class="sidebar-btn">
-                        <span class="menu-stripes"></span>
-                        <span class="menu-stripes"></span>
-                        <span class="menu-stripes"></span>
-                    </button>
-                </div>
 
                 <section id="sidebar" class="sidebar">
                     <div class="slide-top-bar">

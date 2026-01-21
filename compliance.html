@@ -226,16 +226,28 @@
             <!-- Top navigation for mobile -->
             <div class="d-sm-none d-block">
                 <div class="slide-drawer">
-                    <div class="top-header">
+                <div class="top-header">
                         <div class="company-logo">
-                            <a href="index.html"><img src="assets/images/Harmony logo Black.png"
-                                    alt="Harmoney FinServ India Private Limited"></a>
+                            <a href="index.html">
+                                <img src="assets/images/Harmony logo Black.png"
+                                    alt="Harmoney FinServ India Private Limited">
+                            </a>
                         </div>
-                        <button id="sidebar-btn" class="sidebar-btn">
-                            <span class="menu-stripes"></span>
-                            <span class="menu-stripes"></span>
-                            <span class="menu-stripes"></span>
-                        </button>
+
+                        <div class="mobile-header-actions">
+                            <!-- Accessibility Button -->
+                            <button class="a11y-trigger mobile-a11y-btn" onclick="openAccessibilityPanel()"
+                                aria-label="Accessibility">
+                                <i class="fa-solid fa-universal-access"></i>
+                            </button>
+
+                            <!-- Menu Button -->
+                            <button id="sidebar-btn" class="sidebar-btn">
+                                <span class="menu-stripes"></span>
+                                <span class="menu-stripes"></span>
+                                <span class="menu-stripes"></span>
+                            </button>
+                        </div>
                     </div>
 
                     <section id="sidebar" class="sidebar">
@@ -453,7 +465,7 @@
                                             stroke="currentColor" stroke-width="2">
                                             <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                                         </svg>
-                                        Commission Disclosures (MFD)
+                                        <p style="color: #3b82f6;">Commission Disclosures (MFD)</p>
                                     </a>
 
                                     <a href="https://pms.harmoneywealth.in/shrdbms/userlogin.ss" target="_blank"
@@ -463,7 +475,7 @@
                                             <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
                                             <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
                                         </svg>
-                                        Disclosure Document (PMS)
+                                       <p style="color: #3b82f6;"> Disclosure Document (PMS)</p>
                                     </a>
                                 </div>
                             </div>
@@ -498,10 +510,10 @@
                                         <div class="step-number">2</div>
                                         <div class="step-content">
                                             <h3>Grievance Cell</h3>
-                                            <p>If no satisfactory response from RM, write to:
+                                            <p>If no satisfactory response from RM, write to:     </p>
                                                 <a
                                                     href="mailto:support@harmoneywealth.com">support@harmoneywealth.com</a>
-                                            </p>
+                                       
                                         </div>
                                     </div>
 
@@ -509,12 +521,12 @@
                                         <div class="step-number">3</div>
                                         <div class="step-content">
                                             <h3>Compliance Officer</h3>
-                                            <p>If no response within 21 days, contact:
+                                            <p>If no response within 21 days, contact:   </p>
                                                 <a
                                                     href="mailto:ingrcomplaince@harmoneywealth.com">ingrcomplaince@harmoneywealth.com</a>
-                                                <br>Or write to: Harmoney Finserv India Pvt. Ltd., No: 78 2nd Floor,
-                                                11th Main, 14th Cross, 6th Sector, HSR Layout, Bangalore-560102
-                                            </p>
+                                              <p>  Or write to: Harmoney Finserv India Pvt. Ltd., No: 78 2nd Floor,
+                                                11th Main, 14th Cross, 6th Sector, HSR Layout, Bangalore-560102</p>
+                                         
                                         </div>
                                     </div>
 
@@ -522,9 +534,9 @@
                                         <div class="step-number">4</div>
                                         <div class="step-content">
                                             <h3>SEBI SCORES</h3>
-                                            <p>If unsatisfied with resolution, lodge complaint on:
+                                            <p>If unsatisfied with resolution, lodge complaint on:</p>
                                                 <a href="https://scores.sebi.gov.in/scores-home" target="_blank">scores.gov.in</a>
-                                            </p>
+                                            
                                         </div>
                                     </div>
 
@@ -532,12 +544,12 @@
                                         <div class="step-number">5</div>
                                         <div class="step-content">
                                             <h3>Online Dispute Resolution</h3>
-                                            <p>For SMART ODR Portal access:
+                                            <p>For SMART ODR Portal access: </p>
                                                 <a href="https://smartodr.in" target="_blank">SMARTODR Portal</a>
-                                                <br><a
+                                                <a
                                                     href="https://www.sebi.gov.in/legal/master-circulars/aug-2023/online-resolution-of-disputes-in-the-indian-securities-market_75220.html"
                                                     target="_blank" class="circular-link">View full circular</a>
-                                            </p>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -616,9 +628,9 @@
                                         </svg>
                                         <div class="address-details">
                                             <strong>Write to:</strong>
-                                            <span>Harmoney Finserv India Pvt. Ltd.,<br>
-                                                No: 78 2nd Floor, 11th Main,<br>
-                                                14th Cross, 6th Sector,<br>
+                                            <span>Harmoney Finserv India Pvt. Ltd.,
+                                                No: 78 2nd Floor, 11th Main,
+                                                14th Cross, 6th Sector,
                                                 HSR Layout, Bangalore-560102</span>
                                         </div>
                                     </div>
@@ -646,7 +658,7 @@
                                         <polyline points="15 3 21 3 21 9" />
                                         <line x1="10" y1="14" x2="21" y2="3" />
                                     </svg>
-                                    Visit SCORES Portal
+                                    <p style="color: #fff;">Visit SCORES Portal</p>
                                 </a>
 
                                 <div class="scores-instruction">
@@ -656,7 +668,7 @@
                                         <line x1="12" y1="8" x2="12" y2="12" />
                                         <line x1="12" y1="16" x2="12.01" y2="16" />
                                     </svg>
-                                    Click "Complaint Registration" under "Investor Corner"
+                                   <p>Click "Complaint Registration" under "Investor Corner"</p> 
                                 </div>
                             </div>
                         </div>
