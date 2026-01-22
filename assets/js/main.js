@@ -1092,6 +1092,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Additional Accessibility Features
 
+/* ================= ACCESSIBILITY PANEL ================= */
 function openAccessibilityPanel() {
   document.getElementById("accessibilityPanel").classList.add("open");
 }
@@ -1099,160 +1100,267 @@ function closeAccessibilityPanel() {
   document.getElementById("accessibilityPanel").classList.remove("open");
 }
 
-/* ✅ LINE HEIGHT – REAL FIX */
+/* ================= LOCAL STORAGE HELPERS ================= */
+function saveA11y(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
+function getA11y(key, defaultVal) {
+  const val = localStorage.getItem(key);
+  return val ? JSON.parse(val) : defaultVal;
+}
+
+/* ================= LINE HEIGHT ================= */
 function setLineHeight(val) {
   document.querySelectorAll("p, li, span, div, a").forEach(el => {
     el.style.lineHeight = val;
   });
+  saveA11y("lineHeight", val);
 }
 
-// text size
+/* ================= TEXT SIZE ================= */
 function setTextSize(val) {
   document.documentElement.style.fontSize = val + "%";
+  saveA11y("textSize", val);
 }
 
-
-/* KEEP LETTER SPACING */
+/* ================= LETTER SPACING ================= */
 function setLetterSpacing(val) {
   document.body.style.letterSpacing = val + "px";
+  saveA11y("letterSpacing", val);
 }
 
-/* BIG CURSOR */
+/* ================= BIG CURSOR ================= */
 let bigCursorEnabled = false;
-
 function toggleBigCursor() {
   bigCursorEnabled = !bigCursorEnabled;
-
   document.documentElement.classList.toggle("big-cursor", bigCursorEnabled);
-}
-function toggleBigCursor() {
-  document.documentElement.classList.toggle("big-cursor");
+  saveA11y("bigCursor", bigCursorEnabled);
 }
 
-
-/* PAGE READ + UNDERLINE + BORDER */
-let readEnabled = false;
+/* ================= VOICE CORE ================= */
 const synth = window.speechSynthesis;
-let lastReadText = "";
+let voices = [];
+let utterance = null;
+let readEnabled = false;
+let readingState = "stopped"; // reading | paused | stopped
+let lastText = "";
+let currentElement = null;
 
+/* ================= STORAGE SHORTCUT ================= */
+const save = (k,v) => localStorage.setItem(k, JSON.stringify(v));
+const get = (k,d) => JSON.parse(localStorage.getItem(k)) ?? d;
+
+/* ================= PAGE READ BUTTON ================= */
 function togglePageRead() {
   readEnabled = !readEnabled;
-  synth.cancel();
+  save("pageRead", readEnabled);
+
+  if (readEnabled) {
+    readingState = "reading";
+    openVoicePopup();
+  } else {
+    stopReading();
+    closeVoicePopup();
+  }
 }
 
+/* ================= POPUP CONTROL ================= */
+function openVoicePopup() {
+  document.getElementById("voicePopup")?.classList.add("open");
+}
+function closeVoicePopup() {
+  document.getElementById("voicePopup")?.classList.remove("open");
+}
+
+/* ================= LOAD VOICES ================= */
+function loadVoices() {
+  voices = synth.getVoices();
+  const select = document.getElementById("voiceSelect");
+  if (!select) return;
+
+  select.innerHTML = "";
+  voices.forEach((v, i) => {
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = `${v.name} (${v.lang})`;
+    select.appendChild(opt);
+  });
+
+  select.value = get("voiceIndex", 0);
+}
+speechSynthesis.onvoiceschanged = loadVoices;
+
+/* ================= VOICE SETTINGS ================= */
+function initVoiceControls() {
+  const volumeEl = document.getElementById("voiceVolume");
+  const rateEl = document.getElementById("voiceRate");
+  const pitchEl = document.getElementById("voicePitch");
+  const voiceSelect = document.getElementById("voiceSelect");
+
+  if (!volumeEl) return;
+
+  volumeEl.value = get("voiceVolume", 1);
+  rateEl.value = get("voiceRate", 1);
+  pitchEl.value = get("voicePitch", 1);
+
+  volumeEl.oninput = e => save("voiceVolume", e.target.value);
+  rateEl.oninput = e => save("voiceRate", e.target.value);
+  pitchEl.oninput = e => save("voicePitch", e.target.value);
+  voiceSelect.onchange = e => save("voiceIndex", e.target.value);
+}
+
+/* ================= CONTROLS ================= */
+function startReading() {
+  readEnabled = true;
+  readingState = "reading";
+  save("pageRead", true);
+}
+
+function pauseReading() {
+  if (synth.speaking) {
+    synth.pause();
+    readingState = "paused";
+  }
+}
+
+function resumeReading() {
+  if (readingState === "paused") {
+    synth.resume();
+    readingState = "reading";
+  }
+}
+
+function stopReading() {
+  synth.cancel();
+  readEnabled = false;
+  readingState = "stopped";
+  lastText = "";
+  currentElement?.classList.remove("a11y-read-hover");
+  save("pageRead", false);
+}
+
+/* ================= HOVER READ ================= */
 document.body.addEventListener("mouseover", e => {
-  if (!readEnabled) return;
+  if (!readEnabled || readingState !== "reading") return;
 
   const el = e.target;
-
-  if (!el || !el.innerText || el.innerText.trim().length < 2) return;
-
-  // prevent reading parent sections
-  if (el.children.length > 0) return;
-
-  el.classList.add("a11y-read-hover");
+  if (!el.innerText || el.children.length > 0) return;
 
   const text = el.innerText.trim();
-  if (text !== lastReadText) {
-    synth.cancel();
-    synth.speak(new SpeechSynthesisUtterance(text));
-    lastReadText = text;
-  }
+  if (text.length < 2 || text === lastText) return;
+
+  currentElement?.classList.remove("a11y-read-hover");
+  el.classList.add("a11y-read-hover");
+  currentElement = el;
+
+  synth.cancel();
+
+  utterance = new SpeechSynthesisUtterance(text);
+  utterance.voice = voices[get("voiceIndex", 0)] || voices[0];
+  utterance.volume = get("voiceVolume", 1);
+  utterance.rate = get("voiceRate", 1);
+  utterance.pitch = get("voicePitch", 1);
+
+  synth.speak(utterance);
+  lastText = text;
 });
 
 document.body.addEventListener("mouseout", e => {
-  e.target.classList.remove("a11y-read-hover");
+  if (e.target === currentElement) {
+    e.target.classList.remove("a11y-read-hover");
+  }
 });
 
-/* HIGHLIGHT HEADINGS */
+/* ================= HIGHLIGHT HEADINGS ================= */
 function toggleHeadingHighlight() {
   document.querySelectorAll("h1,h2,h3,h4,h5,h6")
     .forEach(h => h.classList.toggle("a11y-heading"));
+
+  saveA11y(
+    "headingHighlight",
+    document.querySelector("h1")?.classList.contains("a11y-heading")
+  );
 }
 
-/* IMAGE DESCRIPTION – BIG */
+/* ================= IMAGE DESCRIPTION ================= */
 let imageDescEnabled = false;
-
 function toggleImageDesc() {
   imageDescEnabled = !imageDescEnabled;
+  saveA11y("imageDesc", imageDescEnabled);
 }
 
 document.querySelectorAll("img").forEach(img => {
   img.addEventListener("mouseenter", () => {
     if (!imageDescEnabled || !img.alt) return;
+
     const tip = document.createElement("div");
     tip.className = "a11y-img-tip";
     tip.innerText = img.alt;
     document.body.appendChild(tip);
+
     const r = img.getBoundingClientRect();
     tip.style.top = (r.top + window.scrollY + r.height + 10) + "px";
     tip.style.left = (r.left + window.scrollX) + "px";
+
     img._tip = tip;
   });
-  img.addEventListener("mouseleave", () => img._tip && img._tip.remove());
+
+  img.addEventListener("mouseleave", () => {
+    img._tip?.remove();
+  });
 });
 
-/* RESET */
-/* =================== RESET ACCESSIBILITY =================== */
+/* ================= HIDE IMAGES ================= */
+function toggleImages() {
+  const hide = document.body.classList.toggle("hide-images");
+  saveA11y("hideImages", hide);
+
+  document.querySelectorAll("img").forEach(img => {
+    hide
+      ? img.setAttribute("aria-hidden", "true")
+      : img.removeAttribute("aria-hidden");
+  });
+}
+
+/* ================= RESTORE ON PAGE LOAD ================= */
+document.addEventListener("DOMContentLoaded", () => {
+
+  document.documentElement.style.fontSize = getA11y("textSize", 100) + "%";
+
+  const lh = getA11y("lineHeight", null);
+  if (lh) setLineHeight(lh);
+
+  document.body.style.letterSpacing = getA11y("letterSpacing", 0) + "px";
+
+  bigCursorEnabled = getA11y("bigCursor", false);
+  document.documentElement.classList.toggle("big-cursor", bigCursorEnabled);
+
+  if (getA11y("headingHighlight", false)) {
+    document.querySelectorAll("h1,h2,h3,h4,h5,h6")
+      .forEach(h => h.classList.add("a11y-heading"));
+  }
+
+  if (getA11y("hideImages", false)) {
+    document.body.classList.add("hide-images");
+    document.querySelectorAll("img").forEach(img =>
+      img.setAttribute("aria-hidden", "true")
+    );
+  }
+
+  imageDescEnabled = getA11y("imageDesc", false);
+
+  if (get("pageRead", false)) {
+    readEnabled = true;
+    readingState = "reading";
+    openVoicePopup();
+  }
+
+  loadVoices();
+  initVoiceControls();
+});
+
+/* ================= RESET ================= */
 function resetAccessibility() {
-  // Reset text size
-  document.documentElement.style.fontSize = "100%";
-
-  // Reset line height
-  document.querySelectorAll("p, li, span, div, a").forEach(el => {
-    el.style.lineHeight = "";
-  });
-
-  // Reset letter spacing
-  document.body.style.letterSpacing = "";
-
-  // Reset big cursor
-  document.body.classList.remove("big-cursor");
-  bigCursorEnabled = false;
-
-  // Reset page read
-  readEnabled = false;
-  synth.cancel();
-  lastReadText = "";
-
-  // Remove heading highlights and read hover highlights
-  document
-    .querySelectorAll(".a11y-heading,.a11y-read-hover")
-    .forEach(el => el.classList.remove("a11y-heading","a11y-read-hover"));
-
-  // Reset image descriptions
-  imageDescEnabled = false;
-  document.querySelectorAll(".a11y-img-tip").forEach(tip => tip.remove());
-
-  // Reset hidden images
-  const imgs = document.querySelectorAll("img");
-  document.body.classList.remove("hide-images");
-  imgs.forEach(img => img.removeAttribute("aria-hidden"));
+  localStorage.clear();
+  location.reload();
 }
-
-
-// Hide Images
-function toggleImages() {
-  document.body.classList.toggle('hide-images');
-}
-
-function toggleImages() {
-  const imgs = document.querySelectorAll('img');
-  const hide = document.body.classList.toggle('hide-images');
-
-  imgs.forEach(img => {
-    if (hide) {
-      img.setAttribute('aria-hidden', 'true');
-    } else {
-      img.removeAttribute('aria-hidden');
-    }
-  });
-}
-
-
-
-
-
-
-
-

@@ -1120,6 +1120,36 @@
         <button class="a11y-reset" onclick="resetAccessibility()">Reset</button>
     </div>
 </div>
+            <!-- VOICE OVER POPUP -->
+<div id="voicePopup" class="voice-popup">
+  <div class="voice-header">
+    <span>Screen Reader Options</span>
+    <button onclick="closeVoicePopup()">✕</button>
+  </div>
+
+  <div class="voice-body">
+    <p>Hover on content to start reading.</p>
+
+    <label>Voice / Accent</label>
+    <select id="voiceSelect"></select>
+
+    <label>Volume</label>
+    <input type="range" min="0" max="1" step="0.1" id="voiceVolume">
+
+    <label>Rate</label>
+    <input type="range" min="0.5" max="2" step="0.1" id="voiceRate">
+
+    <label>Pitch</label>
+    <input type="range" min="0" max="2" step="0.1" id="voicePitch">
+
+    <div class="voice-actions">
+      <button onclick="startReading()">Start</button>
+      <button onclick="pauseReading()">Pause</button>
+      <button onclick="resumeReading()">Resume</button>
+      <button onclick="stopReading()">Stop</button>
+    </div>
+  </div>
+</div>
 
         <script src="assets/js/main.js"></script>
         <script src="https://www.happynessfactory.in/js/app.js?v=SCM2.8.5.18"></script>
