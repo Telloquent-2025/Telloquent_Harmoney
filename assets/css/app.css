@@ -18,6 +18,64 @@
 .sidebar-menu:after, .sidebar-menu:before{
     display: none !important;
 }
+.defineGoal-container .m-goals-slider .m-defineSlider div .single-card .define-content {
+    bottom: 28px;
+    left: 16px;
+    padding: 0 0 0 16px;
+    position: absolute;
+    right: 24px;
+ 
+}
+
+
+
+
+
+.define-content {
+    color: #000;
+    transition: color 0.3s ease;
+}
+
+.define-content p,
+.define-content h5 {
+    color: #000;
+}
+.single-card:has(img:not([src=""])) .define-content {
+    color: #fff;
+}
+
+.single-card:has(img:not([src=""])) .define-content p,
+.single-card:has(img:not([src=""])) .define-content h5 {
+    color: #fff;
+}
+.single-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.single-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.single-card:has(img:not([src=""]))::after {
+    opacity: 1;
+}
+
+.define-content {
+    position: relative;
+    z-index: 2;
+}
+
+
+
+
+
 
 .defineGoal-container .m-goals-slider .m-defineSlider div .single-card img {
     border-radius: 8px;
@@ -54,6 +112,7 @@
     background-color: #c2e7fa!important;
     border-radius: 16px;
     transition: .3s;
+  
 }
 .bottom-links a {
     margin: 0 10px;
@@ -4532,8 +4591,7 @@ body.sidebar-open {
             line-height: 1.7;
             margin-bottom: 25px;
             font-weight: 400;
-            height: 120px;
-            overflow: hidden;
+            
         }
         
         .client-info {
@@ -12391,7 +12449,7 @@ section img.banner-img {
 
 .voice-body input[type="range"] {
   height: 6px;
-  background: linear-gradient(to right, #0057a4, #0077cc);
+  background: linear-gradient(90deg, #e2e8f0 0%, #0057a4 100%);
   -webkit-appearance: none;
   appearance: none;
   padding: 0;

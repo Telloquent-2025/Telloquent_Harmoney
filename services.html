@@ -225,7 +225,7 @@
             <!-- Top navigation for mobile -->
             <div class="d-sm-none d-block">
                 <div class="slide-drawer">
-                <div class="top-header">
+                    <div class="top-header">
                         <div class="company-logo">
                             <a href="index.html">
                                 <img src="assets/images/Harmony logo Black.png"
@@ -302,8 +302,9 @@
                                         Resources <i class="fas fa-chevron-down dropdown-icon"></i>
                                     </a>
                                     <ul class="mobile-dropdown-menu">
-                                        <li><a href="assets/pdf/Jan-2026_Newsletter.pdf" class="dropdown-item download-link"  target="_blank"
-                                            download="Jan-2026_Newsletter.pdf">Newsletter</a></li>
+                                        <li><a href="assets/pdf/Jan-2026_Newsletter.pdf"
+                                                class="dropdown-item download-link" target="_blank"
+                                                download="Jan-2026_Newsletter.pdf">Newsletter</a></li>
                                         <li><a href="assets/pdf/investor_charter_pms.pdf"
                                                 class="dropdown-item download-link" target="_blank"
                                                 download="investor_charter_pms.pdf">Investor Charter</a></li>
@@ -393,7 +394,7 @@
                     being available at reasonable valuation, thereby leading to creation of long term wealth.</p>
 
                 <div class="strategies-grid">
-                  
+
 
                     <!-- Strategy 2 -->
                     <div class="strategy-card">
@@ -484,7 +485,7 @@
                             </ul>
                         </div>
                     </div>
-                      <!-- Strategy 1 -->
+                    <!-- Strategy 1 -->
                     <div class="strategy-card">
                         <div class="strategy-header">
                             <div class="strategy-icon">
@@ -770,12 +771,14 @@
 
                                         <div class="contact-info mt-1">
                                             <p class="contact-item">
+                                                <i class="fas fa-envelope"></i>
                                                 <a href="mailto:support@harmoneywealth.com">
-                                                    <i class="fas fa-envelope"></i> support@harmoneywealth.com </a>
+                                                    support@harmoneywealth.com </a>
                                             </p>
                                             <p class="contact-item">
+                                                <i class="fas fa-phone phone-icon rotated"></i>
                                                 <a href="callto:080-41125960">
-                                                    <i class="fas fa-phone phone-icon rotated"></i> 080-41125960 </a>
+                                                    080-41125960 </a>
                                             </p>
                                         </div>
                                     </div>
@@ -792,19 +795,19 @@
                                                 <div class="reg-container"
                                                     style="display: flex; flex-wrap: wrap; gap: 15px; align-items: center;">
                                                     <div class="reg-item">
-                                                        <strong>SEBI PMS Reg No:</strong> INP000003898 |
+                                                        <strong>SEBI PMS Reg No:INP000003898 |</strong>
                                                     </div>
                                                     <div class="reg-item">
-                                                        <strong>IRDA Reg No:</strong> CA0336 |
+                                                        <strong>IRDA Reg No: CA0336 |</strong>
                                                     </div>
                                                     <div class="reg-item">
-                                                        <strong>GST:</strong> 29AABCI2919Q1Z0 |
+                                                        <strong>GST: 29AABCI2919Q1Z0 |</strong>
                                                     </div>
                                                     <div class="reg-item">
-                                                        <strong>CIN:</strong> U74992KA2002PTC069061 |
+                                                        <strong>CIN: U74992KA2002PTC069061 |</strong>
                                                     </div>
                                                     <div class="reg-item">
-                                                        <strong>AMFI Distributor:</strong> ARN-18080 |
+                                                        <strong>AMFI Distributor: ARN-18080 </strong>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-10">
@@ -918,6 +921,7 @@
                                         <li>
                                             <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
                                         </li>
+
                                         <li><a href="compliance.html">Compliance</a></li>
 
                                     </ul>
@@ -996,7 +1000,6 @@
                                     <a href="#" class="social-icon" data-tooltip="Linkedin">
                                         <i class="fab fa-linkedin-in"></i>
                                     </a>
-
                                 </div>
 
                                 <!-- Mutual Fund Disclaimer -->
@@ -1028,75 +1031,72 @@
             </div>
         </footer>
     </div>
-<div id="accessibilityPanel">
+    <div id="accessibilityPanel">
 
-    <div class="a11y-header">
-        <span>Accessibility</span>
-        <button onclick="closeAccessibilityPanel()">✕</button>
+        <div class="a11y-header">
+            <span>Accessibility</span>
+            <button onclick="closeAccessibilityPanel()">✕</button>
+        </div>
+
+        <div class="a11y-body">
+
+            <div class="a11y-control">
+                <label>Line Height</label>
+                <input type="range" min="1.2" max="2.6" step="0.1" value="1.6" oninput="setLineHeight(this.value)">
+            </div>
+
+            <div class="a11y-control">
+                <label>Text Size</label>
+                <input type="range" min="90" max="130" value="100" step="5" oninput="setTextSize(this.value)">
+            </div>
+
+            <div class="a11y-control">
+                <label>Letter Spacing</label>
+                <input type="range" min="0" max="5" value="0" oninput="setLetterSpacing(this.value)">
+            </div>
+
+            <div class="a11y-actions">
+                <button onclick="toggleBigCursor()">Big Cursor</button>
+                <button onclick="togglePageRead()">Page Read</button>
+                <button onclick="toggleHeadingHighlight()">Highlight Headings</button>
+                <button onclick="toggleImages()">Hide Images</button>
+                <button onclick="toggleImageDesc()">Image Description</button>
+            </div>
+
+            <button class="a11y-reset" onclick="resetAccessibility()">Reset</button>
+        </div>
     </div>
 
-    <div class="a11y-body">
-
-        <div class="a11y-control">
-            <label>Line Height</label>
-            <input type="range" min="1.2" max="2.6" step="0.1" value="1.6"
-                   oninput="setLineHeight(this.value)">
+    <!-- VOICE OVER POPUP -->
+    <div id="voicePopup" class="voice-popup">
+        <div class="voice-header">
+            <span>Screen Reader Options</span>
+            <button onclick="closeVoicePopup()">✕</button>
         </div>
 
-        <div class="a11y-control">
-            <label>Text Size</label>
-            <input type="range" min="90" max="130" value="100" step="5"
-                   oninput="setTextSize(this.value)">
-        </div>
+        <div class="voice-body">
+            <p>Hover on content to start reading.</p>
 
-        <div class="a11y-control">
-            <label>Letter Spacing</label>
-            <input type="range" min="0" max="5" value="0"
-                   oninput="setLetterSpacing(this.value)">
-        </div>
+            <label>Voice / Accent</label>
+            <select id="voiceSelect"></select>
 
-        <div class="a11y-actions">
-            <button onclick="toggleBigCursor()">Big Cursor</button>
-            <button onclick="togglePageRead()">Page Read</button>
-            <button onclick="toggleHeadingHighlight()">Highlight Headings</button>
-            <button onclick="toggleImages()">Hide Images</button>
-            <button onclick="toggleImageDesc()">Image Description</button>
-        </div>
+            <label>Volume</label>
+            <input type="range" min="0" max="1" step="0.1" id="voiceVolume">
 
-        <button class="a11y-reset" onclick="resetAccessibility()">Reset</button>
+            <label>Rate</label>
+            <input type="range" min="0.5" max="2" step="0.1" id="voiceRate">
+
+            <label>Pitch</label>
+            <input type="range" min="0" max="2" step="0.1" id="voicePitch">
+
+            <div class="voice-actions">
+                <button onclick="startReading()">Start</button>
+                <button onclick="pauseReading()">Pause</button>
+                <button onclick="resumeReading()">Resume</button>
+                <button onclick="stopReading()">Stop</button>
+            </div>
+        </div>
     </div>
-</div>
-
-            <!-- VOICE OVER POPUP -->
-<div id="voicePopup" class="voice-popup">
-  <div class="voice-header">
-    <span>Screen Reader Options</span>
-    <button onclick="closeVoicePopup()">✕</button>
-  </div>
-
-  <div class="voice-body">
-    <p>Hover on content to start reading.</p>
-
-    <label>Voice / Accent</label>
-    <select id="voiceSelect"></select>
-
-    <label>Volume</label>
-    <input type="range" min="0" max="1" step="0.1" id="voiceVolume">
-
-    <label>Rate</label>
-    <input type="range" min="0.5" max="2" step="0.1" id="voiceRate">
-
-    <label>Pitch</label>
-    <input type="range" min="0" max="2" step="0.1" id="voicePitch">
-
-    <div class="voice-actions">
-      <button onclick="startReading()">Start</button>
-      <button onclick="pauseReading()">Pause</button>
-      <button onclick="resumeReading()">Resume</button>
-      <button onclick="stopReading()">Stop</button>
-    </div>
-  </div>
-</div>
 
     <script src="assets/js/main.js"></script>
     <script src="https://www.happynessfactory.in/js/app.js?v=SCM2.8.5.18"></script>
@@ -1109,7 +1109,7 @@
     <script src="https://www.happynessfactory.in/assets/js/jquery.confirm.min.js"></script>
     <script src="https://www.happynessfactory.in/assets/js/mask/jquery.mask.min.js"></script>
     <script src="https://www.happynessfactory.in/assets/js/mask/jquery.inputmask.bundle.min.js"></script>
-    
+
     <script>
         function openAccessibilityPanel() {
             document.getElementById("accessibilityPanel").classList.add("open");
