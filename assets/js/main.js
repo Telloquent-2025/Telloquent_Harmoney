@@ -1382,8 +1382,8 @@ function stopReading() {
 
 /* ================= RESTORE ON LOAD ================= */
 document.addEventListener("DOMContentLoaded", () => {
-
-    document.documentElement.style.fontSize = getA11y("textSize", 100) + "%";
+ 
+    document.documentElement.style.fontSize =  getA11y("textSize", 100) + "%";     
 
     const lh = getA11y("lineHeight", null);
     if (lh) setLineHeight(lh);
