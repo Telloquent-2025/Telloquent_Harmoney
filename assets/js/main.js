@@ -1091,13 +1091,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // Additional Accessibility Features
+/* ================= DEVICE DETECTION ================= */
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 /* ================= ACCESSIBILITY PANEL ================= */
 function openAccessibilityPanel() {
-  document.getElementById("accessibilityPanel").classList.add("open");
+  document.getElementById("accessibilityPanel")?.classList.add("open");
 }
 function closeAccessibilityPanel() {
-  document.getElementById("accessibilityPanel").classList.remove("open");
+  document.getElementById("accessibilityPanel")?.classList.remove("open");
 }
 
 /* ================= LOCAL STORAGE HELPERS ================= */
@@ -1147,10 +1149,10 @@ let lastText = "";
 let currentElement = null;
 
 /* ================= STORAGE SHORTCUT ================= */
-const save = (k,v) => localStorage.setItem(k, JSON.stringify(v));
-const get = (k,d) => JSON.parse(localStorage.getItem(k)) ?? d;
+const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+const get = (k, d) => JSON.parse(localStorage.getItem(k)) ?? d;
 
-/* ================= PAGE READ BUTTON ================= */
+/* ================= PAGE READ ================= */
 function togglePageRead() {
   readEnabled = !readEnabled;
   save("pageRead", readEnabled);
@@ -1158,13 +1160,14 @@ function togglePageRead() {
   if (readEnabled) {
     readingState = "reading";
     openVoicePopup();
+    unlockIOSVoice();
   } else {
     stopReading();
     closeVoicePopup();
   }
 }
 
-/* ================= POPUP CONTROL ================= */
+/* ================= POPUP ================= */
 function openVoicePopup() {
   document.getElementById("voicePopup")?.classList.add("open");
 }
@@ -1190,7 +1193,7 @@ function loadVoices() {
 }
 speechSynthesis.onvoiceschanged = loadVoices;
 
-/* ================= VOICE SETTINGS ================= */
+/* ================= VOICE CONTROLS ================= */
 function initVoiceControls() {
   const volumeEl = document.getElementById("voiceVolume");
   const rateEl = document.getElementById("voiceRate");
@@ -1209,11 +1212,20 @@ function initVoiceControls() {
   voiceSelect.onchange = e => save("voiceIndex", e.target.value);
 }
 
+/* ================= IOS VOICE UNLOCK ================= */
+function unlockIOSVoice() {
+  if (!isIOS) return;
+  const u = new SpeechSynthesisUtterance(" ");
+  synth.speak(u);
+  synth.cancel();
+}
+
 /* ================= CONTROLS ================= */
 function startReading() {
   readEnabled = true;
   readingState = "reading";
   save("pageRead", true);
+  unlockIOSVoice();
 }
 
 function pauseReading() {
@@ -1239,12 +1251,10 @@ function stopReading() {
   save("pageRead", false);
 }
 
-/* ================= HOVER READ ================= */
-document.body.addEventListener("mouseover", e => {
+/* ================= READ HANDLER ================= */
+function handleRead(el) {
   if (!readEnabled || readingState !== "reading") return;
-
-  const el = e.target;
-  if (!el.innerText || el.children.length > 0) return;
+  if (!el || !el.innerText || el.children.length > 0) return;
 
   const text = el.innerText.trim();
   if (text.length < 2 || text === lastText) return;
@@ -1263,13 +1273,23 @@ document.body.addEventListener("mouseover", e => {
 
   synth.speak(utterance);
   lastText = text;
+}
+
+/* ================= DESKTOP HOVER ================= */
+document.body.addEventListener("mouseover", e => {
+  if (isIOS) return;
+  handleRead(e.target);
 });
 
-document.body.addEventListener("mouseout", e => {
-  if (e.target === currentElement) {
-    e.target.classList.remove("a11y-read-hover");
-  }
-});
+/* ================= IOS TAP ================= */
+document.body.addEventListener(
+  "touchstart",
+  e => {
+    if (!isIOS) return;
+    handleRead(e.target);
+  },
+  { passive: true }
+);
 
 /* ================= HIGHLIGHT HEADINGS ================= */
 function toggleHeadingHighlight() {
@@ -1299,8 +1319,8 @@ document.querySelectorAll("img").forEach(img => {
     document.body.appendChild(tip);
 
     const r = img.getBoundingClientRect();
-    tip.style.top = (r.top + window.scrollY + r.height + 10) + "px";
-    tip.style.left = (r.left + window.scrollX) + "px";
+    tip.style.top = r.top + window.scrollY + r.height + 10 + "px";
+    tip.style.left = r.left + window.scrollX + "px";
 
     img._tip = tip;
   });
@@ -1322,9 +1342,8 @@ function toggleImages() {
   });
 }
 
-/* ================= RESTORE ON PAGE LOAD ================= */
+/* ================= RESTORE ON LOAD ================= */
 document.addEventListener("DOMContentLoaded", () => {
-
   document.documentElement.style.fontSize = getA11y("textSize", 100) + "%";
 
   const lh = getA11y("lineHeight", null);
@@ -1353,6 +1372,7 @@ document.addEventListener("DOMContentLoaded", () => {
     readEnabled = true;
     readingState = "reading";
     openVoicePopup();
+    unlockIOSVoice();
   }
 
   loadVoices();
