@@ -2345,7 +2345,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (get("pageRead", false)) {
         readEnabled = true;
         readingState = "reading";
-        openVoicePopup();
+        
 
         if (isIOS) {
             const unlock = new SpeechSynthesisUtterance("");
