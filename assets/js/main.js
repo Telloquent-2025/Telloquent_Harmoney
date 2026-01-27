@@ -2108,32 +2108,12 @@ const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
 const get = (k, d) => JSON.parse(localStorage.getItem(k)) ?? d;
 
 /* ================= PAGE READ TOGGLE ================= */
-// function togglePageRead() {
-//     readEnabled = !readEnabled;
-//     save("pageRead", readEnabled);
-
-//     if (readEnabled) {
-//         readingState = "reading";
-//         openVoicePopup();
-
-//         // iOS unlock (NO auto speech)
-//         if (isIOS) {
-//             const unlock = new SpeechSynthesisUtterance("");
-//             unlock.volume = 0;
-//             synth.speak(unlock);
-//         }
-//     } else {
-//         stopReading();
-//         closeVoicePopup();
-//     }
-// }
 function togglePageRead() {
     readEnabled = !readEnabled;
     save("pageRead", readEnabled);
 
     if (readEnabled) {
         readingState = "reading";
-        save("pageReadInitiated", true); // ✅ ADD THIS LINE
         openVoicePopup();
 
         // iOS unlock (NO auto speech)
@@ -2362,22 +2342,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (imageDescEnabled) attachImageDesc();
 
     /* ===== PAGE READ ===== */
-    // if (get("pageRead", false)) {
-    //     readEnabled = true;
-    //     readingState = "reading";
+    if (get("pageRead", false)) {
+        readEnabled = true;
+        readingState = "reading";
         
 
-    //     if (isIOS) {
-    //         const unlock = new SpeechSynthesisUtterance("");
-    //         unlock.volume = 0;
-    //         synth.speak(unlock);
-    //     }
-    // }
-if (get("pageRead", false) && get("pageReadInitiated", false)) {
-    readEnabled = true;
-    readingState = "reading";
-    openVoicePopup(); // ✅ auto-open ONLY after user consent
-}
+        if (isIOS) {
+            const unlock = new SpeechSynthesisUtterance("");
+            unlock.volume = 0;
+            synth.speak(unlock);
+        }
+    }
 
     loadVoices();
     initVoiceControls();
