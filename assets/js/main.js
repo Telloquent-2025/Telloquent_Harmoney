@@ -1088,7 +1088,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
 /* ================= DEVICE DETECTION ================= */
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
@@ -1160,6 +1159,17 @@ function togglePageRead() {
     if (readEnabled) {
         readingState = "reading";
         openVoicePopup();
+        if (isIOS && !iosUnlocked) {
+            const unlockHandler = () => {
+                const u = new SpeechSynthesisUtterance(" ");
+                synth.speak(u);
+                synth.cancel();
+                iosUnlocked = true;
+                document.body.removeEventListener("touchstart", unlockHandler);
+            };
+            document.body.addEventListener("touchstart", unlockHandler, { once: true, passive: true });
+        }
+        if (isIOS) autoReadIOS(); // start automatic reading on iOS
     } else {
         stopReading();
         closeVoicePopup();
@@ -1215,8 +1225,6 @@ function initVoiceControls() {
 function handleRead(el) {
     if (!readEnabled || readingState !== "reading") return;
     if (!el || !el.innerText || el.children.length > 0) return;
-
-    // iOS Safari requires first user gesture
     if (isIOS && !iosUnlocked) return;
 
     const text = el.innerText.trim();
@@ -1234,9 +1242,23 @@ function handleRead(el) {
     utterance.rate = get("voiceRate", 1);
     utterance.pitch = get("voicePitch", 1);
 
+    utterance.onend = () => {
+        if (isIOS) autoReadIOS(); // continue to next element
+    };
+
     synth.speak(utterance);
     lastText = text;
     readingState = "reading";
+}
+
+/* ================= AUTO READ FOR IOS ================= */
+function autoReadIOS() {
+    if (!readEnabled || readingState !== "reading") return;
+    const elements = Array.from(document.querySelectorAll("p, li, span, div, a"))
+        .filter(el => el.innerText.trim().length > 1);
+    const nextIndex = elements.indexOf(currentElement) + 1 || 0;
+    const nextEl = elements[nextIndex] || elements[0]; // loop if end
+    handleRead(nextEl);
 }
 
 /* ================= DESKTOP HOVER ================= */
@@ -1245,20 +1267,11 @@ document.body.addEventListener("mouseover", e => {
     handleRead(e.target);
 });
 
-/* ================= IOS TAP / UNLOCK ================= */
+/* ================= IOS TAP ================= */
 document.body.addEventListener(
     "touchstart",
     e => {
         if (!isIOS) return;
-
-        // unlock speech on first tap
-        if (!iosUnlocked) {
-            const u = new SpeechSynthesisUtterance(" ");
-            synth.speak(u);
-            synth.cancel();
-            iosUnlocked = true;
-        }
-
         handleRead(e.target);
     },
     { passive: true }
@@ -1303,14 +1316,12 @@ function attachImageDesc() {
     document.querySelectorAll("img").forEach(img => {
         img.onmouseenter = img.onmouseleave = img.onclick = img.ontouchstart = null;
 
-        // Desktop hover
         img.addEventListener("mouseenter", () => {
             if (!imageDescEnabled || !img.alt) return;
             showImageTip(img);
         });
         img.addEventListener("mouseleave", () => removeImageTip(img));
 
-        // Mobile tap / iOS
         img.addEventListener("click", () => {
             if (!imageDescEnabled || !img.alt) return;
             showImageTip(img);
@@ -1394,9 +1405,23 @@ document.addEventListener("DOMContentLoaded", () => {
     imageDescEnabled = getA11y("imageDesc", false);
     attachImageDesc();
 
-    // Page Read OFF by default
-    readEnabled = false;
-    readingState = "stopped";
+    // Restore Page Read if previously enabled
+    if (getA11y("pageRead", false)) {
+        readEnabled = true;
+        readingState = "reading";
+        openVoicePopup();
+        if (isIOS && !iosUnlocked) {
+            const unlockHandler = () => {
+                const u = new SpeechSynthesisUtterance(" ");
+                synth.speak(u);
+                synth.cancel();
+                iosUnlocked = true;
+                document.body.removeEventListener("touchstart", unlockHandler);
+            };
+            document.body.addEventListener("touchstart", unlockHandler, { once: true, passive: true });
+        }
+        if (isIOS) autoReadIOS();
+    }
 
     loadVoices();
     initVoiceControls();
@@ -1407,6 +1432,5 @@ function resetAccessibility() {
     localStorage.clear();
     location.reload();
 }
-
 
 
