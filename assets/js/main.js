@@ -1088,6 +1088,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
+
+
+
+
+
+
 /* ================= DEVICE DETECTION ================= */
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
@@ -1142,7 +1149,7 @@ let voices = [];
 let utterance = null;
 
 let readEnabled = false;
-let readingState = "stopped"; // "reading" | "paused" | "stopped"
+let readingState = "stopped"; // reading | paused | stopped
 let lastText = "";
 let currentElement = null;
 let iosUnlocked = false;
@@ -1159,17 +1166,8 @@ function togglePageRead() {
     if (readEnabled) {
         readingState = "reading";
         openVoicePopup();
-        if (isIOS && !iosUnlocked) {
-            const unlockHandler = () => {
-                const u = new SpeechSynthesisUtterance(" ");
-                synth.speak(u);
-                synth.cancel();
-                iosUnlocked = true;
-                document.body.removeEventListener("touchstart", unlockHandler);
-            };
-            document.body.addEventListener("touchstart", unlockHandler, { once: true, passive: true });
-        }
-        if (isIOS) autoReadIOS(); // start automatic reading on iOS
+        unlockIOSVoice();
+        if (isIOS) autoReadIOS();
     } else {
         stopReading();
         closeVoicePopup();
@@ -1221,6 +1219,19 @@ function initVoiceControls() {
     voiceSelect.onchange = e => save("voiceIndex", e.target.value);
 }
 
+/* ================= IOS VOICE UNLOCK ================= */
+function unlockIOSVoice() {
+    if (!isIOS || iosUnlocked) return;
+    const unlockHandler = () => {
+        const u = new SpeechSynthesisUtterance(" ");
+        synth.speak(u);
+        synth.cancel();
+        iosUnlocked = true;
+        document.body.removeEventListener("touchstart", unlockHandler);
+    };
+    document.body.addEventListener("touchstart", unlockHandler, { once: true, passive: true });
+}
+
 /* ================= READ HANDLER ================= */
 function handleRead(el) {
     if (!readEnabled || readingState !== "reading") return;
@@ -1243,7 +1254,7 @@ function handleRead(el) {
     utterance.pitch = get("voicePitch", 1);
 
     utterance.onend = () => {
-        if (isIOS) autoReadIOS(); // continue to next element
+        if (isIOS) autoReadIOS(); // auto continue on iOS
     };
 
     synth.speak(utterance);
@@ -1290,7 +1301,6 @@ function toggleHeadingHighlight() {
 
 /* ================= IMAGE DESCRIPTION ================= */
 let imageDescEnabled = false;
-
 function showImageTip(img) {
     removeImageTip(img);
     const tip = document.createElement("div");
@@ -1304,24 +1314,20 @@ function showImageTip(img) {
 
     img._tip = tip;
 }
-
 function removeImageTip(img) {
     if (img._tip) {
         img._tip.remove();
         img._tip = null;
     }
 }
-
 function attachImageDesc() {
     document.querySelectorAll("img").forEach(img => {
         img.onmouseenter = img.onmouseleave = img.onclick = img.ontouchstart = null;
-
         img.addEventListener("mouseenter", () => {
             if (!imageDescEnabled || !img.alt) return;
             showImageTip(img);
         });
         img.addEventListener("mouseleave", () => removeImageTip(img));
-
         img.addEventListener("click", () => {
             if (!imageDescEnabled || !img.alt) return;
             showImageTip(img);
@@ -1334,7 +1340,6 @@ function attachImageDesc() {
         }, { passive: true });
     });
 }
-
 function toggleImageDesc() {
     imageDescEnabled = !imageDescEnabled;
     saveA11y("imageDesc", imageDescEnabled);
@@ -1360,14 +1365,12 @@ function pauseReading() {
         readingState = "paused";
     }
 }
-
 function resumeReading() {
     if (synth.paused) {
         synth.resume();
         readingState = "reading";
     }
 }
-
 function stopReading() {
     synth.cancel();
     readingState = "stopped";
@@ -1406,20 +1409,11 @@ document.addEventListener("DOMContentLoaded", () => {
     attachImageDesc();
 
     // Restore Page Read if previously enabled
-    if (getA11y("pageRead", false)) {
+    if (get("pageRead", false)) {
         readEnabled = true;
         readingState = "reading";
         openVoicePopup();
-        if (isIOS && !iosUnlocked) {
-            const unlockHandler = () => {
-                const u = new SpeechSynthesisUtterance(" ");
-                synth.speak(u);
-                synth.cancel();
-                iosUnlocked = true;
-                document.body.removeEventListener("touchstart", unlockHandler);
-            };
-            document.body.addEventListener("touchstart", unlockHandler, { once: true, passive: true });
-        }
+        unlockIOSVoice();
         if (isIOS) autoReadIOS();
     }
 
@@ -1432,5 +1426,3 @@ function resetAccessibility() {
     localStorage.clear();
     location.reload();
 }
-
-
