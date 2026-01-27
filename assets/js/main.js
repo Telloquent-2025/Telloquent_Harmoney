@@ -1143,10 +1143,10 @@ let voices = [];
 let utterance = null;
 
 let readEnabled = false;
-let readingState = "stopped"; // reading | paused | stopped
+let readingState = "stopped"; // "reading" | "paused" | "stopped"
 let lastText = "";
 let currentElement = null;
-let iosUnlockedOnce = false;
+let iosUnlocked = false;
 
 /* ================= STORAGE SHORTCUT ================= */
 const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
@@ -1159,13 +1159,9 @@ function togglePageRead() {
 
     if (readEnabled) {
         readingState = "reading";
-        iosUnlockedOnce = false; // reset for iOS
         openVoicePopup();
     } else {
-        synth.cancel();
-        readingState = "stopped";
-        lastText = "";
-        currentElement?.classList.remove("a11y-read-hover");
+        stopReading();
         closeVoicePopup();
     }
 }
@@ -1220,13 +1216,8 @@ function handleRead(el) {
     if (!readEnabled || readingState !== "reading") return;
     if (!el || !el.innerText || el.children.length > 0) return;
 
-    /* iOS unlock ONLY after Page Read + first tap */
-    if (isIOS && !iosUnlockedOnce) {
-        const u = new SpeechSynthesisUtterance(" ");
-        synth.speak(u);
-        synth.cancel();
-        iosUnlockedOnce = true;
-    }
+    // iOS Safari requires first user gesture
+    if (isIOS && !iosUnlocked) return;
 
     const text = el.innerText.trim();
     if (text.length < 2 || text === lastText) return;
@@ -1245,6 +1236,7 @@ function handleRead(el) {
 
     synth.speak(utterance);
     lastText = text;
+    readingState = "reading";
 }
 
 /* ================= DESKTOP HOVER ================= */
@@ -1253,11 +1245,20 @@ document.body.addEventListener("mouseover", e => {
     handleRead(e.target);
 });
 
-/* ================= IOS TAP ================= */
+/* ================= IOS TAP / UNLOCK ================= */
 document.body.addEventListener(
     "touchstart",
     e => {
         if (!isIOS) return;
+
+        // unlock speech on first tap
+        if (!iosUnlocked) {
+            const u = new SpeechSynthesisUtterance(" ");
+            synth.speak(u);
+            synth.cancel();
+            iosUnlocked = true;
+        }
+
         handleRead(e.target);
     },
     { passive: true }
@@ -1307,10 +1308,7 @@ function attachImageDesc() {
             if (!imageDescEnabled || !img.alt) return;
             showImageTip(img);
         });
-
-        img.addEventListener("mouseleave", () => {
-            removeImageTip(img);
-        });
+        img.addEventListener("mouseleave", () => removeImageTip(img));
 
         // Mobile tap / iOS
         img.addEventListener("click", () => {
@@ -1318,7 +1316,6 @@ function attachImageDesc() {
             showImageTip(img);
             setTimeout(() => removeImageTip(img), 3000);
         });
-
         img.addEventListener("touchstart", () => {
             if (!imageDescEnabled || !img.alt) return;
             showImageTip(img);
@@ -1330,7 +1327,7 @@ function attachImageDesc() {
 function toggleImageDesc() {
     imageDescEnabled = !imageDescEnabled;
     saveA11y("imageDesc", imageDescEnabled);
-    attachImageDesc(); // re-attach dynamically
+    attachImageDesc();
 }
 
 /* ================= HIDE IMAGES ================= */
@@ -1343,6 +1340,30 @@ function toggleImages() {
             ? img.setAttribute("aria-hidden", "true")
             : img.removeAttribute("aria-hidden");
     });
+}
+
+/* ================= VOICE POPUP BUTTONS ================= */
+function pauseReading() {
+    if (synth.speaking && !synth.paused) {
+        synth.pause();
+        readingState = "paused";
+    }
+}
+
+function resumeReading() {
+    if (synth.paused) {
+        synth.resume();
+        readingState = "reading";
+    }
+}
+
+function stopReading() {
+    synth.cancel();
+    readingState = "stopped";
+    readEnabled = false;
+    lastText = "";
+    currentElement?.classList.remove("a11y-read-hover");
+    save("pageRead", false);
 }
 
 /* ================= RESTORE ON LOAD ================= */
@@ -1373,7 +1394,7 @@ document.addEventListener("DOMContentLoaded", () => {
     imageDescEnabled = getA11y("imageDesc", false);
     attachImageDesc();
 
-    // Page Read is OFF by default
+    // Page Read OFF by default
     readEnabled = false;
     readingState = "stopped";
 
@@ -1386,5 +1407,6 @@ function resetAccessibility() {
     localStorage.clear();
     location.reload();
 }
+
 
 
