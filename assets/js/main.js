@@ -1095,214 +1095,544 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-/* ================= DEVICE DETECTION ================= */
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+// /* ================= DEVICE DETECTION ================= */
+// const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+// /* ================= ACCESSIBILITY PANEL ================= */
+// function openAccessibilityPanel() {
+//     document.getElementById("accessibilityPanel")?.classList.add("open");
+// }
+// function closeAccessibilityPanel() {
+//     document.getElementById("accessibilityPanel")?.classList.remove("open");
+// }
+
+// /* ================= LOCAL STORAGE HELPERS ================= */
+// function saveA11y(key, value) {
+//     localStorage.setItem(key, JSON.stringify(value));
+// }
+// function getA11y(key, defaultVal) {
+//     const val = localStorage.getItem(key);
+//     return val ? JSON.parse(val) : defaultVal;
+// }
+
+// /* ================= LINE HEIGHT ================= */
+// function setLineHeight(val) {
+//     document.querySelectorAll("p, li, span, div, a").forEach(el => {
+//         el.style.lineHeight = val;
+//     });
+//     saveA11y("lineHeight", val);
+// }
+
+// /* ================= TEXT SIZE ================= */
+// function setTextSize(val) {
+//     document.documentElement.style.fontSize = val + "%";
+//     saveA11y("textSize", val);
+// }
+
+// /* ================= LETTER SPACING ================= */
+// function setLetterSpacing(val) {
+//     document.body.style.letterSpacing = val + "px";
+//     saveA11y("letterSpacing", val);
+// }
+
+// /* ================= BIG CURSOR ================= */
+// let bigCursorEnabled = false;
+// function toggleBigCursor() {
+//     bigCursorEnabled = !bigCursorEnabled;
+//     document.documentElement.classList.toggle("big-cursor", bigCursorEnabled);
+//     saveA11y("bigCursor", bigCursorEnabled);
+// }
+
+// /* ================= VOICE CORE ================= */
+// const synth = window.speechSynthesis;
+// let voices = [];
+// let utterance = null;
+
+// let readEnabled = false;
+// let readingState = "stopped"; // reading | paused | stopped
+// let lastText = "";
+// let currentElement = null;
+// let iosUnlocked = false;
+
+// /* ================= STORAGE SHORTCUT ================= */
+// const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+// const get = (k, d) => JSON.parse(localStorage.getItem(k)) ?? d;
+
+// /* ================= PAGE READ BUTTON ================= */
+// function togglePageRead() {
+//     readEnabled = !readEnabled;
+//     save("pageRead", readEnabled);
+
+//     if (readEnabled) {
+//         readingState = "reading";
+//         openVoicePopup();
+//         unlockIOSVoice();
+//         if (isIOS) autoReadIOS();
+//     } else {
+//         stopReading();
+//         closeVoicePopup();
+//     }
+// }
+
+// /* ================= POPUP ================= */
+// function openVoicePopup() {
+//     document.getElementById("voicePopup")?.classList.add("open");
+// }
+// function closeVoicePopup() {
+//     document.getElementById("voicePopup")?.classList.remove("open");
+// }
+
+// /* ================= LOAD VOICES ================= */
+// function loadVoices() {
+//     voices = synth.getVoices();
+//     const select = document.getElementById("voiceSelect");
+//     if (!select) return;
+
+//     select.innerHTML = "";
+//     voices.forEach((v, i) => {
+//         const opt = document.createElement("option");
+//         opt.value = i;
+//         opt.textContent = `${v.name} (${v.lang})`;
+//         select.appendChild(opt);
+//     });
+
+//     select.value = get("voiceIndex", 0);
+// }
+// speechSynthesis.onvoiceschanged = loadVoices;
+
+// /* ================= VOICE CONTROLS ================= */
+// function initVoiceControls() {
+//     const volumeEl = document.getElementById("voiceVolume");
+//     const rateEl = document.getElementById("voiceRate");
+//     const pitchEl = document.getElementById("voicePitch");
+//     const voiceSelect = document.getElementById("voiceSelect");
+
+//     if (!volumeEl) return;
+
+//     volumeEl.value = get("voiceVolume", 1);
+//     rateEl.value = get("voiceRate", 1);
+//     pitchEl.value = get("voicePitch", 1);
+
+//     volumeEl.oninput = e => save("voiceVolume", e.target.value);
+//     rateEl.oninput = e => save("voiceRate", e.target.value);
+//     pitchEl.oninput = e => save("voicePitch", e.target.value);
+//     voiceSelect.onchange = e => save("voiceIndex", e.target.value);
+// }
+
+// /* ================= IOS VOICE UNLOCK ================= */
+// function unlockIOSVoice() {
+//     if (!isIOS || iosUnlocked) return;
+//     const unlockHandler = () => {
+//         const u = new SpeechSynthesisUtterance(" ");
+//         synth.speak(u);
+//         synth.cancel();
+//         iosUnlocked = true;
+//         document.body.removeEventListener("touchstart", unlockHandler);
+//     };
+//     document.body.addEventListener("touchstart", unlockHandler, { once: true, passive: true });
+// }
+
+// /* ================= READ HANDLER ================= */
+// function handleRead(el) {
+//     if (!readEnabled || readingState !== "reading") return;
+//     if (!el || !el.innerText || el.children.length > 0) return;
+//     if (isIOS && !iosUnlocked) return;
+
+//     const text = el.innerText.trim();
+//     if (text.length < 2 || text === lastText) return;
+
+//     currentElement?.classList.remove("a11y-read-hover");
+//     el.classList.add("a11y-read-hover");
+//     currentElement = el;
+
+//     synth.cancel();
+
+//     utterance = new SpeechSynthesisUtterance(text);
+//     utterance.voice = voices[get("voiceIndex", 0)] || voices[0];
+//     utterance.volume = get("voiceVolume", 1);
+//     utterance.rate = get("voiceRate", 1);
+//     utterance.pitch = get("voicePitch", 1);
+
+//     utterance.onend = () => {
+//         if (isIOS) autoReadIOS(); // auto continue on iOS
+//     };
+
+//     synth.speak(utterance);
+//     lastText = text;
+//     readingState = "reading";
+// }
+
+// /* ================= AUTO READ FOR IOS ================= */
+// function autoReadIOS() {
+//     if (!readEnabled || readingState !== "reading") return;
+//     const elements = Array.from(document.querySelectorAll("p, li, span, div, a"))
+//         .filter(el => el.innerText.trim().length > 1);
+//     const nextIndex = elements.indexOf(currentElement) + 1 || 0;
+//     const nextEl = elements[nextIndex] || elements[0]; // loop if end
+//     handleRead(nextEl);
+// }
+
+// /* ================= DESKTOP HOVER ================= */
+// document.body.addEventListener("mouseover", e => {
+//     if (isIOS) return;
+//     handleRead(e.target);
+// });
+
+// /* ================= IOS TAP ================= */
+// document.body.addEventListener(
+//     "touchstart",
+//     e => {
+//         if (!isIOS) return;
+//         handleRead(e.target);
+//     },
+//     { passive: true }
+// );
+
+// /* ================= HIGHLIGHT HEADINGS ================= */
+// function toggleHeadingHighlight() {
+//     document.querySelectorAll("h1,h2,h3,h4,h5,h6")
+//         .forEach(h => h.classList.toggle("a11y-heading"));
+
+//     saveA11y(
+//         "headingHighlight",
+//         document.querySelector("h1")?.classList.contains("a11y-heading")
+//     );
+// }
+
+// /* ================= IMAGE DESCRIPTION ================= */
+// let imageDescEnabled = false;
+// function showImageTip(img) {
+//     removeImageTip(img);
+//     const tip = document.createElement("div");
+//     tip.className = "a11y-img-tip";
+//     tip.innerText = img.alt;
+//     document.body.appendChild(tip);
+
+//     const r = img.getBoundingClientRect();
+//     tip.style.top = (r.top + window.scrollY + r.height + 10) + "px";
+//     tip.style.left = (r.left + window.scrollX) + "px";
+
+//     img._tip = tip;
+// }
+// function removeImageTip(img) {
+//     if (img._tip) {
+//         img._tip.remove();
+//         img._tip = null;
+//     }
+// }
+// function attachImageDesc() {
+//     document.querySelectorAll("img").forEach(img => {
+//         img.onmouseenter = img.onmouseleave = img.onclick = img.ontouchstart = null;
+//         img.addEventListener("mouseenter", () => {
+//             if (!imageDescEnabled || !img.alt) return;
+//             showImageTip(img);
+//         });
+//         img.addEventListener("mouseleave", () => removeImageTip(img));
+//         img.addEventListener("click", () => {
+//             if (!imageDescEnabled || !img.alt) return;
+//             showImageTip(img);
+//             setTimeout(() => removeImageTip(img), 3000);
+//         });
+//         img.addEventListener("touchstart", () => {
+//             if (!imageDescEnabled || !img.alt) return;
+//             showImageTip(img);
+//             setTimeout(() => removeImageTip(img), 3000);
+//         }, { passive: true });
+//     });
+// }
+// function toggleImageDesc() {
+//     imageDescEnabled = !imageDescEnabled;
+//     saveA11y("imageDesc", imageDescEnabled);
+//     attachImageDesc();
+// }
+
+// /* ================= HIDE IMAGES ================= */
+// function toggleImages() {
+//     const hide = document.body.classList.toggle("hide-images");
+//     saveA11y("hideImages", hide);
+
+//     document.querySelectorAll("img").forEach(img => {
+//         hide
+//             ? img.setAttribute("aria-hidden", "true")
+//             : img.removeAttribute("aria-hidden");
+//     });
+// }
+
+// /* ================= VOICE POPUP BUTTONS ================= */
+// function pauseReading() {
+//     if (synth.speaking && !synth.paused) {
+//         synth.pause();
+//         readingState = "paused";
+//     }
+// }
+// function resumeReading() {
+//     if (synth.paused) {
+//         synth.resume();
+//         readingState = "reading";
+//     }
+// }
+// function stopReading() {
+//     synth.cancel();
+//     readingState = "stopped";
+//     readEnabled = false;
+//     lastText = "";
+//     currentElement?.classList.remove("a11y-read-hover");
+//     save("pageRead", false);
+// }
+
+// /* ================= RESTORE ON LOAD ================= */
+// document.addEventListener("DOMContentLoaded", () => {
+ 
+//     document.documentElement.style.fontSize =  getA11y("textSize", 100) + "%";     
+
+//     const lh = getA11y("lineHeight", null);
+//     if (lh) setLineHeight(lh);
+
+//     document.body.style.letterSpacing = getA11y("letterSpacing", 0) + "px";
+
+//     bigCursorEnabled = getA11y("bigCursor", false);
+//     document.documentElement.classList.toggle("big-cursor", bigCursorEnabled);
+
+//     if (getA11y("headingHighlight", false)) {
+//         document.querySelectorAll("h1,h2,h3,h4,h5,h6")
+//             .forEach(h => h.classList.add("a11y-heading"));
+//     }
+
+//     if (getA11y("hideImages", false)) {
+//         document.body.classList.add("hide-images");
+//         document.querySelectorAll("img").forEach(img =>
+//             img.setAttribute("aria-hidden", "true")
+//         );
+//     }
+
+//     imageDescEnabled = getA11y("imageDesc", false);
+//     attachImageDesc();
+
+//     // Restore Page Read if previously enabled
+//     if (get("pageRead", false)) {
+//         readEnabled = true;
+//         readingState = "reading";
+//         openVoicePopup();
+//         unlockIOSVoice();
+//         if (isIOS) autoReadIOS();
+//     }
+
+//     loadVoices();
+//     initVoiceControls();
+// });
+
+// /* ================= RESET ================= */
+// function resetAccessibility() {
+//     localStorage.clear();
+//     location.reload();
+// }
+
+
+
+
+
 
 /* ================= ACCESSIBILITY PANEL ================= */
 function openAccessibilityPanel() {
-    document.getElementById("accessibilityPanel")?.classList.add("open");
+  document.getElementById("accessibilityPanel").classList.add("open");
 }
 function closeAccessibilityPanel() {
-    document.getElementById("accessibilityPanel")?.classList.remove("open");
+  document.getElementById("accessibilityPanel").classList.remove("open");
 }
 
 /* ================= LOCAL STORAGE HELPERS ================= */
 function saveA11y(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
+  localStorage.setItem(key, JSON.stringify(value));
 }
 function getA11y(key, defaultVal) {
-    const val = localStorage.getItem(key);
-    return val ? JSON.parse(val) : defaultVal;
+  const val = localStorage.getItem(key);
+  return val ? JSON.parse(val) : defaultVal;
 }
 
 /* ================= LINE HEIGHT ================= */
 function setLineHeight(val) {
-    document.querySelectorAll("p, li, span, div, a").forEach(el => {
-        el.style.lineHeight = val;
-    });
-    saveA11y("lineHeight", val);
+  document.querySelectorAll("p, li, span, div, a").forEach(el => {
+    el.style.lineHeight = val;
+  });
+  saveA11y("lineHeight", val);
 }
 
 /* ================= TEXT SIZE ================= */
 function setTextSize(val) {
-    document.documentElement.style.fontSize = val + "%";
-    saveA11y("textSize", val);
+  document.documentElement.style.fontSize = val + "%";
+  saveA11y("textSize", val);
 }
 
 /* ================= LETTER SPACING ================= */
 function setLetterSpacing(val) {
-    document.body.style.letterSpacing = val + "px";
-    saveA11y("letterSpacing", val);
+  document.body.style.letterSpacing = val + "px";
+  saveA11y("letterSpacing", val);
 }
 
 /* ================= BIG CURSOR ================= */
 let bigCursorEnabled = false;
 function toggleBigCursor() {
-    bigCursorEnabled = !bigCursorEnabled;
-    document.documentElement.classList.toggle("big-cursor", bigCursorEnabled);
-    saveA11y("bigCursor", bigCursorEnabled);
+  bigCursorEnabled = !bigCursorEnabled;
+  document.documentElement.classList.toggle("big-cursor", bigCursorEnabled);
+  saveA11y("bigCursor", bigCursorEnabled);
 }
 
 /* ================= VOICE CORE ================= */
 const synth = window.speechSynthesis;
 let voices = [];
 let utterance = null;
-
 let readEnabled = false;
 let readingState = "stopped"; // reading | paused | stopped
 let lastText = "";
 let currentElement = null;
-let iosUnlocked = false;
 
 /* ================= STORAGE SHORTCUT ================= */
-const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
-const get = (k, d) => JSON.parse(localStorage.getItem(k)) ?? d;
+const save = (k,v) => localStorage.setItem(k, JSON.stringify(v));
+const get = (k,d) => JSON.parse(localStorage.getItem(k)) ?? d;
 
 /* ================= PAGE READ BUTTON ================= */
 function togglePageRead() {
-    readEnabled = !readEnabled;
-    save("pageRead", readEnabled);
+  readEnabled = !readEnabled;
+  save("pageRead", readEnabled);
 
-    if (readEnabled) {
-        readingState = "reading";
-        openVoicePopup();
-        unlockIOSVoice();
-        if (isIOS) autoReadIOS();
-    } else {
-        stopReading();
-        closeVoicePopup();
-    }
+  if (readEnabled) {
+    readingState = "reading";
+    openVoicePopup();
+  } else {
+    stopReading();
+    closeVoicePopup();
+  }
 }
 
-/* ================= POPUP ================= */
+/* ================= POPUP CONTROL ================= */
 function openVoicePopup() {
-    document.getElementById("voicePopup")?.classList.add("open");
+  document.getElementById("voicePopup")?.classList.add("open");
 }
 function closeVoicePopup() {
-    document.getElementById("voicePopup")?.classList.remove("open");
+  document.getElementById("voicePopup")?.classList.remove("open");
 }
 
 /* ================= LOAD VOICES ================= */
 function loadVoices() {
-    voices = synth.getVoices();
-    const select = document.getElementById("voiceSelect");
-    if (!select) return;
+  voices = synth.getVoices();
+  const select = document.getElementById("voiceSelect");
+  if (!select) return;
 
-    select.innerHTML = "";
-    voices.forEach((v, i) => {
-        const opt = document.createElement("option");
-        opt.value = i;
-        opt.textContent = `${v.name} (${v.lang})`;
-        select.appendChild(opt);
-    });
+  select.innerHTML = "";
+  voices.forEach((v, i) => {
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = `${v.name} (${v.lang})`;
+    select.appendChild(opt);
+  });
 
-    select.value = get("voiceIndex", 0);
+  select.value = get("voiceIndex", 0);
 }
 speechSynthesis.onvoiceschanged = loadVoices;
 
-/* ================= VOICE CONTROLS ================= */
+/* ================= VOICE SETTINGS ================= */
 function initVoiceControls() {
-    const volumeEl = document.getElementById("voiceVolume");
-    const rateEl = document.getElementById("voiceRate");
-    const pitchEl = document.getElementById("voicePitch");
-    const voiceSelect = document.getElementById("voiceSelect");
+  const volumeEl = document.getElementById("voiceVolume");
+  const rateEl = document.getElementById("voiceRate");
+  const pitchEl = document.getElementById("voicePitch");
+  const voiceSelect = document.getElementById("voiceSelect");
 
-    if (!volumeEl) return;
+  if (!volumeEl) return;
 
-    volumeEl.value = get("voiceVolume", 1);
-    rateEl.value = get("voiceRate", 1);
-    pitchEl.value = get("voicePitch", 1);
+  volumeEl.value = get("voiceVolume", 1);
+  rateEl.value = get("voiceRate", 1);
+  pitchEl.value = get("voicePitch", 1);
 
-    volumeEl.oninput = e => save("voiceVolume", e.target.value);
-    rateEl.oninput = e => save("voiceRate", e.target.value);
-    pitchEl.oninput = e => save("voicePitch", e.target.value);
-    voiceSelect.onchange = e => save("voiceIndex", e.target.value);
+  volumeEl.oninput = e => save("voiceVolume", e.target.value);
+  rateEl.oninput = e => save("voiceRate", e.target.value);
+  pitchEl.oninput = e => save("voicePitch", e.target.value);
+  voiceSelect.onchange = e => save("voiceIndex", e.target.value);
 }
 
-/* ================= IOS VOICE UNLOCK ================= */
-function unlockIOSVoice() {
-    if (!isIOS || iosUnlocked) return;
-    const unlockHandler = () => {
-        const u = new SpeechSynthesisUtterance(" ");
-        synth.speak(u);
-        synth.cancel();
-        iosUnlocked = true;
-        document.body.removeEventListener("touchstart", unlockHandler);
-    };
-    document.body.addEventListener("touchstart", unlockHandler, { once: true, passive: true });
+/* ================= CONTROLS ================= */
+function startReading() {
+  readEnabled = true;
+  readingState = "reading";
+  save("pageRead", true);
 }
 
-/* ================= READ HANDLER ================= */
-function handleRead(el) {
-    if (!readEnabled || readingState !== "reading") return;
-    if (!el || !el.innerText || el.children.length > 0) return;
-    if (isIOS && !iosUnlocked) return;
+function pauseReading() {
+  if (synth.speaking) {
+    synth.pause();
+    readingState = "paused";
+  }
+}
 
-    const text = el.innerText.trim();
-    if (text.length < 2 || text === lastText) return;
-
-    currentElement?.classList.remove("a11y-read-hover");
-    el.classList.add("a11y-read-hover");
-    currentElement = el;
-
-    synth.cancel();
-
-    utterance = new SpeechSynthesisUtterance(text);
-    utterance.voice = voices[get("voiceIndex", 0)] || voices[0];
-    utterance.volume = get("voiceVolume", 1);
-    utterance.rate = get("voiceRate", 1);
-    utterance.pitch = get("voicePitch", 1);
-
-    utterance.onend = () => {
-        if (isIOS) autoReadIOS(); // auto continue on iOS
-    };
-
-    synth.speak(utterance);
-    lastText = text;
+function resumeReading() {
+  if (readingState === "paused") {
+    synth.resume();
     readingState = "reading";
+  }
 }
 
-/* ================= AUTO READ FOR IOS ================= */
-function autoReadIOS() {
-    if (!readEnabled || readingState !== "reading") return;
-    const elements = Array.from(document.querySelectorAll("p, li, span, div, a"))
-        .filter(el => el.innerText.trim().length > 1);
-    const nextIndex = elements.indexOf(currentElement) + 1 || 0;
-    const nextEl = elements[nextIndex] || elements[0]; // loop if end
-    handleRead(nextEl);
+function stopReading() {
+  synth.cancel();
+  readEnabled = false;
+  readingState = "stopped";
+  lastText = "";
+  currentElement?.classList.remove("a11y-read-hover");
+  save("pageRead", false);
 }
 
-/* ================= DESKTOP HOVER ================= */
+/* ================= HOVER READ ================= */
 document.body.addEventListener("mouseover", e => {
-    if (isIOS) return;
-    handleRead(e.target);
+  if (!readEnabled || readingState !== "reading") return;
+
+  const el = e.target;
+  if (!el.innerText || el.children.length > 0) return;
+
+  const text = el.innerText.trim();
+  if (text.length < 2 || text === lastText) return;
+
+  currentElement?.classList.remove("a11y-read-hover");
+  el.classList.add("a11y-read-hover");
+  currentElement = el;
+
+  synth.cancel();
+
+  utterance = new SpeechSynthesisUtterance(text);
+  utterance.voice = voices[get("voiceIndex", 0)] || voices[0];
+  utterance.volume = get("voiceVolume", 1);
+  utterance.rate = get("voiceRate", 1);
+  utterance.pitch = get("voicePitch", 1);
+
+  synth.speak(utterance);
+  lastText = text;
 });
 
-/* ================= IOS TAP ================= */
-document.body.addEventListener(
-    "touchstart",
-    e => {
-        if (!isIOS) return;
-        handleRead(e.target);
-    },
-    { passive: true }
-);
+document.body.addEventListener("mouseout", e => {
+  if (e.target === currentElement) {
+    e.target.classList.remove("a11y-read-hover");
+  }
+});
 
 /* ================= HIGHLIGHT HEADINGS ================= */
 function toggleHeadingHighlight() {
-    document.querySelectorAll("h1,h2,h3,h4,h5,h6")
-        .forEach(h => h.classList.toggle("a11y-heading"));
+  document.querySelectorAll("h1,h2,h3,h4,h5,h6")
+    .forEach(h => h.classList.toggle("a11y-heading"));
 
-    saveA11y(
-        "headingHighlight",
-        document.querySelector("h1")?.classList.contains("a11y-heading")
-    );
+  saveA11y(
+    "headingHighlight",
+    document.querySelector("h1")?.classList.contains("a11y-heading")
+  );
 }
 
 /* ================= IMAGE DESCRIPTION ================= */
 let imageDescEnabled = false;
-function showImageTip(img) {
-    removeImageTip(img);
+function toggleImageDesc() {
+  imageDescEnabled = !imageDescEnabled;
+  saveA11y("imageDesc", imageDescEnabled);
+}
+
+document.querySelectorAll("img").forEach(img => {
+  img.addEventListener("mouseenter", () => {
+    if (!imageDescEnabled || !img.alt) return;
+
     const tip = document.createElement("div");
     tip.className = "a11y-img-tip";
     tip.innerText = img.alt;
@@ -1313,116 +1643,66 @@ function showImageTip(img) {
     tip.style.left = (r.left + window.scrollX) + "px";
 
     img._tip = tip;
-}
-function removeImageTip(img) {
-    if (img._tip) {
-        img._tip.remove();
-        img._tip = null;
-    }
-}
-function attachImageDesc() {
-    document.querySelectorAll("img").forEach(img => {
-        img.onmouseenter = img.onmouseleave = img.onclick = img.ontouchstart = null;
-        img.addEventListener("mouseenter", () => {
-            if (!imageDescEnabled || !img.alt) return;
-            showImageTip(img);
-        });
-        img.addEventListener("mouseleave", () => removeImageTip(img));
-        img.addEventListener("click", () => {
-            if (!imageDescEnabled || !img.alt) return;
-            showImageTip(img);
-            setTimeout(() => removeImageTip(img), 3000);
-        });
-        img.addEventListener("touchstart", () => {
-            if (!imageDescEnabled || !img.alt) return;
-            showImageTip(img);
-            setTimeout(() => removeImageTip(img), 3000);
-        }, { passive: true });
-    });
-}
-function toggleImageDesc() {
-    imageDescEnabled = !imageDescEnabled;
-    saveA11y("imageDesc", imageDescEnabled);
-    attachImageDesc();
-}
+  });
+
+  img.addEventListener("mouseleave", () => {
+    img._tip?.remove();
+  });
+});
 
 /* ================= HIDE IMAGES ================= */
 function toggleImages() {
-    const hide = document.body.classList.toggle("hide-images");
-    saveA11y("hideImages", hide);
+  const hide = document.body.classList.toggle("hide-images");
+  saveA11y("hideImages", hide);
 
-    document.querySelectorAll("img").forEach(img => {
-        hide
-            ? img.setAttribute("aria-hidden", "true")
-            : img.removeAttribute("aria-hidden");
-    });
-}
-
-/* ================= VOICE POPUP BUTTONS ================= */
-function pauseReading() {
-    if (synth.speaking && !synth.paused) {
-        synth.pause();
-        readingState = "paused";
-    }
-}
-function resumeReading() {
-    if (synth.paused) {
-        synth.resume();
-        readingState = "reading";
-    }
-}
-function stopReading() {
-    synth.cancel();
-    readingState = "stopped";
-    readEnabled = false;
-    lastText = "";
-    currentElement?.classList.remove("a11y-read-hover");
-    save("pageRead", false);
+  document.querySelectorAll("img").forEach(img => {
+    hide
+      ? img.setAttribute("aria-hidden", "true")
+      : img.removeAttribute("aria-hidden");
+  });
 }
 
-/* ================= RESTORE ON LOAD ================= */
+/* ================= RESTORE ON PAGE LOAD ================= */
 document.addEventListener("DOMContentLoaded", () => {
- 
-    document.documentElement.style.fontSize =  getA11y("textSize", 100) + "%";     
 
-    const lh = getA11y("lineHeight", null);
-    if (lh) setLineHeight(lh);
+  document.documentElement.style.fontSize = getA11y("textSize", 100) + "%";
 
-    document.body.style.letterSpacing = getA11y("letterSpacing", 0) + "px";
+  const lh = getA11y("lineHeight", null);
+  if (lh) setLineHeight(lh);
 
-    bigCursorEnabled = getA11y("bigCursor", false);
-    document.documentElement.classList.toggle("big-cursor", bigCursorEnabled);
+  document.body.style.letterSpacing = getA11y("letterSpacing", 0) + "px";
 
-    if (getA11y("headingHighlight", false)) {
-        document.querySelectorAll("h1,h2,h3,h4,h5,h6")
-            .forEach(h => h.classList.add("a11y-heading"));
-    }
+  bigCursorEnabled = getA11y("bigCursor", false);
+  document.documentElement.classList.toggle("big-cursor", bigCursorEnabled);
 
-    if (getA11y("hideImages", false)) {
-        document.body.classList.add("hide-images");
-        document.querySelectorAll("img").forEach(img =>
-            img.setAttribute("aria-hidden", "true")
-        );
-    }
+  if (getA11y("headingHighlight", false)) {
+    document.querySelectorAll("h1,h2,h3,h4,h5,h6")
+      .forEach(h => h.classList.add("a11y-heading"));
+  }
 
-    imageDescEnabled = getA11y("imageDesc", false);
-    attachImageDesc();
+  if (getA11y("hideImages", false)) {
+    document.body.classList.add("hide-images");
+    document.querySelectorAll("img").forEach(img =>
+      img.setAttribute("aria-hidden", "true")
+    );
+  }
 
-    // Restore Page Read if previously enabled
-    if (get("pageRead", false)) {
-        readEnabled = true;
-        readingState = "reading";
-        openVoicePopup();
-        unlockIOSVoice();
-        if (isIOS) autoReadIOS();
-    }
+  imageDescEnabled = getA11y("imageDesc", false);
 
-    loadVoices();
-    initVoiceControls();
+  if (get("pageRead", false)) {
+    readEnabled = true;
+    readingState = "reading";
+    openVoicePopup();
+  }
+
+  loadVoices();
+  initVoiceControls();
 });
 
 /* ================= RESET ================= */
 function resetAccessibility() {
-    localStorage.clear();
-    location.reload();
-}
+  localStorage.clear();
+  location.reload();
+} 
+
+
