@@ -1146,7 +1146,6 @@ let readEnabled = false;
 let readingState = "stopped"; // reading | paused | stopped
 let lastText = "";
 let currentElement = null;
-let iosUnlockedOnce = false;
 
 /* ================= STORAGE SHORTCUT ================= */
 const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
@@ -1160,6 +1159,7 @@ function togglePageRead() {
   if (readEnabled) {
     readingState = "reading";
     openVoicePopup();
+    unlockIOSVoice();
   } else {
     stopReading();
     closeVoicePopup();
@@ -1188,12 +1188,7 @@ function loadVoices() {
     select.appendChild(opt);
   });
 
-  const preferredIndex = voices.findIndex(v =>
-    v.name.toLowerCase().includes("microsoft david")
-  );
-
-  select.value = preferredIndex !== -1 ? preferredIndex : 0;
-  save("voiceIndex", select.value);
+  select.value = get("voiceIndex", 0);
 }
 speechSynthesis.onvoiceschanged = loadVoices;
 
@@ -1216,16 +1211,12 @@ function initVoiceControls() {
   voiceSelect.onchange = e => save("voiceIndex", e.target.value);
 }
 
-/* ================= PREFERRED VOICE ================= */
-function getPreferredVoice() {
-  if (!voices.length) return null;
-
-  return (
-    voices.find(v => v.name.toLowerCase().includes("microsoft david")) ||
-    voices.find(v => v.lang.startsWith("en") && !v.name.toLowerCase().includes("female")) ||
-    voices.find(v => v.lang.startsWith("en")) ||
-    voices[0]
-  );
+/* ================= IOS VOICE UNLOCK ================= */
+function unlockIOSVoice() {
+  if (!isIOS) return;
+  const u = new SpeechSynthesisUtterance(" ");
+  synth.speak(u);
+  synth.cancel();
 }
 
 /* ================= CONTROLS ================= */
@@ -1233,6 +1224,7 @@ function startReading() {
   readEnabled = true;
   readingState = "reading";
   save("pageRead", true);
+  unlockIOSVoice();
 }
 
 function pauseReading() {
@@ -1263,14 +1255,6 @@ function handleRead(el) {
   if (!readEnabled || readingState !== "reading") return;
   if (!el || !el.innerText || el.children.length > 0) return;
 
-  /* iOS AUTO-UNLOCK */
-  if (isIOS && !iosUnlockedOnce) {
-    const u = new SpeechSynthesisUtterance(" ");
-    synth.speak(u);
-    synth.cancel();
-    iosUnlockedOnce = true;
-  }
-
   const text = el.innerText.trim();
   if (text.length < 2 || text === lastText) return;
 
@@ -1281,7 +1265,7 @@ function handleRead(el) {
   synth.cancel();
 
   utterance = new SpeechSynthesisUtterance(text);
-  utterance.voice = getPreferredVoice();
+  utterance.voice = voices[get("voiceIndex", 0)] || voices[0];
   utterance.volume = get("voiceVolume", 1);
   utterance.rate = get("voiceRate", 1);
   utterance.pitch = get("voicePitch", 1);
@@ -1324,6 +1308,27 @@ function toggleImageDesc() {
   saveA11y("imageDesc", imageDescEnabled);
 }
 
+document.querySelectorAll("img").forEach(img => {
+  img.addEventListener("mouseenter", () => {
+    if (!imageDescEnabled || !img.alt) return;
+
+    const tip = document.createElement("div");
+    tip.className = "a11y-img-tip";
+    tip.innerText = img.alt;
+    document.body.appendChild(tip);
+
+    const r = img.getBoundingClientRect();
+    tip.style.top = r.top + window.scrollY + r.height + 10 + "px";
+    tip.style.left = r.left + window.scrollX + "px";
+
+    img._tip = tip;
+  });
+
+  img.addEventListener("mouseleave", () => {
+    img._tip?.remove();
+  });
+});
+
 /* ================= HIDE IMAGES ================= */
 function toggleImages() {
   const hide = document.body.classList.toggle("hide-images");
@@ -1338,8 +1343,6 @@ function toggleImages() {
 
 /* ================= RESTORE ON LOAD ================= */
 document.addEventListener("DOMContentLoaded", () => {
-  iosUnlockedOnce = false;
-
   document.documentElement.style.fontSize = getA11y("textSize", 100) + "%";
 
   const lh = getA11y("lineHeight", null);
@@ -1368,6 +1371,7 @@ document.addEventListener("DOMContentLoaded", () => {
     readEnabled = true;
     readingState = "reading";
     openVoicePopup();
+    unlockIOSVoice();
   }
 
   loadVoices();
@@ -1379,3 +1383,4 @@ function resetAccessibility() {
   localStorage.clear();
   location.reload();
 }
+
