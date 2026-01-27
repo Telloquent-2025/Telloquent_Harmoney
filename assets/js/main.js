@@ -2296,6 +2296,19 @@ function toggleImageDesc() {
     attachImageDesc();
 }
 
+
+/* ================= HIGHLIGHT HEADINGS ================= */
+function toggleHeadingHighlight() {
+    document.querySelectorAll("h1,h2,h3,h4,h5,h6")
+        .forEach(h => h.classList.toggle("a11y-heading"));
+
+    saveA11y(
+        "headingHighlight",
+        document.querySelector("h1")?.classList.contains("a11y-heading")
+    );
+}
+
+
 /* ================= RESTORE ON PAGE LOAD ================= */
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -2306,12 +2319,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.body.style.letterSpacing = getA11y("letterSpacing", 0) + "px";
 
+    /* ===== BIG CURSOR ===== */
     bigCursorEnabled = getA11y("bigCursor", false);
     document.documentElement.classList.toggle("big-cursor", bigCursorEnabled);
 
+    /* ===== HEADING HIGHLIGHT ===== */
+    if (getA11y("headingHighlight", false)) {
+        document.querySelectorAll("h1,h2,h3,h4,h5,h6")
+            .forEach(h => h.classList.add("a11y-heading"));
+    }
+
+    /* ===== HIDE IMAGES ===== */
+    if (getA11y("hideImages", false)) {
+        document.body.classList.add("hide-images");
+        document.querySelectorAll("img").forEach(img =>
+            img.setAttribute("aria-hidden", "true")
+        );
+    }
+
+    /* ===== IMAGE DESCRIPTION ===== */
     imageDescEnabled = getA11y("imageDesc", false);
     if (imageDescEnabled) attachImageDesc();
 
+    /* ===== PAGE READ ===== */
     if (get("pageRead", false)) {
         readEnabled = true;
         readingState = "reading";
@@ -2327,6 +2357,21 @@ document.addEventListener("DOMContentLoaded", () => {
     loadVoices();
     initVoiceControls();
 });
+
+
+
+/* ================= HIDE IMAGES ================= */
+function toggleImages() {
+    const hide = document.body.classList.toggle("hide-images");
+    saveA11y("hideImages", hide);
+
+    document.querySelectorAll("img").forEach(img => {
+        hide
+            ? img.setAttribute("aria-hidden", "true")
+            : img.removeAttribute("aria-hidden");
+    });
+}
+
 
 /* ================= RESET ================= */
 function resetAccessibility() {
