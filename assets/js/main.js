@@ -1382,7 +1382,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // /* ================= RESTORE ON LOAD ================= */
 // document.addEventListener("DOMContentLoaded", () => {
- 
+
 //     document.documentElement.style.fontSize =  getA11y("textSize", 100) + "%";     
 
 //     const lh = getA11y("lineHeight", null);
@@ -1707,52 +1707,391 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+
+
+
+
+
+
+// third correct one
+/* ================= DEVICE DETECTION ================= */
+// const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+// /* ================= ACCESSIBILITY PANEL ================= */
+// function openAccessibilityPanel() {
+//     document.getElementById("accessibilityPanel")?.classList.add("open");
+// }
+// function closeAccessibilityPanel() {
+//     document.getElementById("accessibilityPanel")?.classList.remove("open");
+// }
+
+// /* ================= LOCAL STORAGE HELPERS ================= */
+// function saveA11y(key, value) {
+//     localStorage.setItem(key, JSON.stringify(value));
+// }
+// function getA11y(key, defaultVal) {
+//     const val = localStorage.getItem(key);
+//     return val ? JSON.parse(val) : defaultVal;
+// }
+
+// /* ================= LINE HEIGHT ================= */
+// function setLineHeight(val) {
+//     document.querySelectorAll("p, li, span, div, a").forEach(el => {
+//         el.style.lineHeight = val;
+//     });
+//     saveA11y("lineHeight", val);
+// }
+
+// /* ================= TEXT SIZE ================= */
+// function setTextSize(val) {
+//     document.documentElement.style.fontSize = val + "%";
+//     saveA11y("textSize", val);
+// }
+
+// /* ================= LETTER SPACING ================= */
+// function setLetterSpacing(val) {
+//     document.body.style.letterSpacing = val + "px";
+//     saveA11y("letterSpacing", val);
+// }
+
+// /* ================= BIG CURSOR ================= */
+// let bigCursorEnabled = false;
+// function toggleBigCursor() {
+//     bigCursorEnabled = !bigCursorEnabled;
+//     document.documentElement.classList.toggle("big-cursor", bigCursorEnabled);
+//     saveA11y("bigCursor", bigCursorEnabled);
+// }
+
+// /* ================= VOICE CORE ================= */
+// const synth = window.speechSynthesis;
+// let voices = [];
+// let utterance = null;
+// let readEnabled = false;
+// let readingState = "stopped"; // reading | paused | stopped
+// let lastText = "";
+// let currentElement = null;
+
+// /* ================= STORAGE SHORTCUT ================= */
+// const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+// const get = (k, d) => JSON.parse(localStorage.getItem(k)) ?? d;
+
+// /* ================= PAGE READ BUTTON ================= */
+// function togglePageRead() {
+//     readEnabled = !readEnabled;
+//     save("pageRead", readEnabled);
+
+//     if (readEnabled) {
+//         readingState = "reading";
+//         openVoicePopup();
+
+//         // ✅ iOS Safari speech unlock (NO auto reading)
+//         if (isIOS) {
+//             const unlock = new SpeechSynthesisUtterance("");
+//             unlock.volume = 0;
+//             synth.speak(unlock);
+//         }
+
+//     } else {
+//         stopReading();
+//         closeVoicePopup();
+//     }
+// }
+
+// /* ================= POPUP CONTROL ================= */
+// function openVoicePopup() {
+//     document.getElementById("voicePopup")?.classList.add("open");
+// }
+// function closeVoicePopup() {
+//     document.getElementById("voicePopup")?.classList.remove("open");
+// }
+
+// /* ================= LOAD VOICES ================= */
+// function loadVoices() {
+//     voices = synth.getVoices();
+//     const select = document.getElementById("voiceSelect");
+//     if (!select) return;
+
+//     select.innerHTML = "";
+//     voices.forEach((v, i) => {
+//         const opt = document.createElement("option");
+//         opt.value = i;
+//         opt.textContent = `${v.name} (${v.lang})`;
+//         select.appendChild(opt);
+//     });
+
+//     select.value = get("voiceIndex", 0);
+// }
+// speechSynthesis.onvoiceschanged = loadVoices;
+
+// /* ================= VOICE SETTINGS ================= */
+// function initVoiceControls() {
+//     const volumeEl = document.getElementById("voiceVolume");
+//     const rateEl = document.getElementById("voiceRate");
+//     const pitchEl = document.getElementById("voicePitch");
+//     const voiceSelect = document.getElementById("voiceSelect");
+
+//     if (!volumeEl) return;
+
+//     volumeEl.value = get("voiceVolume", 1);
+//     rateEl.value = get("voiceRate", 1);
+//     pitchEl.value = get("voicePitch", 1);
+
+//     volumeEl.oninput = e => save("voiceVolume", e.target.value);
+//     rateEl.oninput = e => save("voiceRate", e.target.value);
+//     pitchEl.oninput = e => save("voicePitch", e.target.value);
+//     voiceSelect.onchange = e => save("voiceIndex", e.target.value);
+// }
+
+// /* ================= CONTROLS ================= */
+// function startReading() {
+//     readEnabled = true;
+//     readingState = "reading";
+//     save("pageRead", true);
+// }
+
+// function pauseReading() {
+//     if (synth.speaking) {
+//         synth.pause();
+//         readingState = "paused";
+//     }
+// }
+
+// function resumeReading() {
+//     if (readingState === "paused") {
+//         synth.resume();
+//         readingState = "reading";
+//     }
+// }
+
+// function stopReading() {
+//     synth.cancel();
+//     readEnabled = false;
+//     readingState = "stopped";
+//     lastText = "";
+//     currentElement?.classList.remove("a11y-read-hover");
+//     save("pageRead", false);
+// }
+
+// /* ================= DESKTOP: HOVER READ ================= */
+// if (!isIOS) {
+//     document.body.addEventListener("mouseover", e => {
+//         if (!readEnabled || readingState !== "reading") return;
+
+//         const el = e.target;
+//         if (!el.innerText || el.children.length > 0) return;
+
+//         const text = el.innerText.trim();
+//         if (text.length < 2 || text === lastText) return;
+
+//         currentElement?.classList.remove("a11y-read-hover");
+//         el.classList.add("a11y-read-hover");
+//         currentElement = el;
+
+//         synth.cancel();
+
+//         utterance = new SpeechSynthesisUtterance(text);
+//         utterance.voice = voices[get("voiceIndex", 0)] || voices[0];
+//         utterance.volume = get("voiceVolume", 1);
+//         utterance.rate = get("voiceRate", 1);
+//         utterance.pitch = get("voicePitch", 1);
+
+//         synth.speak(utterance);
+//         lastText = text;
+//     });
+// }
+
+// /* ================= iOS / ANDROID: TAP READ ================= */
+// document.body.addEventListener("click", e => {
+//     if (!readEnabled || readingState !== "reading") return;
+
+//     const el = e.target;
+//     if (!el.innerText || el.children.length > 0) return;
+
+//     const text = el.innerText.trim();
+//     if (text.length < 2 || text === lastText) return;
+
+//     currentElement?.classList.remove("a11y-read-hover");
+//     el.classList.add("a11y-read-hover");
+//     currentElement = el;
+
+//     synth.cancel();
+
+//     utterance = new SpeechSynthesisUtterance(text);
+//     utterance.voice = voices[get("voiceIndex", 0)] || voices[0];
+//     utterance.volume = get("voiceVolume", 1);
+//     utterance.rate = get("voiceRate", 1);
+//     utterance.pitch = get("voicePitch", 1);
+
+//     synth.speak(utterance);
+//     lastText = text;
+// });
+
+// /* ================= HIGHLIGHT HEADINGS ================= */
+// function toggleHeadingHighlight() {
+//     document.querySelectorAll("h1,h2,h3,h4,h5,h6")
+//         .forEach(h => h.classList.toggle("a11y-heading"));
+
+//     saveA11y(
+//         "headingHighlight",
+//         document.querySelector("h1")?.classList.contains("a11y-heading")
+//     );
+// }
+
+// /* ================= IMAGE DESCRIPTION ================= */
+// let imageDescEnabled = false;
+// function showImageTip(img) {
+//     removeImageTip(img);
+//     const tip = document.createElement("div");
+//     tip.className = "a11y-img-tip";
+//     tip.innerText = img.alt;
+//     document.body.appendChild(tip);
+
+//     const r = img.getBoundingClientRect();
+//     tip.style.top = (r.top + window.scrollY + r.height + 10) + "px";
+//     tip.style.left = (r.left + window.scrollX) + "px";
+
+//     img._tip = tip;
+// }
+// function removeImageTip(img) {
+//     if (img._tip) {
+//         img._tip.remove();
+//         img._tip = null;
+//     }
+// }
+// function attachImageDesc() {
+//     document.querySelectorAll("img").forEach(img => {
+//         img.onmouseenter = img.onmouseleave = img.onclick = img.ontouchstart = null;
+//         img.addEventListener("mouseenter", () => {
+//             if (!imageDescEnabled || !img.alt) return;
+//             showImageTip(img);
+//         });
+//         img.addEventListener("mouseleave", () => removeImageTip(img));
+//         img.addEventListener("click", () => {
+//             if (!imageDescEnabled || !img.alt) return;
+//             showImageTip(img);
+//             setTimeout(() => removeImageTip(img), 3000);
+//         });
+//         img.addEventListener("touchstart", () => {
+//             if (!imageDescEnabled || !img.alt) return;
+//             showImageTip(img);
+//             setTimeout(() => removeImageTip(img), 3000);
+//         }, { passive: true });
+//     });
+// }
+// function toggleImageDesc() {
+//     imageDescEnabled = !imageDescEnabled;
+//     saveA11y("imageDesc", imageDescEnabled);
+//     attachImageDesc();
+// }
+
+// /* ================= HIDE IMAGES ================= */
+// function toggleImages() {
+//     const hide = document.body.classList.toggle("hide-images");
+//     saveA11y("hideImages", hide);
+
+//     document.querySelectorAll("img").forEach(img => {
+//         hide
+//             ? img.setAttribute("aria-hidden", "true")
+//             : img.removeAttribute("aria-hidden");
+//     });
+// }
+
+// /* ================= RESTORE ON PAGE LOAD ================= */
+// document.addEventListener("DOMContentLoaded", () => {
+
+//     document.documentElement.style.fontSize = getA11y("textSize", 100) + "%";
+
+//     const lh = getA11y("lineHeight", null);
+//     if (lh) setLineHeight(lh);
+
+//     document.body.style.letterSpacing = getA11y("letterSpacing", 0) + "px";
+
+//     bigCursorEnabled = getA11y("bigCursor", false);
+//     document.documentElement.classList.toggle("big-cursor", bigCursorEnabled);
+
+//     if (getA11y("headingHighlight", false)) {
+//         document.querySelectorAll("h1,h2,h3,h4,h5,h6")
+//             .forEach(h => h.classList.add("a11y-heading"));
+//     }
+
+//     if (getA11y("hideImages", false)) {
+//         document.body.classList.add("hide-images");
+//         document.querySelectorAll("img").forEach(img =>
+//             img.setAttribute("aria-hidden", "true")
+//         );
+//     }
+
+//     imageDescEnabled = getA11y("imageDesc", false);
+
+//     // ✅ RESTORE PAGE READ STATE (NO POPUP, NO AUTO READ)
+//     if (get("pageRead", false)) {
+//         readEnabled = true;
+//         readingState = "reading";
+//     }
+
+//     loadVoices();
+//     initVoiceControls();
+// });
+
+// /* ================= RESET ================= */
+// function resetAccessibility() {
+//     localStorage.clear();
+//     location.reload();
+// }
+
+
+
+
+
+
+
+
 /* ================= DEVICE DETECTION ================= */
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 /* ================= ACCESSIBILITY PANEL ================= */
 function openAccessibilityPanel() {
-  document.getElementById("accessibilityPanel")?.classList.add("open");
+    document.getElementById("accessibilityPanel")?.classList.add("open");
 }
 function closeAccessibilityPanel() {
-  document.getElementById("accessibilityPanel")?.classList.remove("open");
+    document.getElementById("accessibilityPanel")?.classList.remove("open");
 }
 
 /* ================= LOCAL STORAGE HELPERS ================= */
 function saveA11y(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key, JSON.stringify(value));
 }
 function getA11y(key, defaultVal) {
-  const val = localStorage.getItem(key);
-  return val ? JSON.parse(val) : defaultVal;
+    const val = localStorage.getItem(key);
+    return val ? JSON.parse(val) : defaultVal;
 }
 
 /* ================= LINE HEIGHT ================= */
 function setLineHeight(val) {
-  document.querySelectorAll("p, li, span, div, a").forEach(el => {
-    el.style.lineHeight = val;
-  });
-  saveA11y("lineHeight", val);
+    document.querySelectorAll("p, li, span, div, a").forEach(el => {
+        el.style.lineHeight = val;
+    });
+    saveA11y("lineHeight", val);
 }
 
 /* ================= TEXT SIZE ================= */
 function setTextSize(val) {
-  document.documentElement.style.fontSize = val + "%";
-  saveA11y("textSize", val);
+    document.documentElement.style.fontSize = val + "%";
+    saveA11y("textSize", val);
 }
 
 /* ================= LETTER SPACING ================= */
 function setLetterSpacing(val) {
-  document.body.style.letterSpacing = val + "px";
-  saveA11y("letterSpacing", val);
+    document.body.style.letterSpacing = val + "px";
+    saveA11y("letterSpacing", val);
 }
 
 /* ================= BIG CURSOR ================= */
 let bigCursorEnabled = false;
 function toggleBigCursor() {
-  bigCursorEnabled = !bigCursorEnabled;
-  document.documentElement.classList.toggle("big-cursor", bigCursorEnabled);
-  saveA11y("bigCursor", bigCursorEnabled);
+    bigCursorEnabled = !bigCursorEnabled;
+    document.documentElement.classList.toggle("big-cursor", bigCursorEnabled);
+    saveA11y("bigCursor", bigCursorEnabled);
 }
 
 /* ================= VOICE CORE ================= */
@@ -1760,114 +2099,131 @@ const synth = window.speechSynthesis;
 let voices = [];
 let utterance = null;
 let readEnabled = false;
-let readingState = "stopped"; // reading | paused | stopped
+let readingState = "stopped";
 let lastText = "";
 let currentElement = null;
 
 /* ================= STORAGE SHORTCUT ================= */
-const save = (k,v) => localStorage.setItem(k, JSON.stringify(v));
-const get = (k,d) => JSON.parse(localStorage.getItem(k)) ?? d;
+const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+const get = (k, d) => JSON.parse(localStorage.getItem(k)) ?? d;
 
-/* ================= PAGE READ BUTTON ================= */
+/* ================= PAGE READ TOGGLE ================= */
 function togglePageRead() {
-  readEnabled = !readEnabled;
-  save("pageRead", readEnabled);
+    readEnabled = !readEnabled;
+    save("pageRead", readEnabled);
 
-  if (readEnabled) {
-    readingState = "reading";
-    openVoicePopup();
+    if (readEnabled) {
+        readingState = "reading";
+        openVoicePopup();
 
-    // ✅ iOS Safari speech unlock (NO auto reading)
-    if (isIOS) {
-      const unlock = new SpeechSynthesisUtterance("");
-      unlock.volume = 0;
-      synth.speak(unlock);
+        // iOS unlock (NO auto speech)
+        if (isIOS) {
+            const unlock = new SpeechSynthesisUtterance("");
+            unlock.volume = 0;
+            synth.speak(unlock);
+        }
+    } else {
+        stopReading();
+        closeVoicePopup();
     }
-
-  } else {
-    stopReading();
-    closeVoicePopup();
-  }
 }
 
 /* ================= POPUP CONTROL ================= */
 function openVoicePopup() {
-  document.getElementById("voicePopup")?.classList.add("open");
+    document.getElementById("voicePopup")?.classList.add("open");
 }
 function closeVoicePopup() {
-  document.getElementById("voicePopup")?.classList.remove("open");
+    document.getElementById("voicePopup")?.classList.remove("open");
 }
 
 /* ================= LOAD VOICES ================= */
 function loadVoices() {
-  voices = synth.getVoices();
-  const select = document.getElementById("voiceSelect");
-  if (!select) return;
+    voices = synth.getVoices();
+    const select = document.getElementById("voiceSelect");
+    if (!select) return;
 
-  select.innerHTML = "";
-  voices.forEach((v, i) => {
-    const opt = document.createElement("option");
-    opt.value = i;
-    opt.textContent = `${v.name} (${v.lang})`;
-    select.appendChild(opt);
-  });
+    select.innerHTML = "";
+    voices.forEach((v, i) => {
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.textContent = `${v.name} (${v.lang})`;
+        select.appendChild(opt);
+    });
 
-  select.value = get("voiceIndex", 0);
+    select.value = get("voiceIndex", 0);
 }
 speechSynthesis.onvoiceschanged = loadVoices;
 
 /* ================= VOICE SETTINGS ================= */
 function initVoiceControls() {
-  const volumeEl = document.getElementById("voiceVolume");
-  const rateEl = document.getElementById("voiceRate");
-  const pitchEl = document.getElementById("voicePitch");
-  const voiceSelect = document.getElementById("voiceSelect");
+    const volumeEl = document.getElementById("voiceVolume");
+    const rateEl = document.getElementById("voiceRate");
+    const pitchEl = document.getElementById("voicePitch");
+    const voiceSelect = document.getElementById("voiceSelect");
 
-  if (!volumeEl) return;
+    if (!volumeEl) return;
 
-  volumeEl.value = get("voiceVolume", 1);
-  rateEl.value = get("voiceRate", 1);
-  pitchEl.value = get("voicePitch", 1);
+    volumeEl.value = get("voiceVolume", 1);
+    rateEl.value = get("voiceRate", 1);
+    pitchEl.value = get("voicePitch", 1);
 
-  volumeEl.oninput = e => save("voiceVolume", e.target.value);
-  rateEl.oninput = e => save("voiceRate", e.target.value);
-  pitchEl.oninput = e => save("voicePitch", e.target.value);
-  voiceSelect.onchange = e => save("voiceIndex", e.target.value);
+    volumeEl.oninput = e => save("voiceVolume", e.target.value);
+    rateEl.oninput = e => save("voiceRate", e.target.value);
+    pitchEl.oninput = e => save("voicePitch", e.target.value);
+    voiceSelect.onchange = e => save("voiceIndex", e.target.value);
 }
 
 /* ================= CONTROLS ================= */
-function startReading() {
-  readEnabled = true;
-  readingState = "reading";
-  save("pageRead", true);
-}
-
 function pauseReading() {
-  if (synth.speaking) {
-    synth.pause();
-    readingState = "paused";
-  }
+    if (synth.speaking) {
+        synth.pause();
+        readingState = "paused";
+    }
 }
-
 function resumeReading() {
-  if (readingState === "paused") {
-    synth.resume();
-    readingState = "reading";
-  }
+    if (readingState === "paused") {
+        synth.resume();
+        readingState = "reading";
+    }
 }
-
 function stopReading() {
-  synth.cancel();
-  readEnabled = false;
-  readingState = "stopped";
-  lastText = "";
-  currentElement?.classList.remove("a11y-read-hover");
-  save("pageRead", false);
+    synth.cancel();
+    readEnabled = false;
+    readingState = "stopped";
+    lastText = "";
+    currentElement?.classList.remove("a11y-read-hover");
+    save("pageRead", false);
 }
 
-/* ================= DESKTOP: HOVER READ ================= */
+/* ================= DESKTOP HOVER READ ================= */
 if (!isIOS) {
-  document.body.addEventListener("mouseover", e => {
+    document.body.addEventListener("mouseover", e => {
+        if (!readEnabled || readingState !== "reading") return;
+
+        const el = e.target;
+        if (!el.innerText || el.children.length > 0) return;
+
+        const text = el.innerText.trim();
+        if (text.length < 2 || text === lastText) return;
+
+        currentElement?.classList.remove("a11y-read-hover");
+        el.classList.add("a11y-read-hover");
+        currentElement = el;
+
+        synth.cancel();
+        utterance = new SpeechSynthesisUtterance(text);
+        utterance.voice = voices[get("voiceIndex", 0)] || voices[0];
+        utterance.volume = get("voiceVolume", 1);
+        utterance.rate = get("voiceRate", 1);
+        utterance.pitch = get("voicePitch", 1);
+
+        synth.speak(utterance);
+        lastText = text;
+    });
+}
+
+/* ================= MOBILE TAP READ ================= */
+document.body.addEventListener("click", e => {
     if (!readEnabled || readingState !== "reading") return;
 
     const el = e.target;
@@ -1881,7 +2237,6 @@ if (!isIOS) {
     currentElement = el;
 
     synth.cancel();
-
     utterance = new SpeechSynthesisUtterance(text);
     utterance.voice = voices[get("voiceIndex", 0)] || voices[0];
     utterance.volume = get("voiceVolume", 1);
@@ -1890,100 +2245,91 @@ if (!isIOS) {
 
     synth.speak(utterance);
     lastText = text;
-  });
-}
-
-/* ================= iOS / ANDROID: TAP READ ================= */
-document.body.addEventListener("click", e => {
-  if (!readEnabled || readingState !== "reading") return;
-
-  const el = e.target;
-  if (!el.innerText || el.children.length > 0) return;
-
-  const text = el.innerText.trim();
-  if (text.length < 2 || text === lastText) return;
-
-  currentElement?.classList.remove("a11y-read-hover");
-  el.classList.add("a11y-read-hover");
-  currentElement = el;
-
-  synth.cancel();
-
-  utterance = new SpeechSynthesisUtterance(text);
-  utterance.voice = voices[get("voiceIndex", 0)] || voices[0];
-  utterance.volume = get("voiceVolume", 1);
-  utterance.rate = get("voiceRate", 1);
-  utterance.pitch = get("voicePitch", 1);
-
-  synth.speak(utterance);
-  lastText = text;
 });
-
-/* ================= HIGHLIGHT HEADINGS ================= */
-function toggleHeadingHighlight() {
-  document.querySelectorAll("h1,h2,h3,h4,h5,h6")
-    .forEach(h => h.classList.toggle("a11y-heading"));
-
-  saveA11y(
-    "headingHighlight",
-    document.querySelector("h1")?.classList.contains("a11y-heading")
-  );
-}
 
 /* ================= IMAGE DESCRIPTION ================= */
 let imageDescEnabled = false;
-function toggleImageDesc() {
-  imageDescEnabled = !imageDescEnabled;
-  saveA11y("imageDesc", imageDescEnabled);
+
+function showImageTip(img) {
+    removeImageTip(img);
+    const tip = document.createElement("div");
+    tip.className = "a11y-img-tip";
+    tip.innerText = img.alt;
+    document.body.appendChild(tip);
+
+    const r = img.getBoundingClientRect();
+    tip.style.top = (r.top + window.scrollY + r.height + 10) + "px";
+    tip.style.left = (r.left + window.scrollX) + "px";
+
+    img._tip = tip;
 }
+function removeImageTip(img) {
+    if (img._tip) {
+        img._tip.remove();
+        img._tip = null;
+    }
+}
+function attachImageDesc() {
+    document.querySelectorAll("img").forEach(img => {
+        img.onmouseenter = img.onmouseleave = img.onclick = img.ontouchstart = null;
 
-/* ================= HIDE IMAGES ================= */
-function toggleImages() {
-  const hide = document.body.classList.toggle("hide-images");
-  saveA11y("hideImages", hide);
-
-  document.querySelectorAll("img").forEach(img => {
-    hide
-      ? img.setAttribute("aria-hidden", "true")
-      : img.removeAttribute("aria-hidden");
-  });
+        img.addEventListener("mouseenter", () => {
+            if (!imageDescEnabled || !img.alt) return;
+            showImageTip(img);
+        });
+        img.addEventListener("mouseleave", () => removeImageTip(img));
+        img.addEventListener("click", () => {
+            if (!imageDescEnabled || !img.alt) return;
+            showImageTip(img);
+            setTimeout(() => removeImageTip(img), 3000);
+        });
+        img.addEventListener("touchstart", () => {
+            if (!imageDescEnabled || !img.alt) return;
+            showImageTip(img);
+            setTimeout(() => removeImageTip(img), 3000);
+        }, { passive: true });
+    });
+}
+function toggleImageDesc() {
+    imageDescEnabled = !imageDescEnabled;
+    saveA11y("imageDesc", imageDescEnabled);
+    attachImageDesc();
 }
 
 /* ================= RESTORE ON PAGE LOAD ================= */
 document.addEventListener("DOMContentLoaded", () => {
 
-  document.documentElement.style.fontSize = getA11y("textSize", 100) + "%";
+    document.documentElement.style.fontSize = getA11y("textSize", 100) + "%";
 
-  const lh = getA11y("lineHeight", null);
-  if (lh) setLineHeight(lh);
+    const lh = getA11y("lineHeight", null);
+    if (lh) setLineHeight(lh);
 
-  document.body.style.letterSpacing = getA11y("letterSpacing", 0) + "px";
+    document.body.style.letterSpacing = getA11y("letterSpacing", 0) + "px";
 
-  bigCursorEnabled = getA11y("bigCursor", false);
-  document.documentElement.classList.toggle("big-cursor", bigCursorEnabled);
+    bigCursorEnabled = getA11y("bigCursor", false);
+    document.documentElement.classList.toggle("big-cursor", bigCursorEnabled);
 
-  if (getA11y("headingHighlight", false)) {
-    document.querySelectorAll("h1,h2,h3,h4,h5,h6")
-      .forEach(h => h.classList.add("a11y-heading"));
-  }
+    imageDescEnabled = getA11y("imageDesc", false);
+    if (imageDescEnabled) attachImageDesc();
 
-  if (getA11y("hideImages", false)) {
-    document.body.classList.add("hide-images");
-    document.querySelectorAll("img").forEach(img =>
-      img.setAttribute("aria-hidden", "true")
-    );
-  }
+    if (get("pageRead", false)) {
+        readEnabled = true;
+        readingState = "reading";
+        openVoicePopup();
 
-  imageDescEnabled = getA11y("imageDesc", false);
+        if (isIOS) {
+            const unlock = new SpeechSynthesisUtterance("");
+            unlock.volume = 0;
+            synth.speak(unlock);
+        }
+    }
 
-  // ❌ DO NOT restore pageRead here (important)
-
-  loadVoices();
-  initVoiceControls();
+    loadVoices();
+    initVoiceControls();
 });
 
 /* ================= RESET ================= */
 function resetAccessibility() {
-  localStorage.clear();
-  location.reload();
+    localStorage.clear();
+    location.reload();
 }
